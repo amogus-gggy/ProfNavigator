@@ -167,12 +167,10 @@ async def health_check():
     return {"status": "ok", "model_fitted": survey_model.is_fitted}
 
 
-@app.post("/api/retrain")
+# Админский эндпоинт для переобучения модели на основе накопленных данных(закоментирован, потому что в падлу авторизацию писать)
+"""@app.post("/api/retrain")
 async def retrain_model():
-    """
-    Переобучение модели на накопленных данных.
-    Конвертирует responses.json в формат для trainer и запускает обучение.
-    """
+    
     import subprocess
     import sys
     
@@ -217,7 +215,7 @@ async def retrain_model():
 
 @app.post("/api/reload-model")
 async def reload_model():
-    """Перезагрузить модель из файла (без переобучения)"""
+    
     global survey_model
     survey_model = SurveyModel()
-    return {"status": "success", "model_fitted": survey_model.is_fitted}
+    return {"status": "success", "model_fitted": survey_model.is_fitted}"""
