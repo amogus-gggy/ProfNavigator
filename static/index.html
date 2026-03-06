@@ -96,7 +96,7 @@
             <div class="mb-8">
                 <div class="flex justify-between items-center mb-2">
                     <span class="text-sm font-medium text-gray-600">
-                        Вопрос <span id="current-question-num">1</span> из <span id="total-questions">10</span>
+                        Вопрос <span id="current-question-num">1</span> из <span id="total-questions">15</span>
                     </span>
                     <span class="text-sm font-medium text-indigo-600" id="progress-percent">0%</span>
                 </div>
@@ -202,316 +202,346 @@
         let currentQuestionIndex = 0;
         let answers = [];
 
-        const SPHERE_ICONS = {
-        "IT и аналитика": "💻",
-        "Коммуникации и сервис": "🤝",
-        "Творчество и дизайн": "🎨",
-        "Менеджмент и управление": "📊",
-        "Производство и технологии": "🔧",
-        "Наука и исследования": "🔬"
+        // Иконки для сфер (ключи - category key из questions.json)
+        const SPHERE_ICONS_MAP = {
+            "analytical": "💻",
+            "social": "🤝",
+            "creative": "🎨",
+            "managerial": "📊",
+            "practical": "🔧",
+            "research": "🔬",
+            "technical": "⚙️",
+            "artistic": "🎭",
+            "entrepreneurial": "🚀",
+            "scientific": "🧪"
         };
 
-        const SPHERE_COLORS = {
-        "IT и аналитика": "from-blue-500 to-cyan-500",
-        "Коммуникации и сервис": "from-green-500 to-emerald-500",
-        "Творчество и дизайн": "from-purple-500 to-pink-500",
-        "Менеджмент и управление": "from-red-500 to-orange-500",
-        "Производство и технологии": "from-orange-500 to-amber-500",
-        "Наука и исследования": "from-cyan-500 to-teal-500"
-        };
-
-        const SPHERE_BG_COLORS = {
-        "IT и аналитика": "bg-blue-500",
-        "Коммуникации и сервис": "bg-green-500",
-        "Творчество и дизайн": "bg-purple-500",
-        "Менеджмент и управление": "bg-red-500",
-        "Производство и технологии": "bg-orange-500",
-        "Наука и исследования": "bg-cyan-500"
-        };
-
-        const SPHERE_NAMES = {
-        "analytical": "IT и аналитика",
-        "social": "Коммуникации и сервис",
-        "creative": "Творчество и дизайн",
-        "managerial": "Менеджмент и управление",
-        "practical": "Производство и технологии",
-        "research": "Наука и исследования"
+        // Градиенты для сфер (ключи - category key)
+        const SPHERE_COLORS_MAP = {
+            "analytical": "from-blue-500 to-cyan-500",
+            "social": "from-green-500 to-emerald-500",
+            "creative": "from-purple-500 to-pink-500",
+            "managerial": "from-red-500 to-orange-500",
+            "practical": "from-orange-500 to-amber-500",
+            "research": "from-cyan-500 to-teal-500",
+            "technical": "from-slate-500 to-gray-500",
+            "artistic": "from-pink-500 to-rose-500",
+            "entrepreneurial": "from-emerald-500 to-green-500",
+            "scientific": "from-violet-500 to-purple-500"
         };
 
         const elements = {
-        loading: document.getElementById('loading'),
-        quizContainer: document.getElementById('quiz-container'),
-        questionCard: document.getElementById('question-card'),
-        questionNumber: document.getElementById('question-number'),
-        questionText: document.getElementById('question-text'),
-        optionsContainer: document.getElementById('options-container'),
-        currentQuestionNum: document.getElementById('current-question-num'),
-        totalQuestions: document.getElementById('total-questions'),
-        progressPercent: document.getElementById('progress-percent'),
-        progressBar: document.getElementById('progress-bar'),
-        prevBtn: document.getElementById('prev-btn'),
-        nextBtn: document.getElementById('next-btn'),
-        nextBtnText: document.getElementById('next-btn-text'),
-        nextBtnIcon: document.getElementById('next-btn-icon'),
-        resultContainer: document.getElementById('result-container'),
-        resultIcon: document.getElementById('result-icon'),
-        resultSphere: document.getElementById('result-sphere'),
-        resultDescription: document.getElementById('result-description'),
-        probabilitiesContainer: document.getElementById('probabilities-container'),
-        rankingContainer: document.getElementById('ranking-container'),
-        restartBtn: document.getElementById('restart-btn'),
-        errorContainer: document.getElementById('error-container'),
-        errorMessage: document.getElementById('error-message')
+            loading: document.getElementById('loading'),
+            quizContainer: document.getElementById('quiz-container'),
+            questionCard: document.getElementById('question-card'),
+            questionNumber: document.getElementById('question-number'),
+            questionText: document.getElementById('question-text'),
+            optionsContainer: document.getElementById('options-container'),
+            currentQuestionNum: document.getElementById('current-question-num'),
+            totalQuestions: document.getElementById('total-questions'),
+            progressPercent: document.getElementById('progress-percent'),
+            progressBar: document.getElementById('progress-bar'),
+            prevBtn: document.getElementById('prev-btn'),
+            nextBtn: document.getElementById('next-btn'),
+            nextBtnText: document.getElementById('next-btn-text'),
+            nextBtnIcon: document.getElementById('next-btn-icon'),
+            resultContainer: document.getElementById('result-container'),
+            resultIcon: document.getElementById('result-icon'),
+            resultSphere: document.getElementById('result-sphere'),
+            resultDescription: document.getElementById('result-description'),
+            probabilitiesContainer: document.getElementById('probabilities-container'),
+            rankingContainer: document.getElementById('ranking-container'),
+            restartBtn: document.getElementById('restart-btn'),
+            errorContainer: document.getElementById('error-container'),
+            errorMessage: document.getElementById('error-message')
         };
 
         async function loadQuestions() {
-        try {
-        const response = await fetch(`${API_URL}/questions`);
-        if (!response.ok) throw new Error('Ошибка загрузки вопросов');
-        questionsData = await response.json();
+            try {
+                // Добавляем timestamp для отключения кэширования
+                const response = await fetch(`${API_URL}/questions?t=${Date.now()}`);
+                if (!response.ok) throw new Error('Ошибка загрузки вопросов');
+                questionsData = await response.json();
 
-        elements.totalQuestions.textContent = questionsData.questions.length;
-        answers = new Array(questionsData.questions.length).fill(null);
+                console.log('Loaded questionsData:', {
+                    questionsCount: questionsData.questions.length,
+                    selectedCount: questionsData.selected_count,
+                    spheresCount: Object.keys(questionsData.spheres || {}).length,
+                    spheres: questionsData.spheres
+                });
 
-        elements.loading.classList.add('hidden');
-        elements.quizContainer.classList.remove('hidden');
+                elements.totalQuestions.textContent = questionsData.selected_count || questionsData.questions.length;
+                answers = new Array(questionsData.questions.length).fill(null);
 
-        renderQuestion();
-        } catch (error) {
-        showError('Не удалось загрузить вопросы. Убедитесь, что сервер запущен.');
-        }
+                elements.loading.classList.add('hidden');
+                elements.quizContainer.classList.remove('hidden');
+
+                renderQuestion();
+            } catch (error) {
+                console.error('Error loading questions:', error);
+                showError('Не удалось загрузить вопросы. Убедитесь, что сервер запущен.');
+            }
         }
 
         function renderQuestion() {
-        const question = questionsData.questions[currentQuestionIndex];
+            const question = questionsData.questions[currentQuestionIndex];
+            const totalQuestions = questionsData.selected_count || questionsData.questions.length;
 
-        // Update progress
-        const progress = ((currentQuestionIndex + 1) / questionsData.questions.length) * 100;
-        elements.currentQuestionNum.textContent = currentQuestionIndex + 1;
-        elements.progressPercent.textContent = Math.round(progress) + '%';
-        elements.progressBar.style.width = progress + '%';
+            // Update progress
+            const progress = ((currentQuestionIndex + 1) / totalQuestions) * 100;
+            elements.currentQuestionNum.textContent = currentQuestionIndex + 1;
+            elements.progressPercent.textContent = Math.round(progress) + '%';
+            elements.progressBar.style.width = progress + '%';
 
-        // Update question
-        elements.questionNumber.textContent = currentQuestionIndex + 1;
-        elements.questionText.textContent = question.text;
+            // Update question
+            elements.questionNumber.textContent = currentQuestionIndex + 1;
+            elements.questionText.textContent = question.text;
 
-        // Render options
-        const savedAnswer = answers[currentQuestionIndex];
-        elements.optionsContainer.innerHTML = '';
+            // Render options
+            const savedAnswer = answers[currentQuestionIndex];
+            elements.optionsContainer.innerHTML = '';
 
-        question.options.forEach((opt, idx) => {
-        const isSelected = savedAnswer && savedAnswer.option_id === opt.id;
+            question.options.forEach((opt, idx) => {
+                const isSelected = savedAnswer && savedAnswer.option_id === opt.id;
 
-        const optionDiv = document.createElement('div');
-        optionDiv.className = `option-card flex items-center p-4 border-2 rounded-xl cursor-pointer transition duration-200 group ${isSelected ? 'selected' : 'border-gray-200 hover:border-indigo-300'}`;
-        optionDiv.dataset.optionId = opt.id;
+                const optionDiv = document.createElement('div');
+                optionDiv.className = `option-card flex items-center p-4 border-2 rounded-xl cursor-pointer transition duration-200 group ${isSelected ? 'selected' : 'border-gray-200 hover:border-indigo-300'}`;
+                optionDiv.dataset.optionId = opt.id;
 
-        optionDiv.innerHTML = `
-        <div class="check-circle flex-shrink-0 w-6 h-6 rounded-full border-2 ${isSelected ? 'border-indigo-500 bg-indigo-500' : 'border-gray-300 group-hover:border-indigo-400'} flex items-center justify-center mr-4">
-        ${isSelected ? '<svg class="w-4 h-4 text-white" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path></svg>' : ''}
-        </div>
-        <span class="option-text text-gray-700 font-medium ${isSelected ? 'text-indigo-700' : ''}">${opt.text}</span>
-        `;
+                optionDiv.innerHTML = `
+                    <div class="check-circle flex-shrink-0 w-6 h-6 rounded-full border-2 ${isSelected ? 'border-indigo-500 bg-indigo-500' : 'border-gray-300 group-hover:border-indigo-400'} flex items-center justify-center mr-4">
+                        ${isSelected ? '<svg class="w-4 h-4 text-white" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path></svg>' : ''}
+                    </div>
+                    <span class="option-text text-gray-700 font-medium ${isSelected ? 'text-indigo-700' : ''}">${opt.text}</span>
+                `;
 
-        optionDiv.addEventListener('click', () => selectOption(opt.id));
-        elements.optionsContainer.appendChild(optionDiv);
-        });
+                optionDiv.addEventListener('click', () => selectOption(opt.id));
+                elements.optionsContainer.appendChild(optionDiv);
+            });
 
-        // Update buttons
-        elements.prevBtn.disabled = currentQuestionIndex === 0;
+            // Update buttons
+            elements.prevBtn.disabled = currentQuestionIndex === 0;
 
-        if (currentQuestionIndex === questionsData.questions.length - 1) {
-        elements.nextBtnText.textContent = 'Получить результат';
-        elements.nextBtnIcon.innerHTML = '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>';
-        } else {
-        elements.nextBtnText.textContent = 'Далее';
-        elements.nextBtnIcon.innerHTML = '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>';
-        }
+            if (currentQuestionIndex === questionsData.questions.length - 1) {
+                elements.nextBtnText.textContent = 'Получить результат';
+                elements.nextBtnIcon.innerHTML = '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>';
+            } else {
+                elements.nextBtnText.textContent = 'Далее';
+                elements.nextBtnIcon.innerHTML = '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>';
+            }
 
-        updateNextButton();
+            updateNextButton();
 
-        // Re-trigger animation
-        elements.questionCard.classList.remove('fade-in');
-        void elements.questionCard.offsetWidth;
-        elements.questionCard.classList.add('fade-in');
+            // Re-trigger animation
+            elements.questionCard.classList.remove('fade-in');
+            void elements.questionCard.offsetWidth;
+            elements.questionCard.classList.add('fade-in');
         }
 
         function selectOption(optionId) {
-        const question = questionsData.questions[currentQuestionIndex];
-        answers[currentQuestionIndex] = {
-        question_id: question.id,
-        option_id: optionId
-        };
+            const question = questionsData.questions[currentQuestionIndex];
+            answers[currentQuestionIndex] = {
+                question_id: question.id,
+                option_id: optionId
+            };
 
-        // Update UI immediately without full re-render
-        const options = elements.optionsContainer.querySelectorAll('.option-card');
-        options.forEach(opt => {
-        const isSelected = opt.dataset.optionId === optionId;
-        const checkCircle = opt.querySelector('.check-circle');
-        const optionText = opt.querySelector('.option-text');
+            // Update UI immediately without full re-render
+            const options = elements.optionsContainer.querySelectorAll('.option-card');
+            options.forEach(opt => {
+                const isSelected = opt.dataset.optionId === optionId;
+                const checkCircle = opt.querySelector('.check-circle');
+                const optionText = opt.querySelector('.option-text');
 
-        if (isSelected) {
-        opt.classList.add('selected');
-        opt.classList.remove('border-gray-200', 'hover:border-indigo-300');
-        checkCircle.classList.add('border-indigo-500', 'bg-indigo-500');
-        checkCircle.classList.remove('border-gray-300');
-        checkCircle.innerHTML = '<svg class="w-4 h-4 text-white" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path></svg>';
-        optionText.classList.add('text-indigo-700', 'font-semibold');
-        } else {
-        opt.classList.remove('selected');
-        opt.classList.add('border-gray-200', 'hover:border-indigo-300');
-        checkCircle.classList.remove('border-indigo-500', 'bg-indigo-500');
-        checkCircle.classList.add('border-gray-300');
-        checkCircle.innerHTML = '';
-        optionText.classList.remove('text-indigo-700', 'font-semibold');
-        }
-        });
+                if (isSelected) {
+                    opt.classList.add('selected');
+                    opt.classList.remove('border-gray-200', 'hover:border-indigo-300');
+                    checkCircle.classList.add('border-indigo-500', 'bg-indigo-500');
+                    checkCircle.classList.remove('border-gray-300');
+                    checkCircle.innerHTML = '<svg class="w-4 h-4 text-white" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path></svg>';
+                    optionText.classList.add('text-indigo-700', 'font-semibold');
+                } else {
+                    opt.classList.remove('selected');
+                    opt.classList.add('border-gray-200', 'hover:border-indigo-300');
+                    checkCircle.classList.remove('border-indigo-500', 'bg-indigo-500');
+                    checkCircle.classList.add('border-gray-300');
+                    checkCircle.innerHTML = '';
+                    optionText.classList.remove('text-indigo-700', 'font-semibold');
+                }
+            });
 
-        updateNextButton();
+            updateNextButton();
         }
 
         function updateNextButton() {
-        const hasAnswer = answers[currentQuestionIndex] !== null;
-        elements.nextBtn.disabled = !hasAnswer;
+            const totalQuestions = questionsData.selected_count || questionsData.questions.length;
+            
+            if (currentQuestionIndex === totalQuestions - 1) {
+                elements.nextBtnText.textContent = 'Получить результат';
+                elements.nextBtnIcon.innerHTML = '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>';
+            } else {
+                elements.nextBtnText.textContent = 'Далее';
+                elements.nextBtnIcon.innerHTML = '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>';
+            }
+            
+            const hasAnswer = answers[currentQuestionIndex] !== null;
+            elements.nextBtn.disabled = !hasAnswer;
         }
 
         function nextQuestion() {
-        if (currentQuestionIndex < questionsData.questions.length - 1) {
-        currentQuestionIndex++;
-        renderQuestion();
-        } else {
-        submitAnswers();
-        }
+            const totalQuestions = questionsData.selected_count || questionsData.questions.length;
+            
+            if (currentQuestionIndex < totalQuestions - 1) {
+                currentQuestionIndex++;
+                renderQuestion();
+            } else {
+                submitAnswers();
+            }
         }
 
         function prevQuestion() {
-        if (currentQuestionIndex > 0) {
-        currentQuestionIndex--;
-        renderQuestion();
-        }
+            if (currentQuestionIndex > 0) {
+                currentQuestionIndex--;
+                renderQuestion();
+            }
         }
 
         async function submitAnswers() {
-        const validAnswers = answers.filter(a => a !== null);
+            const totalQuestions = questionsData.selected_count || questionsData.questions.length;
+            const validAnswers = answers.filter(a => a !== null);
 
-        if (validAnswers.length !== questionsData.questions.length) {
-        showError('Пожалуйста, ответьте на все вопросы');
-        return;
-        }
+            if (validAnswers.length !== totalQuestions) {
+                showError('Пожалуйста, ответьте на все вопросы');
+                return;
+            }
 
-        elements.nextBtn.disabled = true;
-        elements.nextBtnText.textContent = 'Обработка...';
-        elements.nextBtnIcon.innerHTML = '<circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle><path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>';
-        elements.nextBtnIcon.classList.add('animate-spin');
+            elements.nextBtn.disabled = true;
+            elements.nextBtnText.textContent = 'Обработка...';
+            elements.nextBtnIcon.innerHTML = '<circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle><path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>';
+            elements.nextBtnIcon.classList.add('animate-spin');
 
-        try {
-        const response = await fetch(`${API_URL}/submit`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ answers: validAnswers })
-        });
+            try {
+                const response = await fetch(`${API_URL}/submit`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ answers: validAnswers })
+                });
 
-        if (!response.ok) throw new Error('Ошибка отправки ответов');
+                if (!response.ok) throw new Error('Ошибка отправки ответов');
 
-        const result = await response.json();
-        showResult(result);
-        } catch (error) {
-        showError('Не удалось отправить ответы. Попробуйте позже.');
-        elements.nextBtn.disabled = false;
-        elements.nextBtnText.textContent = 'Получить результат';
-        elements.nextBtnIcon.classList.remove('animate-spin');
-        elements.nextBtnIcon.innerHTML = '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>';
-        }
+                const result = await response.json();
+                showResult(result);
+            } catch (error) {
+                showError('Не удалось отправить ответы. Попробуйте позже.');
+                elements.nextBtn.disabled = false;
+                elements.nextBtnText.textContent = 'Получить результат';
+                elements.nextBtnIcon.classList.remove('animate-spin');
+                elements.nextBtnIcon.innerHTML = '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>';
+            }
         }
 
         function showResult(result) {
-        elements.resultSphere.textContent = result.sphere;
-        elements.resultIcon.textContent = SPHERE_ICONS[result.sphere] || '🎯';
-        elements.resultDescription.textContent = result.description;
+            // Получаем информацию о сфере из серверных данных
+            const spheres = questionsData.spheres || {};
+            
+            console.log('Spheres from server:', spheres);
+            console.log('Result primary:', result.primary);
+            
+            const primarySphere = spheres[result.primary] || {};
+            
+            elements.resultSphere.textContent = primarySphere.name || result.primary;
+            elements.resultIcon.textContent = primarySphere.icon || SPHERE_ICONS_MAP[result.primary] || '🎯';
+            elements.resultDescription.textContent = primarySphere.description || '';
 
-        // Probabilities chart
-        const categories = Object.entries(result.probabilities)
-        .sort((a, b) => b[1] - a[1]);
+            // Probabilities chart
+            const categories = Object.entries(result.probabilities)
+                .sort((a, b) => b[1] - a[1]);
 
-        elements.probabilitiesContainer.innerHTML = categories.map(([cat, prob]) => {
-        const percentage = Math.round(prob * 100);
-        const name = SPHERE_NAMES[cat] || cat;
-        const icon = SPHERE_ICONS[name] || '📌';
-        const gradient = SPHERE_COLORS[name] || 'from-indigo-500 to-purple-500';
+            elements.probabilitiesContainer.innerHTML = categories.map(([cat, prob]) => {
+                const percentage = Math.round(prob * 100);
+                const sphereInfo = spheres[cat] || {};
+                const name = sphereInfo.name || cat;
+                const icon = sphereInfo.icon || SPHERE_ICONS_MAP[cat] || '📌';
+                const gradient = SPHERE_COLORS_MAP[cat] || 'from-indigo-500 to-purple-500';
 
-        return `
-        <div>
-        <div class="flex justify-between items-center mb-2">
-        <div class="flex items-center gap-2">
-        <span class="text-xl">${icon}</span>
-        <span class="font-medium text-gray-700">${name}</span>
-        </div>
-        <span class="font-bold text-gray-900">${percentage}%</span>
-        </div>
-        <div class="w-full bg-gray-200 rounded-full h-3 overflow-hidden">
-        <div
-        class="h-3 rounded-full bg-gradient-to-r ${gradient} transition-all duration-1000 ease-out"
-        style="width: 0%"
-        data-width="${percentage}%"
-        ></div>
-        </div>
-        </div>
-        `;
-        }).join('');
+                return `
+                    <div>
+                        <div class="flex justify-between items-center mb-2">
+                            <div class="flex items-center gap-2">
+                                <span class="text-xl">${icon}</span>
+                                <span class="font-medium text-gray-700">${name}</span>
+                            </div>
+                            <span class="font-bold text-gray-900">${percentage}%</span>
+                        </div>
+                        <div class="w-full bg-gray-200 rounded-full h-3 overflow-hidden">
+                            <div
+                                class="h-3 rounded-full bg-gradient-to-r ${gradient} transition-all duration-1000 ease-out"
+                                style="width: 0%"
+                                data-width="${percentage}%"
+                            ></div>
+                        </div>
+                    </div>
+                `;
+            }).join('');
 
-        // Ranking
-        elements.rankingContainer.innerHTML = result.ranking.map(([cat, prob], index) => {
-        const name = SPHERE_NAMES[cat] || cat;
-        const icon = SPHERE_ICONS[name] || '📌';
-        const medals = ['🥇', '🥈', '🥉', '4️⃣', '5️⃣', '6️⃣'];
-        const colors = [
-        'bg-gradient-to-r from-yellow-100 to-amber-100 border-yellow-300',
-        'bg-gradient-to-r from-gray-100 to-slate-100 border-gray-300',
-        'bg-gradient-to-r from-orange-100 to-amber-100 border-orange-300',
-        'bg-gray-50 border-gray-200',
-        'bg-gray-50 border-gray-200',
-        'bg-gray-50 border-gray-200'
-        ];
+            // Ranking
+            const medals = ['🥇', '🥈', '🥉', '4️⃣', '5️⃣', '6️⃣', '7️⃣', '8️⃣', '9️⃣', '🔟'];
+            const colors = [
+                'bg-gradient-to-r from-yellow-100 to-amber-100 border-yellow-300',
+                'bg-gradient-to-r from-gray-100 to-slate-100 border-gray-300',
+                'bg-gradient-to-r from-orange-100 to-amber-100 border-orange-300',
+                'bg-gray-50 border-gray-200',
+                'bg-gray-50 border-gray-200',
+                'bg-gray-50 border-gray-200',
+                'bg-gray-50 border-gray-200',
+                'bg-gray-50 border-gray-200',
+                'bg-gray-50 border-gray-200',
+                'bg-gray-50 border-gray-200'
+            ];
+            
+            elements.rankingContainer.innerHTML = result.ranking.map(([cat, prob], index) => {
+                const sphereInfo = spheres[cat] || {};
+                const name = sphereInfo.name || cat;
+                const icon = sphereInfo.icon || SPHERE_ICONS_MAP[cat] || '📌';
 
-        return `
-        <div class="flex items-center justify-between p-4 rounded-xl border-2 ${colors[index] || colors[3]} transition duration-200 hover:shadow-md">
-        <div class="flex items-center gap-3">
-        <span class="text-2xl">${medals[index] || `${index + 1}.`}</span>
-        <span class="text-xl">${icon}</span>
-        <span class="font-semibold text-gray-800">${name}</span>
-        </div>
-        <span class="font-bold text-indigo-600 text-lg">${Math.round(prob * 100)}%</span>
-        </div>
-        `;
-        }).join('');
+                return `
+                    <div class="flex items-center justify-between p-4 rounded-xl border-2 ${colors[index] || colors[3]} transition duration-200 hover:shadow-md">
+                        <div class="flex items-center gap-3">
+                            <span class="text-2xl">${medals[index] || `${index + 1}.`}</span>
+                            <span class="text-xl">${icon}</span>
+                            <span class="font-semibold text-gray-800">${name}</span>
+                        </div>
+                        <span class="font-bold text-indigo-600 text-lg">${Math.round(prob * 100)}%</span>
+                    </div>
+                `;
+            }).join('');
 
-        elements.quizContainer.classList.add('hidden');
-        elements.resultContainer.classList.remove('hidden');
-        elements.errorContainer.classList.add('hidden');
+            elements.quizContainer.classList.add('hidden');
+            elements.resultContainer.classList.remove('hidden');
+            elements.errorContainer.classList.add('hidden');
 
-        // Animate progress bars after showing result
-        setTimeout(() => {
-        document.querySelectorAll('[data-width]').forEach(bar => {
-        bar.style.width = bar.getAttribute('data-width');
-        });
-        }, 100);
+            // Animate progress bars after showing result
+            setTimeout(() => {
+                document.querySelectorAll('[data-width]').forEach(bar => {
+                    bar.style.width = bar.getAttribute('data-width');
+                });
+            }, 100);
         }
 
         function showError(message) {
-        elements.errorMessage.textContent = message;
-        elements.errorContainer.classList.remove('hidden');
-        setTimeout(() => {
-        elements.errorContainer.classList.add('hidden');
-        }, 5000);
+            elements.errorMessage.textContent = message;
+            elements.errorContainer.classList.remove('hidden');
+            setTimeout(() => {
+                elements.errorContainer.classList.add('hidden');
+            }, 5000);
         }
 
         function restartQuiz() {
-        currentQuestionIndex = 0;
-        answers = new Array(questionsData.questions.length).fill(null);
-        elements.resultContainer.classList.add('hidden');
-        elements.quizContainer.classList.remove('hidden');
-        elements.nextBtnIcon.classList.remove('animate-spin');
-        loadQuestions();
+            currentQuestionIndex = 0;
+            answers = new Array(questionsData.selected_count || questionsData.questions.length).fill(null);
+            elements.resultContainer.classList.add('hidden');
+            elements.quizContainer.classList.remove('hidden');
+            elements.nextBtnIcon.classList.remove('animate-spin');
+            loadQuestions();
         }
 
         // Event listeners

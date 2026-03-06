@@ -4,192 +4,5600 @@
       "id": 1,
       "text": "Что вам нравится делать больше всего?",
       "options": [
-        {"id": "a", "text": "Работать с данными и анализировать", "category": "analytical"},
-        {"id": "b", "text": "Общаться с людьми и помогать", "category": "social"},
-        {"id": "c", "text": "Создавать что-то новое", "category": "creative"},
-        {"id": "d", "text": "Организовывать процессы", "category": "managerial"},
-        {"id": "e", "text": "Работать руками и создавать материальные вещи", "category": "practical"},
-        {"id": "f", "text": "Исследовать и изучать неизвестное", "category": "research"},
-        {"id": "g", "text": "Работать с техникой и технологиями", "category": "technical"},
-        {"id": "h", "text": "Заниматься искусством", "category": "artistic"},
-        {"id": "i", "text": "Создавать бизнес и стартапы", "category": "entrepreneurial"},
-        {"id": "j", "text": "Проводить научные эксперименты", "category": "scientific"}
+        {
+          "id": "a",
+          "text": "Работать с данными и анализировать",
+          "category": "analytical"
+        },
+        {
+          "id": "b",
+          "text": "Общаться с людьми и помогать",
+          "category": "social"
+        },
+        {
+          "id": "c",
+          "text": "Создавать что-то новое",
+          "category": "creative"
+        },
+        {
+          "id": "d",
+          "text": "Организовывать процессы",
+          "category": "managerial"
+        },
+        {
+          "id": "e",
+          "text": "Работать руками и создавать материальные вещи",
+          "category": "practical"
+        },
+        {
+          "id": "f",
+          "text": "Исследовать и изучать неизвестное",
+          "category": "research"
+        },
+        {
+          "id": "g",
+          "text": "Работать с техникой и технологиями",
+          "category": "technical"
+        },
+        {
+          "id": "h",
+          "text": "Заниматься искусством",
+          "category": "artistic"
+        },
+        {
+          "id": "i",
+          "text": "Создавать бизнес и стартапы",
+          "category": "entrepreneurial"
+        },
+        {
+          "id": "j",
+          "text": "Проводить научные эксперименты",
+          "category": "scientific"
+        }
       ]
     },
     {
       "id": 2,
       "text": "Какой тип задач вам интересен?",
       "options": [
-        {"id": "a", "text": "Логические и аналитические", "category": "analytical"},
-        {"id": "b", "text": "Творческие и креативные", "category": "creative"},
-        {"id": "c", "text": "Коммуникативные", "category": "social"},
-        {"id": "d", "text": "Управленческие", "category": "managerial"},
-        {"id": "e", "text": "Технические и практические", "category": "practical"},
-        {"id": "f", "text": "Научные и исследовательские", "category": "research"},
-        {"id": "g", "text": "Инженерные и технологические", "category": "technical"},
-        {"id": "h", "text": "Художественные и артистические", "category": "artistic"},
-        {"id": "i", "text": "Предпринимательские", "category": "entrepreneurial"},
-        {"id": "j", "text": "Экспериментальные и лабораторные", "category": "scientific"}
+        {
+          "id": "a",
+          "text": "Логические и аналитические",
+          "category": "analytical"
+        },
+        {
+          "id": "b",
+          "text": "Творческие и креативные",
+          "category": "creative"
+        },
+        {
+          "id": "c",
+          "text": "Коммуникативные",
+          "category": "social"
+        },
+        {
+          "id": "d",
+          "text": "Управленческие",
+          "category": "managerial"
+        },
+        {
+          "id": "e",
+          "text": "Технические и практические",
+          "category": "practical"
+        },
+        {
+          "id": "f",
+          "text": "Научные и исследовательские",
+          "category": "research"
+        },
+        {
+          "id": "g",
+          "text": "Инженерные и технологические",
+          "category": "technical"
+        },
+        {
+          "id": "h",
+          "text": "Художественные и артистические",
+          "category": "artistic"
+        },
+        {
+          "id": "i",
+          "text": "Предпринимательские",
+          "category": "entrepreneurial"
+        },
+        {
+          "id": "j",
+          "text": "Экспериментальные и лабораторные",
+          "category": "scientific"
+        }
       ]
     },
     {
       "id": 3,
       "text": "Где вы предпочитаете работать?",
       "options": [
-        {"id": "a", "text": "В офисе за компьютером", "category": "analytical"},
-        {"id": "b", "text": "В команде с коллегами", "category": "social"},
-        {"id": "c", "text": "Удалённо в любом месте", "category": "creative"},
-        {"id": "d", "text": "В динамичной среде", "category": "managerial"},
-        {"id": "e", "text": "В мастерской или лаборатории", "category": "practical"},
-        {"id": "f", "text": "В исследовательском центре", "category": "research"},
-        {"id": "g", "text": "На производстве или заводе", "category": "technical"},
-        {"id": "h", "text": "В студии или театре", "category": "artistic"},
-        {"id": "i", "text": "В собственном бизнесе", "category": "entrepreneurial"},
-        {"id": "j", "text": "В научной лаборатории", "category": "scientific"}
+        {
+          "id": "a",
+          "text": "В офисе за компьютером",
+          "category": "analytical"
+        },
+        {
+          "id": "b",
+          "text": "В команде с коллегами",
+          "category": "social"
+        },
+        {
+          "id": "c",
+          "text": "Удалённо в любом месте",
+          "category": "creative"
+        },
+        {
+          "id": "d",
+          "text": "В динамичной среде",
+          "category": "managerial"
+        },
+        {
+          "id": "e",
+          "text": "В мастерской или лаборатории",
+          "category": "practical"
+        },
+        {
+          "id": "f",
+          "text": "В исследовательском центре",
+          "category": "research"
+        },
+        {
+          "id": "g",
+          "text": "На производстве или заводе",
+          "category": "technical"
+        },
+        {
+          "id": "h",
+          "text": "В студии или театре",
+          "category": "artistic"
+        },
+        {
+          "id": "i",
+          "text": "В собственном бизнесе",
+          "category": "entrepreneurial"
+        },
+        {
+          "id": "j",
+          "text": "В научной лаборатории",
+          "category": "scientific"
+        }
       ]
     },
     {
       "id": 4,
       "text": "Что для вас успех?",
       "options": [
-        {"id": "a", "text": "Решение сложных задач", "category": "analytical"},
-        {"id": "b", "text": "Признание и влияние", "category": "managerial"},
-        {"id": "c", "text": "Свобода самовыражения", "category": "creative"},
-        {"id": "d", "text": "Помощь другим людям", "category": "social"},
-        {"id": "e", "text": "Создание качественных продуктов", "category": "practical"},
-        {"id": "f", "text": "Научные открытия", "category": "research"},
-        {"id": "g", "text": "Внедрение новых технологий", "category": "technical"},
-        {"id": "h", "text": "Признание в искусстве", "category": "artistic"},
-        {"id": "i", "text": "Финансовый успех бизнеса", "category": "entrepreneurial"},
-        {"id": "j", "text": "Научные публикации", "category": "scientific"}
+        {
+          "id": "a",
+          "text": "Решение сложных задач",
+          "category": "analytical"
+        },
+        {
+          "id": "b",
+          "text": "Признание и влияние",
+          "category": "managerial"
+        },
+        {
+          "id": "c",
+          "text": "Свобода самовыражения",
+          "category": "creative"
+        },
+        {
+          "id": "d",
+          "text": "Помощь другим людям",
+          "category": "social"
+        },
+        {
+          "id": "e",
+          "text": "Создание качественных продуктов",
+          "category": "practical"
+        },
+        {
+          "id": "f",
+          "text": "Научные открытия",
+          "category": "research"
+        },
+        {
+          "id": "g",
+          "text": "Внедрение новых технологий",
+          "category": "technical"
+        },
+        {
+          "id": "h",
+          "text": "Признание в искусстве",
+          "category": "artistic"
+        },
+        {
+          "id": "i",
+          "text": "Финансовый успех бизнеса",
+          "category": "entrepreneurial"
+        },
+        {
+          "id": "j",
+          "text": "Научные публикации",
+          "category": "scientific"
+        }
       ]
     },
     {
       "id": 5,
       "text": "Как вы принимаете решения?",
       "options": [
-        {"id": "a", "text": "На основе фактов и данных", "category": "analytical"},
-        {"id": "b", "text": "Прислушиваясь к интуиции", "category": "creative"},
-        {"id": "c", "text": "Советуясь с другими", "category": "social"},
-        {"id": "d", "text": "Быстро и решительно", "category": "managerial"},
-        {"id": "e", "text": "Проверяя на практике", "category": "practical"},
-        {"id": "f", "text": "Изучая научные данные", "category": "research"},
-        {"id": "g", "text": "Оценивая технические возможности", "category": "technical"},
-        {"id": "h", "text": "Следуя вдохновению", "category": "artistic"},
-        {"id": "i", "text": "Оценивая риски и выгоду", "category": "entrepreneurial"},
-        {"id": "j", "text": "На основе экспериментов", "category": "scientific"}
+        {
+          "id": "a",
+          "text": "На основе фактов и данных",
+          "category": "analytical"
+        },
+        {
+          "id": "b",
+          "text": "Прислушиваясь к интуиции",
+          "category": "creative"
+        },
+        {
+          "id": "c",
+          "text": "Советуясь с другими",
+          "category": "social"
+        },
+        {
+          "id": "d",
+          "text": "Быстро и решительно",
+          "category": "managerial"
+        },
+        {
+          "id": "e",
+          "text": "Проверяя на практике",
+          "category": "practical"
+        },
+        {
+          "id": "f",
+          "text": "Изучая научные данные",
+          "category": "research"
+        },
+        {
+          "id": "g",
+          "text": "Оценивая технические возможности",
+          "category": "technical"
+        },
+        {
+          "id": "h",
+          "text": "Следуя вдохновению",
+          "category": "artistic"
+        },
+        {
+          "id": "i",
+          "text": "Оценивая риски и выгоду",
+          "category": "entrepreneurial"
+        },
+        {
+          "id": "j",
+          "text": "На основе экспериментов",
+          "category": "scientific"
+        }
       ]
     },
     {
       "id": 6,
       "text": "Что вас мотивирует?",
       "options": [
-        {"id": "a", "text": "Интеллектуальный вызов", "category": "analytical"},
-        {"id": "b", "text": "Возможность лидировать", "category": "managerial"},
-        {"id": "c", "text": "Создание чего-то уникального", "category": "creative"},
-        {"id": "d", "text": "Социальная значимость", "category": "social"},
-        {"id": "e", "text": "Конкретные результаты труда", "category": "practical"},
-        {"id": "f", "text": "Познание нового", "category": "research"},
-        {"id": "g", "text": "Технические инновации", "category": "technical"},
-        {"id": "h", "text": "Творческая реализация", "category": "artistic"},
-        {"id": "i", "text": "Рост бизнеса", "category": "entrepreneurial"},
-        {"id": "j", "text": "Научные достижения", "category": "scientific"}
+        {
+          "id": "a",
+          "text": "Интеллектуальный вызов",
+          "category": "analytical"
+        },
+        {
+          "id": "b",
+          "text": "Возможность лидировать",
+          "category": "managerial"
+        },
+        {
+          "id": "c",
+          "text": "Создание чего-то уникального",
+          "category": "creative"
+        },
+        {
+          "id": "d",
+          "text": "Социальная значимость",
+          "category": "social"
+        },
+        {
+          "id": "e",
+          "text": "Конкретные результаты труда",
+          "category": "practical"
+        },
+        {
+          "id": "f",
+          "text": "Познание нового",
+          "category": "research"
+        },
+        {
+          "id": "g",
+          "text": "Технические инновации",
+          "category": "technical"
+        },
+        {
+          "id": "h",
+          "text": "Творческая реализация",
+          "category": "artistic"
+        },
+        {
+          "id": "i",
+          "text": "Рост бизнеса",
+          "category": "entrepreneurial"
+        },
+        {
+          "id": "j",
+          "text": "Научные достижения",
+          "category": "scientific"
+        }
       ]
     },
     {
       "id": 7,
       "text": "Как вы предпочитаете учиться?",
       "options": [
-        {"id": "a", "text": "Изучать теорию и закономерности", "category": "analytical"},
-        {"id": "b", "text": "Методом проб и ошибок", "category": "creative"},
-        {"id": "c", "text": "В процессе общения", "category": "social"},
-        {"id": "d", "text": "Через практические задачи", "category": "managerial"},
-        {"id": "e", "text": "Работая с инструментами", "category": "practical"},
-        {"id": "f", "text": "Проводя эксперименты", "category": "research"},
-        {"id": "g", "text": "Изучая технические системы", "category": "technical"},
-        {"id": "h", "text": "Через творческую практику", "category": "artistic"},
-        {"id": "i", "text": "На реальных бизнес-кейсах", "category": "entrepreneurial"},
-        {"id": "j", "text": "Через научные исследования", "category": "scientific"}
+        {
+          "id": "a",
+          "text": "Изучать теорию и закономерности",
+          "category": "analytical"
+        },
+        {
+          "id": "b",
+          "text": "Методом проб и ошибок",
+          "category": "creative"
+        },
+        {
+          "id": "c",
+          "text": "В процессе общения",
+          "category": "social"
+        },
+        {
+          "id": "d",
+          "text": "Через практические задачи",
+          "category": "managerial"
+        },
+        {
+          "id": "e",
+          "text": "Работая с инструментами",
+          "category": "practical"
+        },
+        {
+          "id": "f",
+          "text": "Проводя эксперименты",
+          "category": "research"
+        },
+        {
+          "id": "g",
+          "text": "Изучая технические системы",
+          "category": "technical"
+        },
+        {
+          "id": "h",
+          "text": "Через творческую практику",
+          "category": "artistic"
+        },
+        {
+          "id": "i",
+          "text": "На реальных бизнес-кейсах",
+          "category": "entrepreneurial"
+        },
+        {
+          "id": "j",
+          "text": "Через научные исследования",
+          "category": "scientific"
+        }
       ]
     },
     {
       "id": 8,
       "text": "Какой проект вам ближе?",
       "options": [
-        {"id": "a", "text": "Анализ больших данных", "category": "analytical"},
-        {"id": "b", "text": "Запуск нового продукта", "category": "managerial"},
-        {"id": "c", "text": "Дизайн и визуализация", "category": "creative"},
-        {"id": "d", "text": "Образовательная программа", "category": "social"},
-        {"id": "e", "text": "Строительство или производство", "category": "practical"},
-        {"id": "f", "text": "Научное исследование", "category": "research"},
-        {"id": "g", "text": "Разработка технологии", "category": "technical"},
-        {"id": "h", "text": "Художественная выставка", "category": "artistic"},
-        {"id": "i", "text": "Стартап проект", "category": "entrepreneurial"},
-        {"id": "j", "text": "Лабораторный эксперимент", "category": "scientific"}
+        {
+          "id": "a",
+          "text": "Анализ больших данных",
+          "category": "analytical"
+        },
+        {
+          "id": "b",
+          "text": "Запуск нового продукта",
+          "category": "managerial"
+        },
+        {
+          "id": "c",
+          "text": "Дизайн и визуализация",
+          "category": "creative"
+        },
+        {
+          "id": "d",
+          "text": "Образовательная программа",
+          "category": "social"
+        },
+        {
+          "id": "e",
+          "text": "Строительство или производство",
+          "category": "practical"
+        },
+        {
+          "id": "f",
+          "text": "Научное исследование",
+          "category": "research"
+        },
+        {
+          "id": "g",
+          "text": "Разработка технологии",
+          "category": "technical"
+        },
+        {
+          "id": "h",
+          "text": "Художественная выставка",
+          "category": "artistic"
+        },
+        {
+          "id": "i",
+          "text": "Стартап проект",
+          "category": "entrepreneurial"
+        },
+        {
+          "id": "j",
+          "text": "Лабораторный эксперимент",
+          "category": "scientific"
+        }
       ]
     },
     {
       "id": 9,
       "text": "Что вас вдохновляет?",
       "options": [
-        {"id": "a", "text": "Точные вычисления и статистика", "category": "analytical"},
-        {"id": "b", "text": "Командная работа", "category": "social"},
-        {"id": "c", "text": "Искусство и дизайн", "category": "creative"},
-        {"id": "d", "text": "Бизнес-достижения", "category": "managerial"},
-        {"id": "e", "text": "Механизмы и технологии", "category": "practical"},
-        {"id": "f", "text": "Научные теории", "category": "research"},
-        {"id": "g", "text": "Инженерные решения", "category": "technical"},
-        {"id": "h", "text": "Произведения искусства", "category": "artistic"},
-        {"id": "i", "text": "Успешные стартапы", "category": "entrepreneurial"},
-        {"id": "j", "text": "Научные открытия", "category": "scientific"}
+        {
+          "id": "a",
+          "text": "Точные вычисления и статистика",
+          "category": "analytical"
+        },
+        {
+          "id": "b",
+          "text": "Командная работа",
+          "category": "social"
+        },
+        {
+          "id": "c",
+          "text": "Искусство и дизайн",
+          "category": "creative"
+        },
+        {
+          "id": "d",
+          "text": "Бизнес-достижения",
+          "category": "managerial"
+        },
+        {
+          "id": "e",
+          "text": "Механизмы и технологии",
+          "category": "practical"
+        },
+        {
+          "id": "f",
+          "text": "Научные теории",
+          "category": "research"
+        },
+        {
+          "id": "g",
+          "text": "Инженерные решения",
+          "category": "technical"
+        },
+        {
+          "id": "h",
+          "text": "Произведения искусства",
+          "category": "artistic"
+        },
+        {
+          "id": "i",
+          "text": "Успешные стартапы",
+          "category": "entrepreneurial"
+        },
+        {
+          "id": "j",
+          "text": "Научные открытия",
+          "category": "scientific"
+        }
       ]
     },
     {
       "id": 10,
       "text": "Как вы решаете проблемы?",
       "options": [
-        {"id": "a", "text": "Анализирую данные и факты", "category": "analytical"},
-        {"id": "b", "text": "Ищу поддержку у окружающих", "category": "social"},
-        {"id": "c", "text": "Придумываю нестандартные решения", "category": "creative"},
-        {"id": "d", "text": "Беру контроль на себя", "category": "managerial"},
-        {"id": "e", "text": "Действую практически", "category": "practical"},
-        {"id": "f", "text": "Изучаю научный подход", "category": "research"},
-        {"id": "g", "text": "Ищу техническое решение", "category": "technical"},
-        {"id": "h", "text": "Нахожу творческий подход", "category": "artistic"},
-        {"id": "i", "text": "Ищу выгодные возможности", "category": "entrepreneurial"},
-        {"id": "j", "text": "Провожу исследование", "category": "scientific"}
+        {
+          "id": "a",
+          "text": "Анализирую данные и факты",
+          "category": "analytical"
+        },
+        {
+          "id": "b",
+          "text": "Ищу поддержку у окружающих",
+          "category": "social"
+        },
+        {
+          "id": "c",
+          "text": "Придумываю нестандартные решения",
+          "category": "creative"
+        },
+        {
+          "id": "d",
+          "text": "Беру контроль на себя",
+          "category": "managerial"
+        },
+        {
+          "id": "e",
+          "text": "Действую практически",
+          "category": "practical"
+        },
+        {
+          "id": "f",
+          "text": "Изучаю научный подход",
+          "category": "research"
+        },
+        {
+          "id": "g",
+          "text": "Ищу техническое решение",
+          "category": "technical"
+        },
+        {
+          "id": "h",
+          "text": "Нахожу творческий подход",
+          "category": "artistic"
+        },
+        {
+          "id": "i",
+          "text": "Ищу выгодные возможности",
+          "category": "entrepreneurial"
+        },
+        {
+          "id": "j",
+          "text": "Провожу исследование",
+          "category": "scientific"
+        }
       ]
     },
     {
       "id": 11,
       "text": "Какая рабочая среда вам комфортна?",
       "options": [
-        {"id": "a", "text": "Структурированная и системная", "category": "analytical"},
-        {"id": "b", "text": "Дружелюбная и открытая", "category": "social"},
-        {"id": "c", "text": "Свободная и гибкая", "category": "creative"},
-        {"id": "d", "text": "Конкурентная и амбициозная", "category": "managerial"},
-        {"id": "e", "text": "Практичная и функциональная", "category": "practical"},
-        {"id": "f", "text": "Академическая и исследовательская", "category": "research"},
-        {"id": "g", "text": "Техническая и инженерная", "category": "technical"},
-        {"id": "h", "text": "Арт-пространство", "category": "artistic"},
-        {"id": "i", "text": "Предпринимательская", "category": "entrepreneurial"},
-        {"id": "j", "text": "Научно-исследовательская", "category": "scientific"}
+        {
+          "id": "a",
+          "text": "Структурированная и системная",
+          "category": "analytical"
+        },
+        {
+          "id": "b",
+          "text": "Дружелюбная и открытая",
+          "category": "social"
+        },
+        {
+          "id": "c",
+          "text": "Свободная и гибкая",
+          "category": "creative"
+        },
+        {
+          "id": "d",
+          "text": "Конкурентная и амбициозная",
+          "category": "managerial"
+        },
+        {
+          "id": "e",
+          "text": "Практичная и функциональная",
+          "category": "practical"
+        },
+        {
+          "id": "f",
+          "text": "Академическая и исследовательская",
+          "category": "research"
+        },
+        {
+          "id": "g",
+          "text": "Техническая и инженерная",
+          "category": "technical"
+        },
+        {
+          "id": "h",
+          "text": "Арт-пространство",
+          "category": "artistic"
+        },
+        {
+          "id": "i",
+          "text": "Предпринимательская",
+          "category": "entrepreneurial"
+        },
+        {
+          "id": "j",
+          "text": "Научно-исследовательская",
+          "category": "scientific"
+        }
       ]
     },
     {
       "id": 12,
       "text": "Что вы цените в работе?",
       "options": [
-        {"id": "a", "text": "Точность и логику", "category": "analytical"},
-        {"id": "b", "text": "Взаимодействие с людьми", "category": "social"},
-        {"id": "c", "text": "Возможность творить", "category": "creative"},
-        {"id": "d", "text": "Карьерный рост", "category": "managerial"},
-        {"id": "e", "text": "Осязаемые результаты", "category": "practical"},
-        {"id": "f", "text": "Глубину понимания", "category": "research"},
-        {"id": "g", "text": "Техническое совершенство", "category": "technical"},
-        {"id": "h", "text": "Эстетическую ценность", "category": "artistic"},
-        {"id": "i", "text": "Финансовую независимость", "category": "entrepreneurial"},
-        {"id": "j", "text": "Научную достоверность", "category": "scientific"}
+        {
+          "id": "a",
+          "text": "Точность и логику",
+          "category": "analytical"
+        },
+        {
+          "id": "b",
+          "text": "Взаимодействие с людьми",
+          "category": "social"
+        },
+        {
+          "id": "c",
+          "text": "Возможность творить",
+          "category": "creative"
+        },
+        {
+          "id": "d",
+          "text": "Карьерный рост",
+          "category": "managerial"
+        },
+        {
+          "id": "e",
+          "text": "Осязаемые результаты",
+          "category": "practical"
+        },
+        {
+          "id": "f",
+          "text": "Глубину понимания",
+          "category": "research"
+        },
+        {
+          "id": "g",
+          "text": "Техническое совершенство",
+          "category": "technical"
+        },
+        {
+          "id": "h",
+          "text": "Эстетическую ценность",
+          "category": "artistic"
+        },
+        {
+          "id": "i",
+          "text": "Финансовую независимость",
+          "category": "entrepreneurial"
+        },
+        {
+          "id": "j",
+          "text": "Научную достоверность",
+          "category": "scientific"
+        }
+      ]
+    },
+    {
+      "id": 13,
+      "text": "Какой стиль работы вам ближе?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Систематический и методичный",
+          "category": "analytical"
+        },
+        {
+          "id": "b",
+          "text": "Совместный и кооперативный",
+          "category": "social"
+        },
+        {
+          "id": "c",
+          "text": "Спонтанный и свободный",
+          "category": "creative"
+        },
+        {
+          "id": "d",
+          "text": "Лидерский и директивный",
+          "category": "managerial"
+        },
+        {
+          "id": "e",
+          "text": "Прикладной и практичный",
+          "category": "practical"
+        },
+        {
+          "id": "f",
+          "text": "Аналитический и глубокий",
+          "category": "research"
+        },
+        {
+          "id": "g",
+          "text": "Технический и точный",
+          "category": "technical"
+        },
+        {
+          "id": "h",
+          "text": "Выразительный и эмоциональный",
+          "category": "artistic"
+        },
+        {
+          "id": "i",
+          "text": "Рискованный и амбициозный",
+          "category": "entrepreneurial"
+        },
+        {
+          "id": "j",
+          "text": "Экспериментальный и исследовательский",
+          "category": "scientific"
+        }
+      ]
+    },
+    {
+      "id": 14,
+      "text": "Что вам интересно изучать?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Математику и статистику",
+          "category": "analytical"
+        },
+        {
+          "id": "b",
+          "text": "Психологию и социологию",
+          "category": "social"
+        },
+        {
+          "id": "c",
+          "text": "Искусство и дизайн",
+          "category": "creative"
+        },
+        {
+          "id": "d",
+          "text": "Менеджмент и лидерство",
+          "category": "managerial"
+        },
+        {
+          "id": "e",
+          "text": "Технологию производства",
+          "category": "practical"
+        },
+        {
+          "id": "f",
+          "text": "Фундаментальные науки",
+          "category": "research"
+        },
+        {
+          "id": "g",
+          "text": "Инженерию и механику",
+          "category": "technical"
+        },
+        {
+          "id": "h",
+          "text": "Литературу и музыку",
+          "category": "artistic"
+        },
+        {
+          "id": "i",
+          "text": "Экономику и маркетинг",
+          "category": "entrepreneurial"
+        },
+        {
+          "id": "j",
+          "text": "Физику и химию",
+          "category": "scientific"
+        }
+      ]
+    },
+    {
+      "id": 15,
+      "text": "Кем вы видите себя в будущем?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Аналитиком или дата-сайентистом",
+          "category": "analytical"
+        },
+        {
+          "id": "b",
+          "text": "Преподавателем или консультантом",
+          "category": "social"
+        },
+        {
+          "id": "c",
+          "text": "Дизайнером или художником",
+          "category": "creative"
+        },
+        {
+          "id": "d",
+          "text": "Руководителем или директором",
+          "category": "managerial"
+        },
+        {
+          "id": "e",
+          "text": "Мастером или технологом",
+          "category": "practical"
+        },
+        {
+          "id": "f",
+          "text": "Учёным или исследователем",
+          "category": "research"
+        },
+        {
+          "id": "g",
+          "text": "Инженером или разработчиком",
+          "category": "technical"
+        },
+        {
+          "id": "h",
+          "text": "Актёром или музыкантом",
+          "category": "artistic"
+        },
+        {
+          "id": "i",
+          "text": "Предпринимателем или инвестором",
+          "category": "entrepreneurial"
+        },
+        {
+          "id": "j",
+          "text": "Лаборантом или научным сотрудником",
+          "category": "scientific"
+        }
+      ]
+    },
+    {
+      "id": 16,
+      "text": "Какой инструмент вы предпочитаете использовать?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Таблицы и базы данных",
+          "category": "analytical"
+        },
+        {
+          "id": "b",
+          "text": "Мессенджеры и соцсети",
+          "category": "social"
+        },
+        {
+          "id": "c",
+          "text": "Графические редакторы",
+          "category": "creative"
+        },
+        {
+          "id": "d",
+          "text": "Планировщики задач",
+          "category": "managerial"
+        },
+        {
+          "id": "e",
+          "text": "Ручной инструмент и оборудование",
+          "category": "practical"
+        },
+        {
+          "id": "f",
+          "text": "Научное оборудование",
+          "category": "research"
+        },
+        {
+          "id": "g",
+          "text": "CAD-системы и симуляторы",
+          "category": "technical"
+        },
+        {
+          "id": "h",
+          "text": "Музыкальные инструменты",
+          "category": "artistic"
+        },
+        {
+          "id": "i",
+          "text": "CRM и аналитику продаж",
+          "category": "entrepreneurial"
+        },
+        {
+          "id": "j",
+          "text": "Лабораторные приборы",
+          "category": "scientific"
+        }
+      ]
+    },
+    {
+      "id": 17,
+      "text": "Как вы относитесь к рутине?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Люблю порядок и повторяемость",
+          "category": "analytical"
+        },
+        {
+          "id": "b",
+          "text": "Предпочитаю живое общение",
+          "category": "social"
+        },
+        {
+          "id": "c",
+          "text": "Нужна свобода для вдохновения",
+          "category": "creative"
+        },
+        {
+          "id": "d",
+          "text": "Рутина — часть системы",
+          "category": "managerial"
+        },
+        {
+          "id": "e",
+          "text": "Рука набивается на практике",
+          "category": "practical"
+        },
+        {
+          "id": "f",
+          "text": "Рутина мешает открытиям",
+          "category": "research"
+        },
+        {
+          "id": "g",
+          "text": "Автоматизирую повторяющееся",
+          "category": "technical"
+        },
+        {
+          "id": "h",
+          "text": "Рутина убивает творчество",
+          "category": "artistic"
+        },
+        {
+          "id": "i",
+          "text": "Оптимизирую процессы",
+          "category": "entrepreneurial"
+        },
+        {
+          "id": "j",
+          "text": "Эксперименты важнее рутины",
+          "category": "scientific"
+        }
+      ]
+    },
+    {
+      "id": 18,
+      "text": "Что для вас идеальная команда?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Компетентные специалисты",
+          "category": "analytical"
+        },
+        {
+          "id": "b",
+          "text": "Дружелюбные и поддерживающие",
+          "category": "social"
+        },
+        {
+          "id": "c",
+          "text": "Креативные и неординарные",
+          "category": "creative"
+        },
+        {
+          "id": "d",
+          "text": "Целеустремлённые и организованные",
+          "category": "managerial"
+        },
+        {
+          "id": "e",
+          "text": "Умелые и практичные",
+          "category": "practical"
+        },
+        {
+          "id": "f",
+          "text": "Любознательные и глубокие",
+          "category": "research"
+        },
+        {
+          "id": "g",
+          "text": "Технически подкованные",
+          "category": "technical"
+        },
+        {
+          "id": "h",
+          "text": "Талантливые и выразительные",
+          "category": "artistic"
+        },
+        {
+          "id": "i",
+          "text": "Амбициозные и предприимчивые",
+          "category": "entrepreneurial"
+        },
+        {
+          "id": "j",
+          "text": "Методичные и точные",
+          "category": "scientific"
+        }
+      ]
+    },
+    {
+      "id": 19,
+      "text": "Как вы реагируете на неудачи?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Анализирую причины и делаю выводы",
+          "category": "analytical"
+        },
+        {
+          "id": "b",
+          "text": "Обсуждаю с близкими",
+          "category": "social"
+        },
+        {
+          "id": "c",
+          "text": "Ищу новый творческий подход",
+          "category": "creative"
+        },
+        {
+          "id": "d",
+          "text": "Корректирую план действий",
+          "category": "managerial"
+        },
+        {
+          "id": "e",
+          "text": "Пробую другой практический метод",
+          "category": "practical"
+        },
+        {
+          "id": "f",
+          "text": "Пересматриваю гипотезу",
+          "category": "research"
+        },
+        {
+          "id": "g",
+          "text": "Ищу техническое улучшение",
+          "category": "technical"
+        },
+        {
+          "id": "h",
+          "text": "Преобразую в новый замысел",
+          "category": "artistic"
+        },
+        {
+          "id": "i",
+          "text": "Оцениваю риски и пробую снова",
+          "category": "entrepreneurial"
+        },
+        {
+          "id": "j",
+          "text": "Провожу контрольный эксперимент",
+          "category": "scientific"
+        }
+      ]
+    },
+    {
+      "id": 20,
+      "text": "Какой формат работы вам ближе?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Индивидуальная аналитика",
+          "category": "analytical"
+        },
+        {
+          "id": "b",
+          "text": "Групповые обсуждения",
+          "category": "social"
+        },
+        {
+          "id": "c",
+          "text": "Свободный график",
+          "category": "creative"
+        },
+        {
+          "id": "d",
+          "text": "Чёткие дедлайны и роли",
+          "category": "managerial"
+        },
+        {
+          "id": "e",
+          "text": "Работа с физическими объектами",
+          "category": "practical"
+        },
+        {
+          "id": "f",
+          "text": "Долгосрочные исследования",
+          "category": "research"
+        },
+        {
+          "id": "g",
+          "text": "Проектная техническая работа",
+          "category": "technical"
+        },
+        {
+          "id": "h",
+          "text": "Выступления и презентации",
+          "category": "artistic"
+        },
+        {
+          "id": "i",
+          "text": "Гибкие стартап-форматы",
+          "category": "entrepreneurial"
+        },
+        {
+          "id": "j",
+          "text": "Строгие научные протоколы",
+          "category": "scientific"
+        }
+      ]
+    },
+    {
+      "id": 21,
+      "text": "Что вы ищете в карьере?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Профессиональную экспертизу",
+          "category": "analytical"
+        },
+        {
+          "id": "b",
+          "text": "Возможность помогать людям",
+          "category": "social"
+        },
+        {
+          "id": "c",
+          "text": "Самовыражение и уникальность",
+          "category": "creative"
+        },
+        {
+          "id": "d",
+          "text": "Статус и ответственность",
+          "category": "managerial"
+        },
+        {
+          "id": "e",
+          "text": "Мастерство и качество",
+          "category": "practical"
+        },
+        {
+          "id": "f",
+          "text": "Новые знания и открытия",
+          "category": "research"
+        },
+        {
+          "id": "g",
+          "text": "Инновации и технологии",
+          "category": "technical"
+        },
+        {
+          "id": "h",
+          "text": "Признание таланта",
+          "category": "artistic"
+        },
+        {
+          "id": "i",
+          "text": "Независимость и масштаб",
+          "category": "entrepreneurial"
+        },
+        {
+          "id": "j",
+          "text": "Вклад в науку",
+          "category": "scientific"
+        }
+      ]
+    },
+    {
+      "id": 22,
+      "text": "Как вы обрабатываете информацию?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Структурирую и систематизирую",
+          "category": "analytical"
+        },
+        {
+          "id": "b",
+          "text": "Обсуждаю и делюсь",
+          "category": "social"
+        },
+        {
+          "id": "c",
+          "text": "Визуализирую и интерпретирую",
+          "category": "creative"
+        },
+        {
+          "id": "d",
+          "text": "Выделяю приоритеты и задачи",
+          "category": "managerial"
+        },
+        {
+          "id": "e",
+          "text": "Пробую на практике",
+          "category": "practical"
+        },
+        {
+          "id": "f",
+          "text": "Сравниваю с теорией",
+          "category": "research"
+        },
+        {
+          "id": "g",
+          "text": "Анализирую технические аспекты",
+          "category": "technical"
+        },
+        {
+          "id": "h",
+          "text": "Ищу эстетику и смысл",
+          "category": "artistic"
+        },
+        {
+          "id": "i",
+          "text": "Оцениваю коммерческий потенциал",
+          "category": "entrepreneurial"
+        },
+        {
+          "id": "j",
+          "text": "Проверяю экспериментально",
+          "category": "scientific"
+        }
+      ]
+    },
+    {
+      "id": 23,
+      "text": "Что для вас важно в проекте?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Точность данных и выводов",
+          "category": "analytical"
+        },
+        {
+          "id": "b",
+          "text": "Польза для людей",
+          "category": "social"
+        },
+        {
+          "id": "c",
+          "text": "Оригинальность идеи",
+          "category": "creative"
+        },
+        {
+          "id": "d",
+          "text": "Чёткость целей и сроков",
+          "category": "managerial"
+        },
+        {
+          "id": "e",
+          "text": "Качество исполнения",
+          "category": "practical"
+        },
+        {
+          "id": "f",
+          "text": "Научная новизна",
+          "category": "research"
+        },
+        {
+          "id": "g",
+          "text": "Техническая реализуемость",
+          "category": "technical"
+        },
+        {
+          "id": "h",
+          "text": "Художественная ценность",
+          "category": "artistic"
+        },
+        {
+          "id": "i",
+          "text": "Рентабельность и рост",
+          "category": "entrepreneurial"
+        },
+        {
+          "id": "j",
+          "text": "Методологическая строгость",
+          "category": "scientific"
+        }
+      ]
+    },
+    {
+      "id": 24,
+      "text": "Как вы строите отношения с коллегами?",
+      "options": [
+        {
+          "id": "a",
+          "text": "На основе профессионализма",
+          "category": "analytical"
+        },
+        {
+          "id": "b",
+          "text": "Через доверие и эмпатию",
+          "category": "social"
+        },
+        {
+          "id": "c",
+          "text": "Через совместное творчество",
+          "category": "creative"
+        },
+        {
+          "id": "d",
+          "text": "Через чёткие роли и ожидания",
+          "category": "managerial"
+        },
+        {
+          "id": "e",
+          "text": "Через совместную работу руками",
+          "category": "practical"
+        },
+        {
+          "id": "f",
+          "text": "Через обмен знаниями",
+          "category": "research"
+        },
+        {
+          "id": "g",
+          "text": "Через техническое сотрудничество",
+          "category": "technical"
+        },
+        {
+          "id": "h",
+          "text": "Через вдохновение и эмоции",
+          "category": "artistic"
+        },
+        {
+          "id": "i",
+          "text": "Через взаимную выгоду",
+          "category": "entrepreneurial"
+        },
+        {
+          "id": "j",
+          "text": "Через научную дискуссию",
+          "category": "scientific"
+        }
+      ]
+    },
+    {
+      "id": 25,
+      "text": "Какой тип обратной связи вам нужен?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Конкретная и основанная на данных",
+          "category": "analytical"
+        },
+        {
+          "id": "b",
+          "text": "Поддерживающая и человечная",
+          "category": "social"
+        },
+        {
+          "id": "c",
+          "text": "Вдохновляющая и образная",
+          "category": "creative"
+        },
+        {
+          "id": "d",
+          "text": "Структурированная и по делу",
+          "category": "managerial"
+        },
+        {
+          "id": "e",
+          "text": "Практичная и применимая",
+          "category": "practical"
+        },
+        {
+          "id": "f",
+          "text": "Глубокая и аргументированная",
+          "category": "research"
+        },
+        {
+          "id": "g",
+          "text": "Технически точная",
+          "category": "technical"
+        },
+        {
+          "id": "h",
+          "text": "Эмоциональная и искренняя",
+          "category": "artistic"
+        },
+        {
+          "id": "i",
+          "text": "Ориентированная на результат",
+          "category": "entrepreneurial"
+        },
+        {
+          "id": "j",
+          "text": "Объективная и воспроизводимая",
+          "category": "scientific"
+        }
+      ]
+    },
+    {
+      "id": 26,
+      "text": "Что вы делаете, когда застряли?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Разбиваю задачу на части",
+          "category": "analytical"
+        },
+        {
+          "id": "b",
+          "text": "Прошу совета у других",
+          "category": "social"
+        },
+        {
+          "id": "c",
+          "text": "Меняю угол зрения",
+          "category": "creative"
+        },
+        {
+          "id": "d",
+          "text": "Пересматриваю приоритеты",
+          "category": "managerial"
+        },
+        {
+          "id": "e",
+          "text": "Пробую другой инструмент",
+          "category": "practical"
+        },
+        {
+          "id": "f",
+          "text": "Изучаю литературу",
+          "category": "research"
+        },
+        {
+          "id": "g",
+          "text": "Ищу техническую документацию",
+          "category": "technical"
+        },
+        {
+          "id": "h",
+          "text": "Даю себе время для вдохновения",
+          "category": "artistic"
+        },
+        {
+          "id": "i",
+          "text": "Ищу альтернативный путь",
+          "category": "entrepreneurial"
+        },
+        {
+          "id": "j",
+          "text": "Повторяю эксперимент",
+          "category": "scientific"
+        }
+      ]
+    },
+    {
+      "id": 27,
+      "text": "Какой темп работы вам комфортен?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Размеренный и вдумчивый",
+          "category": "analytical"
+        },
+        {
+          "id": "b",
+          "text": "Ритмичный, с общением",
+          "category": "social"
+        },
+        {
+          "id": "c",
+          "text": "Импульсивный, по вдохновению",
+          "category": "creative"
+        },
+        {
+          "id": "d",
+          "text": "Динамичный, с дедлайнами",
+          "category": "managerial"
+        },
+        {
+          "id": "e",
+          "text": "Стабильный, с результатом",
+          "category": "practical"
+        },
+        {
+          "id": "f",
+          "text": "Неторопливый, для глубины",
+          "category": "research"
+        },
+        {
+          "id": "g",
+          "text": "Технически выверенный",
+          "category": "technical"
+        },
+        {
+          "id": "h",
+          "text": "Волнообразный, под настроение",
+          "category": "artistic"
+        },
+        {
+          "id": "i",
+          "text": "Быстрый, с фокусом на рост",
+          "category": "entrepreneurial"
+        },
+        {
+          "id": "j",
+          "text": "Методичный, по протоколу",
+          "category": "scientific"
+        }
+      ]
+    },
+    {
+      "id": 28,
+      "text": "Что вы цените в руководителе?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Компетентность и логику",
+          "category": "analytical"
+        },
+        {
+          "id": "b",
+          "text": "Заботу и поддержку",
+          "category": "social"
+        },
+        {
+          "id": "c",
+          "text": "Свободу для творчества",
+          "category": "creative"
+        },
+        {
+          "id": "d",
+          "text": "Ясность целей и делегирование",
+          "category": "managerial"
+        },
+        {
+          "id": "e",
+          "text": "Практический опыт",
+          "category": "practical"
+        },
+        {
+          "id": "f",
+          "text": "Глубину знаний",
+          "category": "research"
+        },
+        {
+          "id": "g",
+          "text": "Техническую экспертизу",
+          "category": "technical"
+        },
+        {
+          "id": "h",
+          "text": "Чувство прекрасного",
+          "category": "artistic"
+        },
+        {
+          "id": "i",
+          "text": "Стратегическое мышление",
+          "category": "entrepreneurial"
+        },
+        {
+          "id": "j",
+          "text": "Научную строгость",
+          "category": "scientific"
+        }
+      ]
+    },
+    {
+      "id": 29,
+      "text": "Как вы относитесь к изменениям?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Анализирую последствия",
+          "category": "analytical"
+        },
+        {
+          "id": "b",
+          "text": "Обсуждаю с командой",
+          "category": "social"
+        },
+        {
+          "id": "c",
+          "text": "Вижу возможность для нового",
+          "category": "creative"
+        },
+        {
+          "id": "d",
+          "text": "Планирую внедрение",
+          "category": "managerial"
+        },
+        {
+          "id": "e",
+          "text": "Пробую на практике",
+          "category": "practical"
+        },
+        {
+          "id": "f",
+          "text": "Изучаю причины и эффекты",
+          "category": "research"
+        },
+        {
+          "id": "g",
+          "text": "Оцениваю техническую сторону",
+          "category": "technical"
+        },
+        {
+          "id": "h",
+          "text": "Ищу эстетику в переменах",
+          "category": "artistic"
+        },
+        {
+          "id": "i",
+          "text": "Вижу бизнес-возможности",
+          "category": "entrepreneurial"
+        },
+        {
+          "id": "j",
+          "text": "Проверяю гипотезы",
+          "category": "scientific"
+        }
+      ]
+    },
+    {
+      "id": 30,
+      "text": "Какой тип обучения вам ближе?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Структурированные курсы",
+          "category": "analytical"
+        },
+        {
+          "id": "b",
+          "text": "Групповые тренинги",
+          "category": "social"
+        },
+        {
+          "id": "c",
+          "text": "Свободное творческое изучение",
+          "category": "creative"
+        },
+        {
+          "id": "d",
+          "text": "Практика управления",
+          "category": "managerial"
+        },
+        {
+          "id": "e",
+          "text": "Обучение через действие",
+          "category": "practical"
+        },
+        {
+          "id": "f",
+          "text": "Академические исследования",
+          "category": "research"
+        },
+        {
+          "id": "g",
+          "text": "Технические воркшопы",
+          "category": "technical"
+        },
+        {
+          "id": "h",
+          "text": "Мастер-классы и перформансы",
+          "category": "artistic"
+        },
+        {
+          "id": "i",
+          "text": "Бизнес-инкубаторы",
+          "category": "entrepreneurial"
+        },
+        {
+          "id": "j",
+          "text": "Научные семинары",
+          "category": "scientific"
+        }
+      ]
+    },
+    {
+      "id": 31,
+      "text": "Что вы делаете для саморазвития?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Читаю аналитику и отчёты",
+          "category": "analytical"
+        },
+        {
+          "id": "b",
+          "text": "Участвую в сообществах",
+          "category": "social"
+        },
+        {
+          "id": "c",
+          "text": "Экспериментирую с идеями",
+          "category": "creative"
+        },
+        {
+          "id": "d",
+          "text": "Развиваю лидерские навыки",
+          "category": "managerial"
+        },
+        {
+          "id": "e",
+          "text": "Осваиваю новые инструменты",
+          "category": "practical"
+        },
+        {
+          "id": "f",
+          "text": "Изучаю научные статьи",
+          "category": "research"
+        },
+        {
+          "id": "g",
+          "text": "Слежу за тех-трендами",
+          "category": "technical"
+        },
+        {
+          "id": "h",
+          "text": "Посещаю выставки и концерты",
+          "category": "artistic"
+        },
+        {
+          "id": "i",
+          "text": "Анализирую кейсы бизнеса",
+          "category": "entrepreneurial"
+        },
+        {
+          "id": "j",
+          "text": "Провожу собственные опыты",
+          "category": "scientific"
+        }
+      ]
+    },
+    {
+      "id": 32,
+      "text": "Как вы измеряете прогресс?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Метриками и показателями",
+          "category": "analytical"
+        },
+        {
+          "id": "b",
+          "text": "Отзывами людей",
+          "category": "social"
+        },
+        {
+          "id": "c",
+          "text": "Новизной и оригинальностью",
+          "category": "creative"
+        },
+        {
+          "id": "d",
+          "text": "Достижением целей",
+          "category": "managerial"
+        },
+        {
+          "id": "e",
+          "text": "Качеством результата",
+          "category": "practical"
+        },
+        {
+          "id": "f",
+          "text": "Глубиной понимания",
+          "category": "research"
+        },
+        {
+          "id": "g",
+          "text": "Техническими характеристиками",
+          "category": "technical"
+        },
+        {
+          "id": "h",
+          "text": "Эмоциональным откликом",
+          "category": "artistic"
+        },
+        {
+          "id": "i",
+          "text": "Финансовыми результатами",
+          "category": "entrepreneurial"
+        },
+        {
+          "id": "j",
+          "text": "Воспроизводимостью результатов",
+          "category": "scientific"
+        }
+      ]
+    },
+    {
+      "id": 33,
+      "text": "Что вас раздражает в работе?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Неточность и хаос в данных",
+          "category": "analytical"
+        },
+        {
+          "id": "b",
+          "text": "Холодность и формальность",
+          "category": "social"
+        },
+        {
+          "id": "c",
+          "text": "Жёсткие рамки и шаблоны",
+          "category": "creative"
+        },
+        {
+          "id": "d",
+          "text": "Неопределённость и бездействие",
+          "category": "managerial"
+        },
+        {
+          "id": "e",
+          "text": "Теория без практики",
+          "category": "practical"
+        },
+        {
+          "id": "f",
+          "text": "Поверхностность суждений",
+          "category": "research"
+        },
+        {
+          "id": "g",
+          "text": "Устаревшие технологии",
+          "category": "technical"
+        },
+        {
+          "id": "h",
+          "text": "Отсутствие эстетики",
+          "category": "artistic"
+        },
+        {
+          "id": "i",
+          "text": "Бюрократия и медлительность",
+          "category": "entrepreneurial"
+        },
+        {
+          "id": "j",
+          "text": "Ненаучные методы",
+          "category": "scientific"
+        }
+      ]
+    },
+    {
+      "id": 34,
+      "text": "Как вы планируете день?",
+      "options": [
+        {
+          "id": "a",
+          "text": "По приоритетам и дедлайнам",
+          "category": "analytical"
+        },
+        {
+          "id": "b",
+          "text": "С учётом встреч и общения",
+          "category": "social"
+        },
+        {
+          "id": "c",
+          "text": "Оставляю место для спонтанности",
+          "category": "creative"
+        },
+        {
+          "id": "d",
+          "text": "Через список задач и контроль",
+          "category": "managerial"
+        },
+        {
+          "id": "e",
+          "text": "По необходимости и доступности",
+          "category": "practical"
+        },
+        {
+          "id": "f",
+          "text": "Под исследовательские циклы",
+          "category": "research"
+        },
+        {
+          "id": "g",
+          "text": "С учётом технических этапов",
+          "category": "technical"
+        },
+        {
+          "id": "h",
+          "text": "По вдохновению и настроению",
+          "category": "artistic"
+        },
+        {
+          "id": "i",
+          "text": "С фокусом на ключевые цели",
+          "category": "entrepreneurial"
+        },
+        {
+          "id": "j",
+          "text": "По научному расписанию",
+          "category": "scientific"
+        }
+      ]
+    },
+    {
+      "id": 35,
+      "text": "Что для вас важно в продукте?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Достоверность и надёжность",
+          "category": "analytical"
+        },
+        {
+          "id": "b",
+          "text": "Польза и доступность",
+          "category": "social"
+        },
+        {
+          "id": "c",
+          "text": "Уникальность и красота",
+          "category": "creative"
+        },
+        {
+          "id": "d",
+          "text": "Эффективность и масштабируемость",
+          "category": "managerial"
+        },
+        {
+          "id": "e",
+          "text": "Качество и долговечность",
+          "category": "practical"
+        },
+        {
+          "id": "f",
+          "text": "Новизна и обоснованность",
+          "category": "research"
+        },
+        {
+          "id": "g",
+          "text": "Функциональность и инновации",
+          "category": "technical"
+        },
+        {
+          "id": "h",
+          "text": "Выразительность и смысл",
+          "category": "artistic"
+        },
+        {
+          "id": "i",
+          "text": "Конкурентоспособность",
+          "category": "entrepreneurial"
+        },
+        {
+          "id": "j",
+          "text": "Методологическая чистота",
+          "category": "scientific"
+        }
+      ]
+    },
+    {
+      "id": 36,
+      "text": "Как вы работаете с критикой?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Анализирую аргументы",
+          "category": "analytical"
+        },
+        {
+          "id": "b",
+          "text": "Прислушиваюсь к мнению",
+          "category": "social"
+        },
+        {
+          "id": "c",
+          "text": "Фильтрую через своё видение",
+          "category": "creative"
+        },
+        {
+          "id": "d",
+          "text": "Использую для улучшения",
+          "category": "managerial"
+        },
+        {
+          "id": "e",
+          "text": "Проверяю на практике",
+          "category": "practical"
+        },
+        {
+          "id": "f",
+          "text": "Сравниваю с данными",
+          "category": "research"
+        },
+        {
+          "id": "g",
+          "text": "Оцениваю техническую обоснованность",
+          "category": "technical"
+        },
+        {
+          "id": "h",
+          "text": "Преобразую в новый замысел",
+          "category": "artistic"
+        },
+        {
+          "id": "i",
+          "text": "Оцениваю риски и выгоду",
+          "category": "entrepreneurial"
+        },
+        {
+          "id": "j",
+          "text": "Требую воспроизводимости",
+          "category": "scientific"
+        }
+      ]
+    },
+    {
+      "id": 37,
+      "text": "Какой тип задач вы избегаете?",
+      "options": [
+        {
+          "id": "a",
+          "text": "С неясными данными",
+          "category": "analytical"
+        },
+        {
+          "id": "b",
+          "text": "Без человеческого контакта",
+          "category": "social"
+        },
+        {
+          "id": "c",
+          "text": "С жёсткими инструкциями",
+          "category": "creative"
+        },
+        {
+          "id": "d",
+          "text": "Без чёткой ответственности",
+          "category": "managerial"
+        },
+        {
+          "id": "e",
+          "text": "Чисто теоретические",
+          "category": "practical"
+        },
+        {
+          "id": "f",
+          "text": "С поверхностным подходом",
+          "category": "research"
+        },
+        {
+          "id": "g",
+          "text": "С устаревшим стеком",
+          "category": "technical"
+        },
+        {
+          "id": "h",
+          "text": "Без творческой свободы",
+          "category": "artistic"
+        },
+        {
+          "id": "i",
+          "text": "С низким потенциалом роста",
+          "category": "entrepreneurial"
+        },
+        {
+          "id": "j",
+          "text": "Без научной строгости",
+          "category": "scientific"
+        }
+      ]
+    },
+    {
+      "id": 38,
+      "text": "Что вы ищете в коллеге?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Профессионализм и точность",
+          "category": "analytical"
+        },
+        {
+          "id": "b",
+          "text": "Открытость и эмпатию",
+          "category": "social"
+        },
+        {
+          "id": "c",
+          "text": "Оригинальность мышления",
+          "category": "creative"
+        },
+        {
+          "id": "d",
+          "text": "Ответственность и инициативу",
+          "category": "managerial"
+        },
+        {
+          "id": "e",
+          "text": "Практические навыки",
+          "category": "practical"
+        },
+        {
+          "id": "f",
+          "text": "Глубину знаний",
+          "category": "research"
+        },
+        {
+          "id": "g",
+          "text": "Техническую компетентность",
+          "category": "technical"
+        },
+        {
+          "id": "h",
+          "text": "Талант и выразительность",
+          "category": "artistic"
+        },
+        {
+          "id": "i",
+          "text": "Предприимчивость и драйв",
+          "category": "entrepreneurial"
+        },
+        {
+          "id": "j",
+          "text": "Методичность и объективность",
+          "category": "scientific"
+        }
+      ]
+    },
+    {
+      "id": 39,
+      "text": "Как вы относитесь к многозадачности?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Предпочитаю фокус на одной задаче",
+          "category": "analytical"
+        },
+        {
+          "id": "b",
+          "text": "Легко переключаюсь между людьми",
+          "category": "social"
+        },
+        {
+          "id": "c",
+          "text": "Работаю в потоке идей",
+          "category": "creative"
+        },
+        {
+          "id": "d",
+          "text": "Умею приоритизировать потоки",
+          "category": "managerial"
+        },
+        {
+          "id": "e",
+          "text": "Делаю то, что нужно сейчас",
+          "category": "practical"
+        },
+        {
+          "id": "f",
+          "text": "Глубокая работа важнее",
+          "category": "research"
+        },
+        {
+          "id": "g",
+          "text": "Автоматизирую рутину",
+          "category": "technical"
+        },
+        {
+          "id": "h",
+          "text": "Следую за вдохновением",
+          "category": "artistic"
+        },
+        {
+          "id": "i",
+          "text": "Балансирую между проектами",
+          "category": "entrepreneurial"
+        },
+        {
+          "id": "j",
+          "text": "Концентрируюсь на эксперименте",
+          "category": "scientific"
+        }
+      ]
+    },
+    {
+      "id": 40,
+      "text": "Что для вас значит «качество»?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Точность и воспроизводимость",
+          "category": "analytical"
+        },
+        {
+          "id": "b",
+          "text": "Удовлетворённость людей",
+          "category": "social"
+        },
+        {
+          "id": "c",
+          "text": "Оригинальность и выразительность",
+          "category": "creative"
+        },
+        {
+          "id": "d",
+          "text": "Соответствие целям и срокам",
+          "category": "managerial"
+        },
+        {
+          "id": "e",
+          "text": "Надёжность и функциональность",
+          "category": "practical"
+        },
+        {
+          "id": "f",
+          "text": "Научная обоснованность",
+          "category": "research"
+        },
+        {
+          "id": "g",
+          "text": "Техническое совершенство",
+          "category": "technical"
+        },
+        {
+          "id": "h",
+          "text": "Эстетическая целостность",
+          "category": "artistic"
+        },
+        {
+          "id": "i",
+          "text": "Ценность для рынка",
+          "category": "entrepreneurial"
+        },
+        {
+          "id": "j",
+          "text": "Методологическая строгость",
+          "category": "scientific"
+        }
+      ]
+    },
+    {
+      "id": 41,
+      "text": "Как вы выбираете следующий шаг?",
+      "options": [
+        {
+          "id": "a",
+          "text": "На основе анализа данных",
+          "category": "analytical"
+        },
+        {
+          "id": "b",
+          "text": "Советуясь с командой",
+          "category": "social"
+        },
+        {
+          "id": "c",
+          "text": "Доверяя интуиции",
+          "category": "creative"
+        },
+        {
+          "id": "d",
+          "text": "Оценивая приоритеты",
+          "category": "managerial"
+        },
+        {
+          "id": "e",
+          "text": "Пробуя на практике",
+          "category": "practical"
+        },
+        {
+          "id": "f",
+          "text": "Изучая литературу",
+          "category": "research"
+        },
+        {
+          "id": "g",
+          "text": "Оценивая техническую реализуемость",
+          "category": "technical"
+        },
+        {
+          "id": "h",
+          "text": "Следуя вдохновению",
+          "category": "artistic"
+        },
+        {
+          "id": "i",
+          "text": "Оценивая риски и выгоду",
+          "category": "entrepreneurial"
+        },
+        {
+          "id": "j",
+          "text": "Проводя пилотный тест",
+          "category": "scientific"
+        }
+      ]
+    },
+    {
+      "id": 42,
+      "text": "Что вас вдохновляет в других?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Логика и глубина анализа",
+          "category": "analytical"
+        },
+        {
+          "id": "b",
+          "text": "Доброта и поддержка",
+          "category": "social"
+        },
+        {
+          "id": "c",
+          "text": "Смелость идей",
+          "category": "creative"
+        },
+        {
+          "id": "d",
+          "text": "Лидерские качества",
+          "category": "managerial"
+        },
+        {
+          "id": "e",
+          "text": "Мастерство рук",
+          "category": "practical"
+        },
+        {
+          "id": "f",
+          "text": "Научная страсть",
+          "category": "research"
+        },
+        {
+          "id": "g",
+          "text": "Техническая изобретательность",
+          "category": "technical"
+        },
+        {
+          "id": "h",
+          "text": "Художественный талант",
+          "category": "artistic"
+        },
+        {
+          "id": "i",
+          "text": "Предпринимательский дух",
+          "category": "entrepreneurial"
+        },
+        {
+          "id": "j",
+          "text": "Методичность и точность",
+          "category": "scientific"
+        }
+      ]
+    },
+    {
+      "id": 43,
+      "text": "Как вы относитесь к рискам?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Оцениваю вероятность и последствия",
+          "category": "analytical"
+        },
+        {
+          "id": "b",
+          "text": "Обсуждаю с близкими",
+          "category": "social"
+        },
+        {
+          "id": "c",
+          "text": "Риск — часть творчества",
+          "category": "creative"
+        },
+        {
+          "id": "d",
+          "text": "Управляю через планирование",
+          "category": "managerial"
+        },
+        {
+          "id": "e",
+          "text": "Пробую осторожно",
+          "category": "practical"
+        },
+        {
+          "id": "f",
+          "text": "Изучаю перед действием",
+          "category": "research"
+        },
+        {
+          "id": "g",
+          "text": "Тестирую в безопасной среде",
+          "category": "technical"
+        },
+        {
+          "id": "h",
+          "text": "Риск ради выразительности",
+          "category": "artistic"
+        },
+        {
+          "id": "i",
+          "text": "Риск — возможность роста",
+          "category": "entrepreneurial"
+        },
+        {
+          "id": "j",
+          "text": "Контролируемый эксперимент",
+          "category": "scientific"
+        }
+      ]
+    },
+    {
+      "id": 44,
+      "text": "Что вы делаете для повышения эффективности?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Оптимизирую процессы анализа",
+          "category": "analytical"
+        },
+        {
+          "id": "b",
+          "text": "Улучшаю коммуникацию",
+          "category": "social"
+        },
+        {
+          "id": "c",
+          "text": "Ищу новые творческие методы",
+          "category": "creative"
+        },
+        {
+          "id": "d",
+          "text": "Внедряю системы управления",
+          "category": "managerial"
+        },
+        {
+          "id": "e",
+          "text": "Автоматизирую ручной труд",
+          "category": "practical"
+        },
+        {
+          "id": "f",
+          "text": "Углубляю методологию",
+          "category": "research"
+        },
+        {
+          "id": "g",
+          "text": "Использую современные инструменты",
+          "category": "technical"
+        },
+        {
+          "id": "h",
+          "text": "Освобождаю время для творчества",
+          "category": "artistic"
+        },
+        {
+          "id": "i",
+          "text": "Масштабирую успешные практики",
+          "category": "entrepreneurial"
+        },
+        {
+          "id": "j",
+          "text": "Стандартизирую протоколы",
+          "category": "scientific"
+        }
+      ]
+    },
+    {
+      "id": 45,
+      "text": "Какой тип проекта вас привлекает?",
+      "options": [
+        {
+          "id": "a",
+          "text": "С чёткими метриками успеха",
+          "category": "analytical"
+        },
+        {
+          "id": "b",
+          "text": "С социальной миссией",
+          "category": "social"
+        },
+        {
+          "id": "c",
+          "text": "С пространством для фантазии",
+          "category": "creative"
+        },
+        {
+          "id": "d",
+          "text": "С ясной структурой и ролями",
+          "category": "managerial"
+        },
+        {
+          "id": "e",
+          "text": "С осязаемым результатом",
+          "category": "practical"
+        },
+        {
+          "id": "f",
+          "text": "С научной гипотезой",
+          "category": "research"
+        },
+        {
+          "id": "g",
+          "text": "С техническим вызовом",
+          "category": "technical"
+        },
+        {
+          "id": "h",
+          "text": "С художественной свободой",
+          "category": "artistic"
+        },
+        {
+          "id": "i",
+          "text": "С потенциалом масштабирования",
+          "category": "entrepreneurial"
+        },
+        {
+          "id": "j",
+          "text": "С воспроизводимым дизайном",
+          "category": "scientific"
+        }
+      ]
+    },
+    {
+      "id": 46,
+      "text": "Как вы относитесь к стандартам?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Следую, если они обоснованы",
+          "category": "analytical"
+        },
+        {
+          "id": "b",
+          "text": "Гибко адаптирую под людей",
+          "category": "social"
+        },
+        {
+          "id": "c",
+          "text": "Нарушаю ради креатива",
+          "category": "creative"
+        },
+        {
+          "id": "d",
+          "text": "Использую как основу управления",
+          "category": "managerial"
+        },
+        {
+          "id": "e",
+          "text": "Применяю, если это работает",
+          "category": "practical"
+        },
+        {
+          "id": "f",
+          "text": "Пересматриваю при новых данных",
+          "category": "research"
+        },
+        {
+          "id": "g",
+          "text": "Следую техническим регламентам",
+          "category": "technical"
+        },
+        {
+          "id": "h",
+          "text": "Игнорирую, если мешают искусству",
+          "category": "artistic"
+        },
+        {
+          "id": "i",
+          "text": "Использую как конкурентное преимущество",
+          "category": "entrepreneurial"
+        },
+        {
+          "id": "j",
+          "text": "Требую научного обоснования",
+          "category": "scientific"
+        }
+      ]
+    },
+    {
+      "id": 47,
+      "text": "Что вы цените в процессе работы?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Ясность и последовательность",
+          "category": "analytical"
+        },
+        {
+          "id": "b",
+          "text": "Атмосферу доверия",
+          "category": "social"
+        },
+        {
+          "id": "c",
+          "text": "Возможность импровизации",
+          "category": "creative"
+        },
+        {
+          "id": "d",
+          "text": "Чёткость и контроль",
+          "category": "managerial"
+        },
+        {
+          "id": "e",
+          "text": "Практическую применимость",
+          "category": "practical"
+        },
+        {
+          "id": "f",
+          "text": "Глубину погружения",
+          "category": "research"
+        },
+        {
+          "id": "g",
+          "text": "Техническую точность",
+          "category": "technical"
+        },
+        {
+          "id": "h",
+          "text": "Эмоциональную вовлечённость",
+          "category": "artistic"
+        },
+        {
+          "id": "i",
+          "text": "Динамику и результат",
+          "category": "entrepreneurial"
+        },
+        {
+          "id": "j",
+          "text": "Методологическую чистоту",
+          "category": "scientific"
+        }
+      ]
+    },
+    {
+      "id": 48,
+      "text": "Как вы работаете с дедлайнами?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Планирую с запасом времени",
+          "category": "analytical"
+        },
+        {
+          "id": "b",
+          "text": "Координирую с командой",
+          "category": "social"
+        },
+        {
+          "id": "c",
+          "text": "Работаю в последнюю очередь",
+          "category": "creative"
+        },
+        {
+          "id": "d",
+          "text": "Контролирую этапы выполнения",
+          "category": "managerial"
+        },
+        {
+          "id": "e",
+          "text": "Делаю по мере возможности",
+          "category": "practical"
+        },
+        {
+          "id": "f",
+          "text": "Гибко корректирую график",
+          "category": "research"
+        },
+        {
+          "id": "g",
+          "text": "Оптимизирую технические этапы",
+          "category": "technical"
+        },
+        {
+          "id": "h",
+          "text": "Подстраиваю под вдохновение",
+          "category": "artistic"
+        },
+        {
+          "id": "i",
+          "text": "Фокусируюсь на ключевых вехах",
+          "category": "entrepreneurial"
+        },
+        {
+          "id": "j",
+          "text": "Следую научному расписанию",
+          "category": "scientific"
+        }
+      ]
+    },
+    {
+      "id": 49,
+      "text": "Что для вас важно в обучении других?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Структура и логика изложения",
+          "category": "analytical"
+        },
+        {
+          "id": "b",
+          "text": "Поддержка и обратная связь",
+          "category": "social"
+        },
+        {
+          "id": "c",
+          "text": "Простор для творчества ученика",
+          "category": "creative"
+        },
+        {
+          "id": "d",
+          "text": "Чёткость целей и критериев",
+          "category": "managerial"
+        },
+        {
+          "id": "e",
+          "text": "Практические упражнения",
+          "category": "practical"
+        },
+        {
+          "id": "f",
+          "text": "Глубина понимания темы",
+          "category": "research"
+        },
+        {
+          "id": "g",
+          "text": "Техническая точность",
+          "category": "technical"
+        },
+        {
+          "id": "h",
+          "text": "Вдохновение и пример",
+          "category": "artistic"
+        },
+        {
+          "id": "i",
+          "text": "Применимость в бизнесе",
+          "category": "entrepreneurial"
+        },
+        {
+          "id": "j",
+          "text": "Научная достоверность",
+          "category": "scientific"
+        }
+      ]
+    },
+    {
+      "id": 50,
+      "text": "Как вы относитесь к инновациям?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Оцениваю на основе данных",
+          "category": "analytical"
+        },
+        {
+          "id": "b",
+          "text": "Обсуждаю влияние на людей",
+          "category": "social"
+        },
+        {
+          "id": "c",
+          "text": "Вижу поле для творчества",
+          "category": "creative"
+        },
+        {
+          "id": "d",
+          "text": "Планирую внедрение",
+          "category": "managerial"
+        },
+        {
+          "id": "e",
+          "text": "Пробую на практике",
+          "category": "practical"
+        },
+        {
+          "id": "f",
+          "text": "Изучаю теоретическую базу",
+          "category": "research"
+        },
+        {
+          "id": "g",
+          "text": "Оцениваю техническую реализуемость",
+          "category": "technical"
+        },
+        {
+          "id": "h",
+          "text": "Ищу эстетику в новом",
+          "category": "artistic"
+        },
+        {
+          "id": "i",
+          "text": "Вижу бизнес-потенциал",
+          "category": "entrepreneurial"
+        },
+        {
+          "id": "j",
+          "text": "Требую экспериментального подтверждения",
+          "category": "scientific"
+        }
+      ]
+    },
+    {
+      "id": 51,
+      "text": "Что вы делаете, когда проект завершен?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Анализирую результаты и метрики",
+          "category": "analytical"
+        },
+        {
+          "id": "b",
+          "text": "Благодарю команду и делюсь успехом",
+          "category": "social"
+        },
+        {
+          "id": "c",
+          "text": "Ищу новые творческие идеи",
+          "category": "creative"
+        },
+        {
+          "id": "d",
+          "text": "Подвожу итоги и планирую дальше",
+          "category": "managerial"
+        },
+        {
+          "id": "e",
+          "text": "Оцениваю качество исполнения",
+          "category": "practical"
+        },
+        {
+          "id": "f",
+          "text": "Формулирую новые гипотезы",
+          "category": "research"
+        },
+        {
+          "id": "g",
+          "text": "Документирую технические решения",
+          "category": "technical"
+        },
+        {
+          "id": "h",
+          "text": "Готовлю презентацию или выставку",
+          "category": "artistic"
+        },
+        {
+          "id": "i",
+          "text": "Ищу возможности масштабирования",
+          "category": "entrepreneurial"
+        },
+        {
+          "id": "j",
+          "text": "Публикую результаты исследования",
+          "category": "scientific"
+        }
+      ]
+    },
+    {
+      "id": 52,
+      "text": "Как вы выбираете инструменты для работы?",
+      "options": [
+        {
+          "id": "a",
+          "text": "На основе сравнения характеристик",
+          "category": "analytical"
+        },
+        {
+          "id": "b",
+          "text": "По рекомендациям коллег",
+          "category": "social"
+        },
+        {
+          "id": "c",
+          "text": "По удобству и гибкости",
+          "category": "creative"
+        },
+        {
+          "id": "d",
+          "text": "По интеграции в процессы",
+          "category": "managerial"
+        },
+        {
+          "id": "e",
+          "text": "По надёжности и практичности",
+          "category": "practical"
+        },
+        {
+          "id": "f",
+          "text": "По научной обоснованности",
+          "category": "research"
+        },
+        {
+          "id": "g",
+          "text": "По технической совместимости",
+          "category": "technical"
+        },
+        {
+          "id": "h",
+          "text": "По эстетике и выразительности",
+          "category": "artistic"
+        },
+        {
+          "id": "i",
+          "text": "По окупаемости и эффективности",
+          "category": "entrepreneurial"
+        },
+        {
+          "id": "j",
+          "text": "По воспроизводимости результатов",
+          "category": "scientific"
+        }
+      ]
+    },
+    {
+      "id": 53,
+      "text": "Что вас мотивирует в долгосрочной перспективе?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Профессиональный рост и экспертиза",
+          "category": "analytical"
+        },
+        {
+          "id": "b",
+          "text": "Влияние на жизни людей",
+          "category": "social"
+        },
+        {
+          "id": "c",
+          "text": "Реализация творческого потенциала",
+          "category": "creative"
+        },
+        {
+          "id": "d",
+          "text": "Карьерная траектория и статус",
+          "category": "managerial"
+        },
+        {
+          "id": "e",
+          "text": "Мастерство и признание ремесла",
+          "category": "practical"
+        },
+        {
+          "id": "f",
+          "text": "Вклад в науку и знания",
+          "category": "research"
+        },
+        {
+          "id": "g",
+          "text": "Технологический прогресс",
+          "category": "technical"
+        },
+        {
+          "id": "h",
+          "text": "Культурное наследие",
+          "category": "artistic"
+        },
+        {
+          "id": "i",
+          "text": "Финансовая независимость и масштаб",
+          "category": "entrepreneurial"
+        },
+        {
+          "id": "j",
+          "text": "Научные открытия и публикации",
+          "category": "scientific"
+        }
+      ]
+    },
+    {
+      "id": 54,
+      "text": "Как вы относитесь к конкуренции?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Анализирую сильные и слабые стороны",
+          "category": "analytical"
+        },
+        {
+          "id": "b",
+          "text": "Предпочитаю сотрудничество",
+          "category": "social"
+        },
+        {
+          "id": "c",
+          "text": "Конкурирую через уникальность",
+          "category": "creative"
+        },
+        {
+          "id": "d",
+          "text": "Использую как стимул к росту",
+          "category": "managerial"
+        },
+        {
+          "id": "e",
+          "text": "Фокусируюсь на своём качестве",
+          "category": "practical"
+        },
+        {
+          "id": "f",
+          "text": "Ищу нишу для исследования",
+          "category": "research"
+        },
+        {
+          "id": "g",
+          "text": "Развиваю техническое преимущество",
+          "category": "technical"
+        },
+        {
+          "id": "h",
+          "text": "Выражаю индивидуальность",
+          "category": "artistic"
+        },
+        {
+          "id": "i",
+          "text": "Вижу возможность для роста",
+          "category": "entrepreneurial"
+        },
+        {
+          "id": "j",
+          "text": "Сравниваю методологии",
+          "category": "scientific"
+        }
+      ]
+    },
+    {
+      "id": 55,
+      "text": "Что вы ищете в рабочем месте?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Тишину и возможность концентрации",
+          "category": "analytical"
+        },
+        {
+          "id": "b",
+          "text": "Комфорт для общения",
+          "category": "social"
+        },
+        {
+          "id": "c",
+          "text": "Вдохновляющую атмосферу",
+          "category": "creative"
+        },
+        {
+          "id": "d",
+          "text": "Организованность и доступ к ресурсам",
+          "category": "managerial"
+        },
+        {
+          "id": "e",
+          "text": "Практичность и функциональность",
+          "category": "practical"
+        },
+        {
+          "id": "f",
+          "text": "Доступ к литературе и оборудованию",
+          "category": "research"
+        },
+        {
+          "id": "g",
+          "text": "Техническую оснащённость",
+          "category": "technical"
+        },
+        {
+          "id": "h",
+          "text": "Эстетику и творческую среду",
+          "category": "artistic"
+        },
+        {
+          "id": "i",
+          "text": "Гибкость и возможности для роста",
+          "category": "entrepreneurial"
+        },
+        {
+          "id": "j",
+          "text": "Научную инфраструктуру",
+          "category": "scientific"
+        }
+      ]
+    },
+    {
+      "id": 56,
+      "text": "Как вы работаете с большими объёмами информации?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Структурирую и фильтрую",
+          "category": "analytical"
+        },
+        {
+          "id": "b",
+          "text": "Обсуждаю ключевые моменты",
+          "category": "social"
+        },
+        {
+          "id": "c",
+          "text": "Выделяю яркие идеи",
+          "category": "creative"
+        },
+        {
+          "id": "d",
+          "text": "Делегирую и приоритизирую",
+          "category": "managerial"
+        },
+        {
+          "id": "e",
+          "text": "Отбираю практичное",
+          "category": "practical"
+        },
+        {
+          "id": "f",
+          "text": "Углубляюсь в источники",
+          "category": "research"
+        },
+        {
+          "id": "g",
+          "text": "Автоматизирую обработку",
+          "category": "technical"
+        },
+        {
+          "id": "h",
+          "text": "Ищу вдохновляющие фрагменты",
+          "category": "artistic"
+        },
+        {
+          "id": "i",
+          "text": "Фокусируюсь на коммерчески ценном",
+          "category": "entrepreneurial"
+        },
+        {
+          "id": "j",
+          "text": "Систематизирую по методологии",
+          "category": "scientific"
+        }
+      ]
+    },
+    {
+      "id": 57,
+      "text": "Что для вас значит «профессионализм»?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Точность и глубина анализа",
+          "category": "analytical"
+        },
+        {
+          "id": "b",
+          "text": "Эмпатия и этика общения",
+          "category": "social"
+        },
+        {
+          "id": "c",
+          "text": "Уникальность и мастерство",
+          "category": "creative"
+        },
+        {
+          "id": "d",
+          "text": "Ответственность и результат",
+          "category": "managerial"
+        },
+        {
+          "id": "e",
+          "text": "Качество и надёжность",
+          "category": "practical"
+        },
+        {
+          "id": "f",
+          "text": "Научная строгость",
+          "category": "research"
+        },
+        {
+          "id": "g",
+          "text": "Техническая компетентность",
+          "category": "technical"
+        },
+        {
+          "id": "h",
+          "text": "Художественная целостность",
+          "category": "artistic"
+        },
+        {
+          "id": "i",
+          "text": "Эффективность и инновации",
+          "category": "entrepreneurial"
+        },
+        {
+          "id": "j",
+          "text": "Воспроизводимость и объективность",
+          "category": "scientific"
+        }
+      ]
+    },
+    {
+      "id": 58,
+      "text": "Как вы относитесь к ошибкам?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Анализирую и систематизирую причины",
+          "category": "analytical"
+        },
+        {
+          "id": "b",
+          "text": "Поддерживаю и учусь вместе",
+          "category": "social"
+        },
+        {
+          "id": "c",
+          "text": "Вижу в них источник идей",
+          "category": "creative"
+        },
+        {
+          "id": "d",
+          "text": "Корректирую процессы",
+          "category": "managerial"
+        },
+        {
+          "id": "e",
+          "text": "Исправляю на практике",
+          "category": "practical"
+        },
+        {
+          "id": "f",
+          "text": "Пересматриваю гипотезы",
+          "category": "research"
+        },
+        {
+          "id": "g",
+          "text": "Оптимизирую технические решения",
+          "category": "technical"
+        },
+        {
+          "id": "h",
+          "text": "Преобразую в новый замысел",
+          "category": "artistic"
+        },
+        {
+          "id": "i",
+          "text": "Оцениваю как урок для роста",
+          "category": "entrepreneurial"
+        },
+        {
+          "id": "j",
+          "text": "Документирую для будущих экспериментов",
+          "category": "scientific"
+        }
+      ]
+    },
+    {
+      "id": 59,
+      "text": "Что вы цените в коммуникации?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Ясность и аргументированность",
+          "category": "analytical"
+        },
+        {
+          "id": "b",
+          "text": "Искренность и эмпатию",
+          "category": "social"
+        },
+        {
+          "id": "c",
+          "text": "Образность и выразительность",
+          "category": "creative"
+        },
+        {
+          "id": "d",
+          "text": "Чёткость и результативность",
+          "category": "managerial"
+        },
+        {
+          "id": "e",
+          "text": "Практичность и конкретику",
+          "category": "practical"
+        },
+        {
+          "id": "f",
+          "text": "Глубину и обоснованность",
+          "category": "research"
+        },
+        {
+          "id": "g",
+          "text": "Техническую точность",
+          "category": "technical"
+        },
+        {
+          "id": "h",
+          "text": "Эмоциональность и вдохновение",
+          "category": "artistic"
+        },
+        {
+          "id": "i",
+          "text": "Фокус на цели и выгоде",
+          "category": "entrepreneurial"
+        },
+        {
+          "id": "j",
+          "text": "Объективность и воспроизводимость",
+          "category": "scientific"
+        }
+      ]
+    },
+    {
+      "id": 60,
+      "text": "Как вы определяете приоритеты?",
+      "options": [
+        {
+          "id": "a",
+          "text": "На основе данных и анализа",
+          "category": "analytical"
+        },
+        {
+          "id": "b",
+          "text": "Учитывая потребности людей",
+          "category": "social"
+        },
+        {
+          "id": "c",
+          "text": "По степени вдохновения",
+          "category": "creative"
+        },
+        {
+          "id": "d",
+          "text": "Через матрицу важности/срочности",
+          "category": "managerial"
+        },
+        {
+          "id": "e",
+          "text": "По практической значимости",
+          "category": "practical"
+        },
+        {
+          "id": "f",
+          "text": "По научной ценности",
+          "category": "research"
+        },
+        {
+          "id": "g",
+          "text": "По технической критичности",
+          "category": "technical"
+        },
+        {
+          "id": "h",
+          "text": "По художественной значимости",
+          "category": "artistic"
+        },
+        {
+          "id": "i",
+          "text": "По потенциалу роста и прибыли",
+          "category": "entrepreneurial"
+        },
+        {
+          "id": "j",
+          "text": "По методологической строгости",
+          "category": "scientific"
+        }
+      ]
+    },
+    {
+      "id": 61,
+      "text": "Что вы делаете для поддержания баланса?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Планирую время на отдых",
+          "category": "analytical"
+        },
+        {
+          "id": "b",
+          "text": "Провожу время с близкими",
+          "category": "social"
+        },
+        {
+          "id": "c",
+          "text": "Занимаюсь хобби и творчеством",
+          "category": "creative"
+        },
+        {
+          "id": "d",
+          "text": "Делегирую и отпускаю контроль",
+          "category": "managerial"
+        },
+        {
+          "id": "e",
+          "text": "Переключаюсь на физический труд",
+          "category": "practical"
+        },
+        {
+          "id": "f",
+          "text": "Читаю для души",
+          "category": "research"
+        },
+        {
+          "id": "g",
+          "text": "Осваиваю новые технологии",
+          "category": "technical"
+        },
+        {
+          "id": "h",
+          "text": "Посещаю культурные мероприятия",
+          "category": "artistic"
+        },
+        {
+          "id": "i",
+          "text": "Инвестирую в себя и отдых",
+          "category": "entrepreneurial"
+        },
+        {
+          "id": "j",
+          "text": "Провожу личные наблюдения",
+          "category": "scientific"
+        }
+      ]
+    },
+    {
+      "id": 62,
+      "text": "Как вы относитесь к рутинным задачам?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Автоматизирую или систематизирую",
+          "category": "analytical"
+        },
+        {
+          "id": "b",
+          "text": "Выполняю в команде для поддержки",
+          "category": "social"
+        },
+        {
+          "id": "c",
+          "text": "Добавляю творческий элемент",
+          "category": "creative"
+        },
+        {
+          "id": "d",
+          "text": "Включаю в систему управления",
+          "category": "managerial"
+        },
+        {
+          "id": "e",
+          "text": "Выполняю как часть мастерства",
+          "category": "practical"
+        },
+        {
+          "id": "f",
+          "text": "Использую для сбора данных",
+          "category": "research"
+        },
+        {
+          "id": "g",
+          "text": "Автоматизирую технически",
+          "category": "technical"
+        },
+        {
+          "id": "h",
+          "text": "Игнорирую, если мешают творчеству",
+          "category": "artistic"
+        },
+        {
+          "id": "i",
+          "text": "Оптимизирую для эффективности",
+          "category": "entrepreneurial"
+        },
+        {
+          "id": "j",
+          "text": "Стандартизирую для воспроизводимости",
+          "category": "scientific"
+        }
+      ]
+    },
+    {
+      "id": 63,
+      "text": "Что для вас значит «успешный день»?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Решил сложную аналитическую задачу",
+          "category": "analytical"
+        },
+        {
+          "id": "b",
+          "text": "Помог кому-то или получил благодарность",
+          "category": "social"
+        },
+        {
+          "id": "c",
+          "text": "Создал что-то новое и интересное",
+          "category": "creative"
+        },
+        {
+          "id": "d",
+          "text": "Достиг поставленных целей",
+          "category": "managerial"
+        },
+        {
+          "id": "e",
+          "text": "Сделал качественную практическую работу",
+          "category": "practical"
+        },
+        {
+          "id": "f",
+          "text": "Сделал шаг к новому знанию",
+          "category": "research"
+        },
+        {
+          "id": "g",
+          "text": "Реализовал техническое решение",
+          "category": "technical"
+        },
+        {
+          "id": "h",
+          "text": "Выразил себя через искусство",
+          "category": "artistic"
+        },
+        {
+          "id": "i",
+          "text": "Сделал шаг к бизнес-цели",
+          "category": "entrepreneurial"
+        },
+        {
+          "id": "j",
+          "text": "Получил воспроизводимый результат",
+          "category": "scientific"
+        }
+      ]
+    },
+    {
+      "id": 64,
+      "text": "Как вы работаете с неопределённостью?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Собираю больше данных для анализа",
+          "category": "analytical"
+        },
+        {
+          "id": "b",
+          "text": "Обсуждаю с командой варианты",
+          "category": "social"
+        },
+        {
+          "id": "c",
+          "text": "Импровизирую и пробую новое",
+          "category": "creative"
+        },
+        {
+          "id": "d",
+          "text": "Создаю план с вариантами действий",
+          "category": "managerial"
+        },
+        {
+          "id": "e",
+          "text": "Действую по ситуации",
+          "category": "practical"
+        },
+        {
+          "id": "f",
+          "text": "Формулирую гипотезы для проверки",
+          "category": "research"
+        },
+        {
+          "id": "g",
+          "text": "Тестирую прототипы",
+          "category": "technical"
+        },
+        {
+          "id": "h",
+          "text": "Ищу вдохновение в хаосе",
+          "category": "artistic"
+        },
+        {
+          "id": "i",
+          "text": "Вижу возможность в неопределённости",
+          "category": "entrepreneurial"
+        },
+        {
+          "id": "j",
+          "text": "Провожу пилотные эксперименты",
+          "category": "scientific"
+        }
+      ]
+    },
+    {
+      "id": 65,
+      "text": "Что вы ищете в наставнике?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Глубину знаний и логику",
+          "category": "analytical"
+        },
+        {
+          "id": "b",
+          "text": "Поддержку и эмпатию",
+          "category": "social"
+        },
+        {
+          "id": "c",
+          "text": "Творческое вдохновение",
+          "category": "creative"
+        },
+        {
+          "id": "d",
+          "text": "Стратегическое видение",
+          "category": "managerial"
+        },
+        {
+          "id": "e",
+          "text": "Практический опыт",
+          "category": "practical"
+        },
+        {
+          "id": "f",
+          "text": "Научную строгость",
+          "category": "research"
+        },
+        {
+          "id": "g",
+          "text": "Техническую экспертизу",
+          "category": "technical"
+        },
+        {
+          "id": "h",
+          "text": "Художественное чутьё",
+          "category": "artistic"
+        },
+        {
+          "id": "i",
+          "text": "Предпринимательскую интуицию",
+          "category": "entrepreneurial"
+        },
+        {
+          "id": "j",
+          "text": "Методологическую точность",
+          "category": "scientific"
+        }
+      ]
+    },
+    {
+      "id": 66,
+      "text": "Как вы относитесь к обратной связи от клиентов?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Анализирую паттерны и метрики",
+          "category": "analytical"
+        },
+        {
+          "id": "b",
+          "text": "Эмпатично воспринимаю потребности",
+          "category": "social"
+        },
+        {
+          "id": "c",
+          "text": "Использую как источник идей",
+          "category": "creative"
+        },
+        {
+          "id": "d",
+          "text": "Интегрирую в процесс улучшений",
+          "category": "managerial"
+        },
+        {
+          "id": "e",
+          "text": "Применяю для практических доработок",
+          "category": "practical"
+        },
+        {
+          "id": "f",
+          "text": "Изучаю как исследовательский материал",
+          "category": "research"
+        },
+        {
+          "id": "g",
+          "text": "Оцениваю техническую реализуемость",
+          "category": "technical"
+        },
+        {
+          "id": "h",
+          "text": "Ищу эстетику в пожеланиях",
+          "category": "artistic"
+        },
+        {
+          "id": "i",
+          "text": "Оцениваю коммерческий потенциал",
+          "category": "entrepreneurial"
+        },
+        {
+          "id": "j",
+          "text": "Систематизирую для дальнейшего изучения",
+          "category": "scientific"
+        }
+      ]
+    },
+    {
+      "id": 67,
+      "text": "Что вас привлекает в профессии?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Возможность работать с данными",
+          "category": "analytical"
+        },
+        {
+          "id": "b",
+          "text": "Помогать и взаимодействовать",
+          "category": "social"
+        },
+        {
+          "id": "c",
+          "text": "Создавать и выражать себя",
+          "category": "creative"
+        },
+        {
+          "id": "d",
+          "text": "Управлять и влиять",
+          "category": "managerial"
+        },
+        {
+          "id": "e",
+          "text": "Работать руками и видеть результат",
+          "category": "practical"
+        },
+        {
+          "id": "f",
+          "text": "Исследовать и открывать",
+          "category": "research"
+        },
+        {
+          "id": "g",
+          "text": "Работать с технологиями",
+          "category": "technical"
+        },
+        {
+          "id": "h",
+          "text": "Творить и вдохновлять",
+          "category": "artistic"
+        },
+        {
+          "id": "i",
+          "text": "Создавать и масштабировать",
+          "category": "entrepreneurial"
+        },
+        {
+          "id": "j",
+          "text": "Изучать и систематизировать знания",
+          "category": "scientific"
+        }
+      ]
+    },
+    {
+      "id": 68,
+      "text": "Как вы относитесь к междисциплинарности?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Интегрирую данные из разных областей",
+          "category": "analytical"
+        },
+        {
+          "id": "b",
+          "text": "Ценю разнообразие мнений",
+          "category": "social"
+        },
+        {
+          "id": "c",
+          "text": "Смешиваю стили и идеи",
+          "category": "creative"
+        },
+        {
+          "id": "d",
+          "text": "Координирую разные команды",
+          "category": "managerial"
+        },
+        {
+          "id": "e",
+          "text": "Применяю практики из смежных сфер",
+          "category": "practical"
+        },
+        {
+          "id": "f",
+          "text": "Синтезирую знания из разных наук",
+          "category": "research"
+        },
+        {
+          "id": "g",
+          "text": "Комбинирую технологии",
+          "category": "technical"
+        },
+        {
+          "id": "h",
+          "text": "Создаю междисциплинарные проекты",
+          "category": "artistic"
+        },
+        {
+          "id": "i",
+          "text": "Ищу синергию между направлениями",
+          "category": "entrepreneurial"
+        },
+        {
+          "id": "j",
+          "text": "Провожу кросс-дисциплинарные исследования",
+          "category": "scientific"
+        }
+      ]
+    },
+    {
+      "id": 69,
+      "text": "Что для вас важно в документации?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Точность и полнота данных",
+          "category": "analytical"
+        },
+        {
+          "id": "b",
+          "text": "Доступность для понимания",
+          "category": "social"
+        },
+        {
+          "id": "c",
+          "text": "Наглядность и визуализация",
+          "category": "creative"
+        },
+        {
+          "id": "d",
+          "text": "Структура и актуальность",
+          "category": "managerial"
+        },
+        {
+          "id": "e",
+          "text": "Практическая применимость",
+          "category": "practical"
+        },
+        {
+          "id": "f",
+          "text": "Методологическая обоснованность",
+          "category": "research"
+        },
+        {
+          "id": "g",
+          "text": "Техническая детализация",
+          "category": "technical"
+        },
+        {
+          "id": "h",
+          "text": "Эстетика подачи",
+          "category": "artistic"
+        },
+        {
+          "id": "i",
+          "text": "Фокус на ключевых метриках",
+          "category": "entrepreneurial"
+        },
+        {
+          "id": "j",
+          "text": "Воспроизводимость и прозрачность",
+          "category": "scientific"
+        }
+      ]
+    },
+    {
+      "id": 70,
+      "text": "Как вы работаете с ограничениями?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Анализирую и оптимизирую в рамках",
+          "category": "analytical"
+        },
+        {
+          "id": "b",
+          "text": "Ищу компромиссы с командой",
+          "category": "social"
+        },
+        {
+          "id": "c",
+          "text": "Вижу в них вызов для креатива",
+          "category": "creative"
+        },
+        {
+          "id": "d",
+          "text": "Планирую с учётом ресурсов",
+          "category": "managerial"
+        },
+        {
+          "id": "e",
+          "text": "Адаптирую инструменты под задачу",
+          "category": "practical"
+        },
+        {
+          "id": "f",
+          "text": "Переформулирую гипотезы",
+          "category": "research"
+        },
+        {
+          "id": "g",
+          "text": "Ищу технические обходные пути",
+          "category": "technical"
+        },
+        {
+          "id": "h",
+          "text": "Преобразую ограничения в стиль",
+          "category": "artistic"
+        },
+        {
+          "id": "i",
+          "text": "Ищу возможности в ограничениях",
+          "category": "entrepreneurial"
+        },
+        {
+          "id": "j",
+          "text": "Контролирую переменные эксперимента",
+          "category": "scientific"
+        }
+      ]
+    },
+    {
+      "id": 71,
+      "text": "Что вы цените в технологическом прогрессе?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Возможности для анализа",
+          "category": "analytical"
+        },
+        {
+          "id": "b",
+          "text": "Улучшение коммуникации",
+          "category": "social"
+        },
+        {
+          "id": "c",
+          "text": "Новые средства выражения",
+          "category": "creative"
+        },
+        {
+          "id": "d",
+          "text": "Инструменты для управления",
+          "category": "managerial"
+        },
+        {
+          "id": "e",
+          "text": "Практические улучшения",
+          "category": "practical"
+        },
+        {
+          "id": "f",
+          "text": "Новые методы исследования",
+          "category": "research"
+        },
+        {
+          "id": "g",
+          "text": "Техническое совершенство",
+          "category": "technical"
+        },
+        {
+          "id": "h",
+          "text": "Новые формы искусства",
+          "category": "artistic"
+        },
+        {
+          "id": "i",
+          "text": "Возможности для масштабирования",
+          "category": "entrepreneurial"
+        },
+        {
+          "id": "j",
+          "text": "Инструменты для открытий",
+          "category": "scientific"
+        }
+      ]
+    },
+    {
+      "id": 72,
+      "text": "Как вы относитесь к автоматизации?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Использую для обработки данных",
+          "category": "analytical"
+        },
+        {
+          "id": "b",
+          "text": "Освобождаю время для общения",
+          "category": "social"
+        },
+        {
+          "id": "c",
+          "text": "Автоматизирую рутину для творчества",
+          "category": "creative"
+        },
+        {
+          "id": "d",
+          "text": "Внедряю для эффективности процессов",
+          "category": "managerial"
+        },
+        {
+          "id": "e",
+          "text": "Автоматизирую повторяющиеся действия",
+          "category": "practical"
+        },
+        {
+          "id": "f",
+          "text": "Использую для сбора и анализа",
+          "category": "research"
+        },
+        {
+          "id": "g",
+          "text": "Разрабатываю и оптимизирую",
+          "category": "technical"
+        },
+        {
+          "id": "h",
+          "text": "Освобождаю время для искусства",
+          "category": "artistic"
+        },
+        {
+          "id": "i",
+          "text": "Масштабирую бизнес-процессы",
+          "category": "entrepreneurial"
+        },
+        {
+          "id": "j",
+          "text": "Стандартизирую эксперименты",
+          "category": "scientific"
+        }
+      ]
+    },
+    {
+      "id": 73,
+      "text": "Что вы ищете в профессиональном сообществе?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Обмен аналитическими методами",
+          "category": "analytical"
+        },
+        {
+          "id": "b",
+          "text": "Поддержку и нетворкинг",
+          "category": "social"
+        },
+        {
+          "id": "c",
+          "text": "Вдохновение и коллаборации",
+          "category": "creative"
+        },
+        {
+          "id": "d",
+          "text": "Возможности для роста и лидерства",
+          "category": "managerial"
+        },
+        {
+          "id": "e",
+          "text": "Практические советы и опыт",
+          "category": "practical"
+        },
+        {
+          "id": "f",
+          "text": "Научные дискуссии и публикации",
+          "category": "research"
+        },
+        {
+          "id": "g",
+          "text": "Технические знания и инструменты",
+          "category": "technical"
+        },
+        {
+          "id": "h",
+          "text": "Творческие вызовы и выставки",
+          "category": "artistic"
+        },
+        {
+          "id": "i",
+          "text": "Бизнес-возможности и партнёрства",
+          "category": "entrepreneurial"
+        },
+        {
+          "id": "j",
+          "text": "Методологические стандарты",
+          "category": "scientific"
+        }
+      ]
+    },
+    {
+      "id": 74,
+      "text": "Как вы относитесь к глобальным вызовам?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Анализирую данные и тренды",
+          "category": "analytical"
+        },
+        {
+          "id": "b",
+          "text": "Ищу способы помочь людям",
+          "category": "social"
+        },
+        {
+          "id": "c",
+          "text": "Предлагаю креативные решения",
+          "category": "creative"
+        },
+        {
+          "id": "d",
+          "text": "Организую ответные действия",
+          "category": "managerial"
+        },
+        {
+          "id": "e",
+          "text": "Создаю практические решения",
+          "category": "practical"
+        },
+        {
+          "id": "f",
+          "text": "Изучаю причины и последствия",
+          "category": "research"
+        },
+        {
+          "id": "g",
+          "text": "Разрабатываю технологические ответы",
+          "category": "technical"
+        },
+        {
+          "id": "h",
+          "text": "Освещаю через искусство",
+          "category": "artistic"
+        },
+        {
+          "id": "i",
+          "text": "Вижу возможности для инноваций",
+          "category": "entrepreneurial"
+        },
+        {
+          "id": "j",
+          "text": "Провожу научные исследования",
+          "category": "scientific"
+        }
+      ]
+    },
+    {
+      "id": 75,
+      "text": "Что для вас значит «инновация»?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Новый аналитический подход",
+          "category": "analytical"
+        },
+        {
+          "id": "b",
+          "text": "Улучшение взаимодействия",
+          "category": "social"
+        },
+        {
+          "id": "c",
+          "text": "Оригинальная идея или форма",
+          "category": "creative"
+        },
+        {
+          "id": "d",
+          "text": "Оптимизация процессов",
+          "category": "managerial"
+        },
+        {
+          "id": "e",
+          "text": "Практическое улучшение",
+          "category": "practical"
+        },
+        {
+          "id": "f",
+          "text": "Новое знание или метод",
+          "category": "research"
+        },
+        {
+          "id": "g",
+          "text": "Технологический прорыв",
+          "category": "technical"
+        },
+        {
+          "id": "h",
+          "text": "Новый художественный язык",
+          "category": "artistic"
+        },
+        {
+          "id": "i",
+          "text": "Новая бизнес-модель",
+          "category": "entrepreneurial"
+        },
+        {
+          "id": "j",
+          "text": "Экспериментальное открытие",
+          "category": "scientific"
+        }
+      ]
+    },
+    {
+      "id": 76,
+      "text": "Как вы работаете с обратной связью от системы?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Анализирую метрики и логи",
+          "category": "analytical"
+        },
+        {
+          "id": "b",
+          "text": "Обсуждаю с пользователями",
+          "category": "social"
+        },
+        {
+          "id": "c",
+          "text": "Ищу творческие интерпретации",
+          "category": "creative"
+        },
+        {
+          "id": "d",
+          "text": "Корректирую процессы управления",
+          "category": "managerial"
+        },
+        {
+          "id": "e",
+          "text": "Настраиваю инструменты",
+          "category": "practical"
+        },
+        {
+          "id": "f",
+          "text": "Формулирую новые гипотезы",
+          "category": "research"
+        },
+        {
+          "id": "g",
+          "text": "Оптимизирую технические параметры",
+          "category": "technical"
+        },
+        {
+          "id": "h",
+          "text": "Ищу эстетику в данных",
+          "category": "artistic"
+        },
+        {
+          "id": "i",
+          "text": "Оцениваю влияние на бизнес",
+          "category": "entrepreneurial"
+        },
+        {
+          "id": "j",
+          "text": "Документирую для воспроизведения",
+          "category": "scientific"
+        }
+      ]
+    },
+    {
+      "id": 77,
+      "text": "Что вы цените в профессиональной этике?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Объективность и прозрачность",
+          "category": "analytical"
+        },
+        {
+          "id": "b",
+          "text": "Уважение и конфиденциальность",
+          "category": "social"
+        },
+        {
+          "id": "c",
+          "text": "Аутентичность и честность",
+          "category": "creative"
+        },
+        {
+          "id": "d",
+          "text": "Ответственность и справедливость",
+          "category": "managerial"
+        },
+        {
+          "id": "e",
+          "text": "Честность и качество",
+          "category": "practical"
+        },
+        {
+          "id": "f",
+          "text": "Добросовестность исследований",
+          "category": "research"
+        },
+        {
+          "id": "g",
+          "text": "Безопасность и надёжность",
+          "category": "technical"
+        },
+        {
+          "id": "h",
+          "text": "Уважение к авторству",
+          "category": "artistic"
+        },
+        {
+          "id": "i",
+          "text": "Честная конкуренция",
+          "category": "entrepreneurial"
+        },
+        {
+          "id": "j",
+          "text": "Научная добросовестность",
+          "category": "scientific"
+        }
+      ]
+    },
+    {
+      "id": 78,
+      "text": "Как вы относитесь к обучению на протяжении жизни?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Постоянно обновляю аналитические навыки",
+          "category": "analytical"
+        },
+        {
+          "id": "b",
+          "text": "Развиваю коммуникативные компетенции",
+          "category": "social"
+        },
+        {
+          "id": "c",
+          "text": "Исследую новые творческие направления",
+          "category": "creative"
+        },
+        {
+          "id": "d",
+          "text": "Осваиваю новые управленческие подходы",
+          "category": "managerial"
+        },
+        {
+          "id": "e",
+          "text": "Осваиваю новые инструменты и ремёсла",
+          "category": "practical"
+        },
+        {
+          "id": "f",
+          "text": "Слежу за развитием науки",
+          "category": "research"
+        },
+        {
+          "id": "g",
+          "text": "Осваиваю новые технологии",
+          "category": "technical"
+        },
+        {
+          "id": "h",
+          "text": "Развиваю художественное мастерство",
+          "category": "artistic"
+        },
+        {
+          "id": "i",
+          "text": "Изучаю новые бизнес-модели",
+          "category": "entrepreneurial"
+        },
+        {
+          "id": "j",
+          "text": "Углубляю научную экспертизу",
+          "category": "scientific"
+        }
+      ]
+    },
+    {
+      "id": 79,
+      "text": "Что вас привлекает в будущем вашей сферы?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Развитие аналитических методов",
+          "category": "analytical"
+        },
+        {
+          "id": "b",
+          "text": "Улучшение социальных взаимодействий",
+          "category": "social"
+        },
+        {
+          "id": "c",
+          "text": "Новые формы творчества",
+          "category": "creative"
+        },
+        {
+          "id": "d",
+          "text": "Эволюция управленческих практик",
+          "category": "managerial"
+        },
+        {
+          "id": "e",
+          "text": "Прогресс в ремёслах и производстве",
+          "category": "practical"
+        },
+        {
+          "id": "f",
+          "text": "Новые научные горизонты",
+          "category": "research"
+        },
+        {
+          "id": "g",
+          "text": "Технологические прорывы",
+          "category": "technical"
+        },
+        {
+          "id": "h",
+          "text": "Новые художественные направления",
+          "category": "artistic"
+        },
+        {
+          "id": "i",
+          "text": "Возможности для бизнеса",
+          "category": "entrepreneurial"
+        },
+        {
+          "id": "j",
+          "text": "Глубокие научные открытия",
+          "category": "scientific"
+        }
+      ]
+    },
+    {
+      "id": 80,
+      "text": "Как вы относитесь к коллаборациям?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Объединяю данные и методы",
+          "category": "analytical"
+        },
+        {
+          "id": "b",
+          "text": "Ценю синергию и поддержку",
+          "category": "social"
+        },
+        {
+          "id": "c",
+          "text": "Ищу вдохновение в соавторстве",
+          "category": "creative"
+        },
+        {
+          "id": "d",
+          "text": "Координирую усилия команды",
+          "category": "managerial"
+        },
+        {
+          "id": "e",
+          "text": "Объединяю практические навыки",
+          "category": "practical"
+        },
+        {
+          "id": "f",
+          "text": "Синтезирую научные подходы",
+          "category": "research"
+        },
+        {
+          "id": "g",
+          "text": "Интегрирую технические решения",
+          "category": "technical"
+        },
+        {
+          "id": "h",
+          "text": "Создаю совместные произведения",
+          "category": "artistic"
+        },
+        {
+          "id": "i",
+          "text": "Ищу партнёрства для роста",
+          "category": "entrepreneurial"
+        },
+        {
+          "id": "j",
+          "text": "Провожу совместные исследования",
+          "category": "scientific"
+        }
+      ]
+    },
+    {
+      "id": 81,
+      "text": "Что для вас важно в презентации результатов?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Ясность и обоснованность выводов",
+          "category": "analytical"
+        },
+        {
+          "id": "b",
+          "text": "Доступность и эмпатия к аудитории",
+          "category": "social"
+        },
+        {
+          "id": "c",
+          "text": "Визуальная выразительность",
+          "category": "creative"
+        },
+        {
+          "id": "d",
+          "text": "Структура и фокус на целях",
+          "category": "managerial"
+        },
+        {
+          "id": "e",
+          "text": "Демонстрация практической ценности",
+          "category": "practical"
+        },
+        {
+          "id": "f",
+          "text": "Методологическая прозрачность",
+          "category": "research"
+        },
+        {
+          "id": "g",
+          "text": "Техническая точность и детализация",
+          "category": "technical"
+        },
+        {
+          "id": "h",
+          "text": "Эстетика и эмоциональное воздействие",
+          "category": "artistic"
+        },
+        {
+          "id": "i",
+          "text": "Фокус на выгоде и перспективах",
+          "category": "entrepreneurial"
+        },
+        {
+          "id": "j",
+          "text": "Воспроизводимость и научная строгость",
+          "category": "scientific"
+        }
+      ]
+    },
+    {
+      "id": 82,
+      "text": "Как вы работаете с большими данными?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Применяю статистические методы",
+          "category": "analytical"
+        },
+        {
+          "id": "b",
+          "text": "Ищу инсайты для людей",
+          "category": "social"
+        },
+        {
+          "id": "c",
+          "text": "Визуализирую паттерны",
+          "category": "creative"
+        },
+        {
+          "id": "d",
+          "text": "Использую для принятия решений",
+          "category": "managerial"
+        },
+        {
+          "id": "e",
+          "text": "Извлекаю практические выводы",
+          "category": "practical"
+        },
+        {
+          "id": "f",
+          "text": "Формулирую исследовательские вопросы",
+          "category": "research"
+        },
+        {
+          "id": "g",
+          "text": "Автоматизирую обработку",
+          "category": "technical"
+        },
+        {
+          "id": "h",
+          "text": "Ищу эстетику в визуализации",
+          "category": "artistic"
+        },
+        {
+          "id": "i",
+          "text": "Ищу бизнес-инсайты",
+          "category": "entrepreneurial"
+        },
+        {
+          "id": "j",
+          "text": "Проверяю гипотезы на выборках",
+          "category": "scientific"
+        }
+      ]
+    },
+    {
+      "id": 83,
+      "text": "Что вы цените в профессиональном росте?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Углубление аналитических компетенций",
+          "category": "analytical"
+        },
+        {
+          "id": "b",
+          "text": "Развитие эмпатии и влияния",
+          "category": "social"
+        },
+        {
+          "id": "c",
+          "text": "Расширение творческого диапазона",
+          "category": "creative"
+        },
+        {
+          "id": "d",
+          "text": "Рост ответственности и масштаба",
+          "category": "managerial"
+        },
+        {
+          "id": "e",
+          "text": "Повышение мастерства",
+          "category": "practical"
+        },
+        {
+          "id": "f",
+          "text": "Углубление научной экспертизы",
+          "category": "research"
+        },
+        {
+          "id": "g",
+          "text": "Освоение новых технологий",
+          "category": "technical"
+        },
+        {
+          "id": "h",
+          "text": "Развитие художественного голоса",
+          "category": "artistic"
+        },
+        {
+          "id": "i",
+          "text": "Масштабирование влияния и дохода",
+          "category": "entrepreneurial"
+        },
+        {
+          "id": "j",
+          "text": "Вклад в научное знание",
+          "category": "scientific"
+        }
+      ]
+    },
+    {
+      "id": 84,
+      "text": "Как вы относитесь к межкультурному взаимодействию?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Анализирую культурные паттерны",
+          "category": "analytical"
+        },
+        {
+          "id": "b",
+          "text": "Ценю разнообразие и эмпатию",
+          "category": "social"
+        },
+        {
+          "id": "c",
+          "text": "Вдохновляюсь разными традициями",
+          "category": "creative"
+        },
+        {
+          "id": "d",
+          "text": "Адаптирую управление под контекст",
+          "category": "managerial"
+        },
+        {
+          "id": "e",
+          "text": "Учусь практическим приёмам",
+          "category": "practical"
+        },
+        {
+          "id": "f",
+          "text": "Изучаю кросс-культурные исследования",
+          "category": "research"
+        },
+        {
+          "id": "g",
+          "text": "Адаптирую технологии под регионы",
+          "category": "technical"
+        },
+        {
+          "id": "h",
+          "text": "Интегрирую культурные элементы в искусство",
+          "category": "artistic"
+        },
+        {
+          "id": "i",
+          "text": "Ищу глобальные бизнес-возможности",
+          "category": "entrepreneurial"
+        },
+        {
+          "id": "j",
+          "text": "Провожу сравнительные научные исследования",
+          "category": "scientific"
+        }
+      ]
+    },
+    {
+      "id": 85,
+      "text": "Что для вас значит «качественный результат»?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Обоснованный и воспроизводимый",
+          "category": "analytical"
+        },
+        {
+          "id": "b",
+          "text": "Полезный и понятный людям",
+          "category": "social"
+        },
+        {
+          "id": "c",
+          "text": "Оригинальный и выразительный",
+          "category": "creative"
+        },
+        {
+          "id": "d",
+          "text": "Соответствующий целям и срокам",
+          "category": "managerial"
+        },
+        {
+          "id": "e",
+          "text": "Надёжный и функциональный",
+          "category": "practical"
+        },
+        {
+          "id": "f",
+          "text": "Научно обоснованный",
+          "category": "research"
+        },
+        {
+          "id": "g",
+          "text": "Технически совершенный",
+          "category": "technical"
+        },
+        {
+          "id": "h",
+          "text": "Эстетически целостный",
+          "category": "artistic"
+        },
+        {
+          "id": "i",
+          "text": "Конкурентоспособный и масштабируемый",
+          "category": "entrepreneurial"
+        },
+        {
+          "id": "j",
+          "text": "Методологически строгий",
+          "category": "scientific"
+        }
+      ]
+    },
+    {
+      "id": 86,
+      "text": "Как вы работаете с гипотезами?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Проверяю через анализ данных",
+          "category": "analytical"
+        },
+        {
+          "id": "b",
+          "text": "Обсуждаю с экспертами",
+          "category": "social"
+        },
+        {
+          "id": "c",
+          "text": "Развиваю через креатив",
+          "category": "creative"
+        },
+        {
+          "id": "d",
+          "text": "Интегрирую в план действий",
+          "category": "managerial"
+        },
+        {
+          "id": "e",
+          "text": "Тестирую на практике",
+          "category": "practical"
+        },
+        {
+          "id": "f",
+          "text": "Изучаю теоретическую базу",
+          "category": "research"
+        },
+        {
+          "id": "g",
+          "text": "Моделирую технически",
+          "category": "technical"
+        },
+        {
+          "id": "h",
+          "text": "Воплощаю в художественной форме",
+          "category": "artistic"
+        },
+        {
+          "id": "i",
+          "text": "Оцениваю бизнес-потенциал",
+          "category": "entrepreneurial"
+        },
+        {
+          "id": "j",
+          "text": "Провожу контролируемый эксперимент",
+          "category": "scientific"
+        }
+      ]
+    },
+    {
+      "id": 87,
+      "text": "Что вас мотивирует в сложных задачах?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Интеллектуальный вызов",
+          "category": "analytical"
+        },
+        {
+          "id": "b",
+          "text": "Возможность помочь",
+          "category": "social"
+        },
+        {
+          "id": "c",
+          "text": "Простор для креатива",
+          "category": "creative"
+        },
+        {
+          "id": "d",
+          "text": "Возможность проявить лидерство",
+          "category": "managerial"
+        },
+        {
+          "id": "e",
+          "text": "Возможность применить мастерство",
+          "category": "practical"
+        },
+        {
+          "id": "f",
+          "text": "Возможность открыть новое",
+          "category": "research"
+        },
+        {
+          "id": "g",
+          "text": "Возможность создать технологию",
+          "category": "technical"
+        },
+        {
+          "id": "h",
+          "text": "Возможность выразить идею",
+          "category": "artistic"
+        },
+        {
+          "id": "i",
+          "text": "Возможность создать ценность",
+          "category": "entrepreneurial"
+        },
+        {
+          "id": "j",
+          "text": "Возможность проверить теорию",
+          "category": "scientific"
+        }
+      ]
+    },
+    {
+      "id": 88,
+      "text": "Как вы относитесь к стандартам качества?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Следую, если они обоснованы данными",
+          "category": "analytical"
+        },
+        {
+          "id": "b",
+          "text": "Адаптирую под потребности людей",
+          "category": "social"
+        },
+        {
+          "id": "c",
+          "text": "Использую как основу, но не догму",
+          "category": "creative"
+        },
+        {
+          "id": "d",
+          "text": "Внедряю и контролирую соблюдение",
+          "category": "managerial"
+        },
+        {
+          "id": "e",
+          "text": "Применяю, если это улучшает результат",
+          "category": "practical"
+        },
+        {
+          "id": "f",
+          "text": "Пересматриваю при новых открытиях",
+          "category": "research"
+        },
+        {
+          "id": "g",
+          "text": "Следую техническим регламентам",
+          "category": "technical"
+        },
+        {
+          "id": "h",
+          "text": "Нарушаю ради художественной выразительности",
+          "category": "artistic"
+        },
+        {
+          "id": "i",
+          "text": "Использую как конкурентное преимущество",
+          "category": "entrepreneurial"
+        },
+        {
+          "id": "j",
+          "text": "Требую научного обоснования",
+          "category": "scientific"
+        }
+      ]
+    },
+    {
+      "id": 89,
+      "text": "Что вы ищете в профессиональной среде?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Возможности для анализа и роста",
+          "category": "analytical"
+        },
+        {
+          "id": "b",
+          "text": "Поддержку и доверие",
+          "category": "social"
+        },
+        {
+          "id": "c",
+          "text": "Свободу для самовыражения",
+          "category": "creative"
+        },
+        {
+          "id": "d",
+          "text": "Ясность целей и возможностей",
+          "category": "managerial"
+        },
+        {
+          "id": "e",
+          "text": "Практические задачи и инструменты",
+          "category": "practical"
+        },
+        {
+          "id": "f",
+          "text": "Глубину и научность",
+          "category": "research"
+        },
+        {
+          "id": "g",
+          "text": "Технологичность и инновации",
+          "category": "technical"
+        },
+        {
+          "id": "h",
+          "text": "Вдохновение и эстетику",
+          "category": "artistic"
+        },
+        {
+          "id": "i",
+          "text": "Возможности для масштабирования",
+          "category": "entrepreneurial"
+        },
+        {
+          "id": "j",
+          "text": "Методологическую строгость",
+          "category": "scientific"
+        }
+      ]
+    },
+    {
+      "id": 90,
+      "text": "Как вы работаете с временем?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Планирую на основе приоритетов",
+          "category": "analytical"
+        },
+        {
+          "id": "b",
+          "text": "Выделяю время для общения",
+          "category": "social"
+        },
+        {
+          "id": "c",
+          "text": "Оставляю пространство для спонтанности",
+          "category": "creative"
+        },
+        {
+          "id": "d",
+          "text": "Контролирую через календарь и дедлайны",
+          "category": "managerial"
+        },
+        {
+          "id": "e",
+          "text": "Действую по необходимости",
+          "category": "practical"
+        },
+        {
+          "id": "f",
+          "text": "Выделяю время на глубокую работу",
+          "category": "research"
+        },
+        {
+          "id": "g",
+          "text": "Оптимизирую технические процессы",
+          "category": "technical"
+        },
+        {
+          "id": "h",
+          "text": "Следую за вдохновением",
+          "category": "artistic"
+        },
+        {
+          "id": "i",
+          "text": "Фокусируюсь на высокоприоритетных задачах",
+          "category": "entrepreneurial"
+        },
+        {
+          "id": "j",
+          "text": "Планирую экспериментальные циклы",
+          "category": "scientific"
+        }
+      ]
+    },
+    {
+      "id": 91,
+      "text": "Что для вас важно в профессиональной репутации?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Точность и надёжность выводов",
+          "category": "analytical"
+        },
+        {
+          "id": "b",
+          "text": "Доверие и уважение коллег",
+          "category": "social"
+        },
+        {
+          "id": "c",
+          "text": "Уникальность и признание таланта",
+          "category": "creative"
+        },
+        {
+          "id": "d",
+          "text": "Лидерство и результаты",
+          "category": "managerial"
+        },
+        {
+          "id": "e",
+          "text": "Мастерство и качество работ",
+          "category": "practical"
+        },
+        {
+          "id": "f",
+          "text": "Научный вклад и цитируемость",
+          "category": "research"
+        },
+        {
+          "id": "g",
+          "text": "Техническая экспертиза и инновации",
+          "category": "technical"
+        },
+        {
+          "id": "h",
+          "text": "Художественное признание",
+          "category": "artistic"
+        },
+        {
+          "id": "i",
+          "text": "Успех и влияние в бизнесе",
+          "category": "entrepreneurial"
+        },
+        {
+          "id": "j",
+          "text": "Научная добросовестность и открытия",
+          "category": "scientific"
+        }
+      ]
+    },
+    {
+      "id": 92,
+      "text": "Как вы относитесь к изменениям в отрасли?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Анализирую тренды и данные",
+          "category": "analytical"
+        },
+        {
+          "id": "b",
+          "text": "Обсуждаю влияние на людей",
+          "category": "social"
+        },
+        {
+          "id": "c",
+          "text": "Ищу возможности для творчества",
+          "category": "creative"
+        },
+        {
+          "id": "d",
+          "text": "Адаптирую стратегии управления",
+          "category": "managerial"
+        },
+        {
+          "id": "e",
+          "text": "Осваиваю новые практические методы",
+          "category": "practical"
+        },
+        {
+          "id": "f",
+          "text": "Пересматриваю научные подходы",
+          "category": "research"
+        },
+        {
+          "id": "g",
+          "text": "Осваиваю новые технологии",
+          "category": "technical"
+        },
+        {
+          "id": "h",
+          "text": "Ищу новые формы выражения",
+          "category": "artistic"
+        },
+        {
+          "id": "i",
+          "text": "Ищу бизнес-возможности",
+          "category": "entrepreneurial"
+        },
+        {
+          "id": "j",
+          "text": "Провожу исследования по новым направлениям",
+          "category": "scientific"
+        }
+      ]
+    },
+    {
+      "id": 93,
+      "text": "Что вы цените в профессиональном диалоге?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Аргументированность и факты",
+          "category": "analytical"
+        },
+        {
+          "id": "b",
+          "text": "Эмпатию и взаимопонимание",
+          "category": "social"
+        },
+        {
+          "id": "c",
+          "text": "Образность и вдохновение",
+          "category": "creative"
+        },
+        {
+          "id": "d",
+          "text": "Чёткость и результативность",
+          "category": "managerial"
+        },
+        {
+          "id": "e",
+          "text": "Практичность и конкретику",
+          "category": "practical"
+        },
+        {
+          "id": "f",
+          "text": "Глубину и научность",
+          "category": "research"
+        },
+        {
+          "id": "g",
+          "text": "Техническую точность",
+          "category": "technical"
+        },
+        {
+          "id": "h",
+          "text": "Эмоциональность и выразительность",
+          "category": "artistic"
+        },
+        {
+          "id": "i",
+          "text": "Фокус на цели и выгоде",
+          "category": "entrepreneurial"
+        },
+        {
+          "id": "j",
+          "text": "Объективность и воспроизводимость",
+          "category": "scientific"
+        }
+      ]
+    },
+    {
+      "id": 94,
+      "text": "Как вы работаете с неструктурированной информацией?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Структурирую и анализирую",
+          "category": "analytical"
+        },
+        {
+          "id": "b",
+          "text": "Обсуждаю и интерпретирую с другими",
+          "category": "social"
+        },
+        {
+          "id": "c",
+          "text": "Ищу творческие связи и паттерны",
+          "category": "creative"
+        },
+        {
+          "id": "d",
+          "text": "Определяю приоритеты и категории",
+          "category": "managerial"
+        },
+        {
+          "id": "e",
+          "text": "Извлекаю практические инсайты",
+          "category": "practical"
+        },
+        {
+          "id": "f",
+          "text": "Формулирую исследовательские вопросы",
+          "category": "research"
+        },
+        {
+          "id": "g",
+          "text": "Автоматизирую обработку",
+          "category": "technical"
+        },
+        {
+          "id": "h",
+          "text": "Ищу эстетику и смысл",
+          "category": "artistic"
+        },
+        {
+          "id": "i",
+          "text": "Оцениваю коммерческий потенциал",
+          "category": "entrepreneurial"
+        },
+        {
+          "id": "j",
+          "text": "Систематизирую для дальнейшего изучения",
+          "category": "scientific"
+        }
+      ]
+    },
+    {
+      "id": 95,
+      "text": "Что для вас значит «профессиональная удовлетворённость»?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Решение сложных аналитических задач",
+          "category": "analytical"
+        },
+        {
+          "id": "b",
+          "text": "Помощь и позитивное влияние на людей",
+          "category": "social"
+        },
+        {
+          "id": "c",
+          "text": "Реализация творческих идей",
+          "category": "creative"
+        },
+        {
+          "id": "d",
+          "text": "Достижение целей и рост",
+          "category": "managerial"
+        },
+        {
+          "id": "e",
+          "text": "Качество и осязаемость результатов",
+          "category": "practical"
+        },
+        {
+          "id": "f",
+          "text": "Вклад в науку и знания",
+          "category": "research"
+        },
+        {
+          "id": "g",
+          "text": "Реализация технологических решений",
+          "category": "technical"
+        },
+        {
+          "id": "h",
+          "text": "Художественное признание и самовыражение",
+          "category": "artistic"
+        },
+        {
+          "id": "i",
+          "text": "Финансовый успех и независимость",
+          "category": "entrepreneurial"
+        },
+        {
+          "id": "j",
+          "text": "Научные открытия и публикации",
+          "category": "scientific"
+        }
+      ]
+    },
+    {
+      "id": 96,
+      "text": "Как вы относитесь к профессиональной конкуренции?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Анализирую и учусь на лучших практиках",
+          "category": "analytical"
+        },
+        {
+          "id": "b",
+          "text": "Предпочитаю сотрудничество и обмен",
+          "category": "social"
+        },
+        {
+          "id": "c",
+          "text": "Конкурирую через уникальность",
+          "category": "creative"
+        },
+        {
+          "id": "d",
+          "text": "Использую как стимул к развитию",
+          "category": "managerial"
+        },
+        {
+          "id": "e",
+          "text": "Фокусируюсь на своём качестве",
+          "category": "practical"
+        },
+        {
+          "id": "f",
+          "text": "Ищу свою научную нишу",
+          "category": "research"
+        },
+        {
+          "id": "g",
+          "text": "Развиваю техническое преимущество",
+          "category": "technical"
+        },
+        {
+          "id": "h",
+          "text": "Выражаю индивидуальность",
+          "category": "artistic"
+        },
+        {
+          "id": "i",
+          "text": "Вижу возможности для роста",
+          "category": "entrepreneurial"
+        },
+        {
+          "id": "j",
+          "text": "Сравниваю методологии и результаты",
+          "category": "scientific"
+        }
+      ]
+    },
+    {
+      "id": 97,
+      "text": "Что вы ищете в профессиональном вызове?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Возможность применить аналитику",
+          "category": "analytical"
+        },
+        {
+          "id": "b",
+          "text": "Возможность помочь и повлиять",
+          "category": "social"
+        },
+        {
+          "id": "c",
+          "text": "Простор для креатива",
+          "category": "creative"
+        },
+        {
+          "id": "d",
+          "text": "Возможность проявить лидерство",
+          "category": "managerial"
+        },
+        {
+          "id": "e",
+          "text": "Возможность применить мастерство",
+          "category": "practical"
+        },
+        {
+          "id": "f",
+          "text": "Возможность открыть новое",
+          "category": "research"
+        },
+        {
+          "id": "g",
+          "text": "Возможность создать технологию",
+          "category": "technical"
+        },
+        {
+          "id": "h",
+          "text": "Возможность выразить идею",
+          "category": "artistic"
+        },
+        {
+          "id": "i",
+          "text": "Возможность создать ценность",
+          "category": "entrepreneurial"
+        },
+        {
+          "id": "j",
+          "text": "Возможность проверить гипотезу",
+          "category": "scientific"
+        }
+      ]
+    },
+    {
+      "id": 98,
+      "text": "Как вы работаете с профессиональными стандартами?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Следую, если они обоснованы",
+          "category": "analytical"
+        },
+        {
+          "id": "b",
+          "text": "Адаптирую под контекст",
+          "category": "social"
+        },
+        {
+          "id": "c",
+          "text": "Использую как основу для инноваций",
+          "category": "creative"
+        },
+        {
+          "id": "d",
+          "text": "Внедряю и контролирую",
+          "category": "managerial"
+        },
+        {
+          "id": "e",
+          "text": "Применяю, если это работает",
+          "category": "practical"
+        },
+        {
+          "id": "f",
+          "text": "Пересматриваю при новых данных",
+          "category": "research"
+        },
+        {
+          "id": "g",
+          "text": "Следую техническим регламентам",
+          "category": "technical"
+        },
+        {
+          "id": "h",
+          "text": "Нарушаю ради выразительности",
+          "category": "artistic"
+        },
+        {
+          "id": "i",
+          "text": "Использую как преимущество",
+          "category": "entrepreneurial"
+        },
+        {
+          "id": "j",
+          "text": "Требую научного обоснования",
+          "category": "scientific"
+        }
+      ]
+    },
+    {
+      "id": 99,
+      "text": "Что для вас важно в профессиональном наследии?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Вклад в аналитические методы",
+          "category": "analytical"
+        },
+        {
+          "id": "b",
+          "text": "Положительное влияние на людей",
+          "category": "social"
+        },
+        {
+          "id": "c",
+          "text": "Уникальные творческие работы",
+          "category": "creative"
+        },
+        {
+          "id": "d",
+          "text": "Успешные проекты и команды",
+          "category": "managerial"
+        },
+        {
+          "id": "e",
+          "text": "Качественные продукты и решения",
+          "category": "practical"
+        },
+        {
+          "id": "f",
+          "text": "Научные открытия и публикации",
+          "category": "research"
+        },
+        {
+          "id": "g",
+          "text": "Технологические инновации",
+          "category": "technical"
+        },
+        {
+          "id": "h",
+          "text": "Художественные произведения",
+          "category": "artistic"
+        },
+        {
+          "id": "i",
+          "text": "Успешный бизнес и модели",
+          "category": "entrepreneurial"
+        },
+        {
+          "id": "j",
+          "text": "Методологические вклады в науку",
+          "category": "scientific"
+        }
+      ]
+    },
+    {
+      "id": 100,
+      "text": "Как вы определяете свой профессиональный путь?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Через анализ интересов и компетенций",
+          "category": "analytical"
+        },
+        {
+          "id": "b",
+          "text": "Через взаимодействие с людьми",
+          "category": "social"
+        },
+        {
+          "id": "c",
+          "text": "Через творческие поиски",
+          "category": "creative"
+        },
+        {
+          "id": "d",
+          "text": "Через постановку и достижение целей",
+          "category": "managerial"
+        },
+        {
+          "id": "e",
+          "text": "Через практику и мастерство",
+          "category": "practical"
+        },
+        {
+          "id": "f",
+          "text": "Через научные интересы",
+          "category": "research"
+        },
+        {
+          "id": "g",
+          "text": "Через технологические увлечения",
+          "category": "technical"
+        },
+        {
+          "id": "h",
+          "text": "Через художественное самовыражение",
+          "category": "artistic"
+        },
+        {
+          "id": "i",
+          "text": "Через предпринимательские идеи",
+          "category": "entrepreneurial"
+        },
+        {
+          "id": "j",
+          "text": "Через исследовательские вопросы",
+          "category": "scientific"
+        }
       ]
     }
   ],
@@ -197,52 +5605,62 @@
     "analytical": {
       "name": "IT и аналитика",
       "description": "Вам подходит работа с данными, анализом и решением сложных технических задач",
-      "icon": "💻"
+      "icon": "💻",
+      "label": "analytical"
     },
     "social": {
       "name": "Коммуникации и сервис",
       "description": "Вам подходит работа с людьми, помощь и взаимодействие в команде",
-      "icon": "🤝"
+      "icon": "🤝",
+      "label": "social"
     },
     "creative": {
       "name": "Творчество и дизайн",
       "description": "Вам подходит креативная работа, создание нового и самовыражение",
-      "icon": "🎨"
+      "icon": "🎨",
+      "label": "creative"
     },
     "managerial": {
       "name": "Менеджмент и управление",
       "description": "Вам подходит управление процессами, лидерство и организация работы",
-      "icon": "📊"
+      "icon": "📊",
+      "label": "managerial"
     },
     "practical": {
       "name": "Производство и технологии",
       "description": "Вам подходит практическая работа, создание материальных продуктов и работа с техникой",
-      "icon": "🔧"
+      "icon": "🔧",
+      "label": "practical"
     },
     "research": {
       "name": "Наука и исследования",
       "description": "Вам подходит исследовательская работа, изучение нового и научная деятельность",
-      "icon": "🔬"
+      "icon": "🔬",
+      "label": "research"
     },
     "technical": {
       "name": "Инженерия и техники",
       "description": "Вам подходит работа с техническими системами, механизмами и инженерными решениями",
-      "icon": "⚙️"
+      "icon": "⚙️",
+      "label": "technical"
     },
     "artistic": {
       "name": "Искусство и культура",
       "description": "Вам подходит художественная деятельность, создание произведений искусства и культурных проектов",
-      "icon": "🎭"
+      "icon": "🎭",
+      "label": "artistic"
     },
     "entrepreneurial": {
       "name": "Бизнес и предпринимательство",
       "description": "Вам подходит создание и развитие бизнеса, стартапов и коммерческих проектов",
-      "icon": "🚀"
+      "icon": "🚀",
+      "label": "entrepreneurial"
     },
     "scientific": {
       "name": "Фундаментальная наука",
       "description": "Вам подходит научно-исследовательская работа, лабораторные эксперименты и академическая деятельность",
-      "icon": "🧪"
+      "icon": "🧪",
+      "label": "scientific"
     }
   }
 }

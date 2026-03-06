@@ -12,15 +12,15 @@ app = FastAPI(title="Career Survey API")
 
 app.mount("/static", StaticFiles(directory="static"), name="static")
 
-# Загрузка вопросов
+
 def load_questions() -> dict:
     with open("questions.json", "r", encoding="utf-8") as f:
         return json.load(f)
 
-# Инициализация ML модели
+#ML init
 survey_model = SurveyModel()
 
-# Файл для сохранения ответов
+
 RESPONSES_FILE = "responses.json"
 
 
@@ -73,34 +73,42 @@ class SurveyRequest(BaseModel):
 
 
 class SurveyResponse(BaseModel):
-    sphere: str
+    primary: str  # category key (analytical, social, etc.)
+    sphere: str  # название сферы (IT и аналитика)
     description: str
     probabilities: Dict[str, float]
     ranking: List[tuple]
 
 
 @app.get("/questions")
-async def get_questions() -> dict:
-    """Получить случайные вопросы в случайном порядке"""
+async def get_questions(n: int = 15) -> dict:
+    """
+    Получить N случайных вопросов в случайном порядке.
+    
+    Args:
+        n: количество вопросов для выбора (по умолчанию 15)
+    """
     data = load_questions()
     questions = data["questions"].copy()
-    
+
     # Перемешиваем вопросы
     random.shuffle(questions)
-    
-    # Выбираем 5 случайных вопросов (или все, если их меньше)
-    num_questions = min(5, len(questions))
+
+    # Выбираем N случайных вопросов
+    num_questions = min(n, len(questions))
     selected_questions = questions[:num_questions]
-    
+
     # Перемешиваем варианты ответов в каждом вопросе
     for q in selected_questions:
         options = q["options"].copy()
         random.shuffle(options)
         q["options"] = options
-    
+
     return {
         "questions": selected_questions,
-        "spheres": data["spheres"]
+        "spheres": data["spheres"],
+        "total_available": len(data["questions"]),
+        "selected_count": len(selected_questions)
     }
 
 
@@ -135,13 +143,14 @@ async def submit_survey(request: SurveyRequest) -> SurveyResponse:
         if category:
             category_counts[category] += 1
 
-    # Предсказание ML модели
+    
     prediction = survey_model.predict(category_counts)
 
-    # Получение информации о сфере
+    
     sphere_info = data["spheres"][prediction["primary"]]
 
     result = SurveyResponse(
+        primary=prediction["primary"],
         sphere=sphere_info["name"],
         description=sphere_info["description"],
         probabilities=prediction["probabilities"],
