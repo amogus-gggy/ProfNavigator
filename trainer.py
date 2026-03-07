@@ -122,18 +122,24 @@ XGBOOST_PARAM_DIST = {
 
 
 def load_dataset(path: str) -> Tuple[np.ndarray, np.ndarray]:
-    """Загрузка датасета и преобразование в numpy массивы"""
+    """Загрузка датасета и преобразование в numpy массивы (hard labels, нормализованные признаки).
+
+    Признаки извлекаются в АЛФАВИТНОМ порядке, чтобы совпадать с
+    label_encoder.classes_ (LabelEncoder всегда сортирует алфавитно).
+    """
     with open(path, "r", encoding="utf-8") as f:
         data = json.load(f)
+
+    # Алфавитный порядок — он же будет у label_encoder.classes_
+    feature_order = sorted(CATEGORIES)
 
     X = []
     y = []
 
     for sample in data["samples"]:
-        features = [
-            sample["features"].get(cat, 0)
-            for cat in CATEGORIES
-        ]
+        raw = [sample["features"].get(cat, 0) for cat in feature_order]
+        total = sum(raw)
+        features = [v / total if total > 0 else 0.0 for v in raw]
         X.append(features)
         y.append(sample["label"])
 
@@ -288,7 +294,8 @@ def optimize_hyperparameters(
     y: np.ndarray,
     model_type: str = "random_forest",
     n_iter: int = 100,
-    cv: int = 10
+    cv: int = 10,
+    weights: np.ndarray = None
 ) -> Tuple[Any, Dict[str, Any]]:
     """
     Оптимизация гиперпараметров с помощью RandomizedSearchCV
@@ -337,9 +344,10 @@ def optimize_hyperparameters(
         refit=True
     )
     
-    search.fit(X, y)
-    
-    print(f"\n✅ Лучшие параметры:")
+    fit_params = {"sample_weight": weights} if weights is not None else {}
+    search.fit(X, y, **fit_params)
+
+    print(f"\nЛучшие параметры:")
     for param, value in search.best_params_.items():
         print(f"   {param}: {value}")
     print(f"\nЛучшая CV accuracy: {search.best_score_:.4f}")
@@ -433,64 +441,50 @@ def train_model(
     n_iter: int = 100
 ) -> Tuple[Any, Dict[str, Any]]:
     """
-    Обучение модели с опциональной оптимизацией и калибровкой
-    
+    Обучение модели с опциональной оптимизацией и калибровкой.
+
     Returns:
         model, metrics
     """
-    # Разделение на train/validation с сохранением пропорций
     X_train, X_val, y_train, y_val = train_test_split(
         X, y, test_size=0.15, random_state=42, stratify=y
     )
 
-    print(f"\n📚 Размер train: {len(X_train)}, validation: {len(X_val)}")
-    
-    # Оптимизация или обычное обучение
+    print(f"\nРазмер train: {len(X_train)}, validation: {len(X_val)}")
+
     if optimize:
         model, best_params = optimize_hyperparameters(X_train, y_train, model_type, n_iter)
     else:
         model = create_model(model_type)
         best_params = {}
-        print(f"\n🔧 Обучение модели: {model_type}")
+        print(f"\nОбучение модели: {model_type}")
         model.fit(X_train, y_train)
 
-    # Валидация
     y_pred = model.predict(X_val)
     accuracy = accuracy_score(y_val, y_pred)
 
-    print(f"\n✅ Точность на validation: {accuracy:.4f}")
-    
-    # Проверяем целевую метрику
+    print(f"\nТочность на validation: {accuracy:.4f}")
     if accuracy >= 0.90:
-        print("   🎯 ЦЕЛЬ ДОСТИГНУТА: точность >= 90%!")
+        print("   ЦЕЛЬ ДОСТИГНУТА: точность >= 90%!")
     else:
-        print(f"   ⚠️ Точность ниже целевой (90%). Рекомендуется использовать --optimize")
-    
+        print(f"   Точность ниже целевой (90%). Рекомендуется --optimize")
+
     print("\nClassification report:")
     print(classification_report(y_val, y_pred, zero_division=0))
 
-    
-
-    # Оценка стабильности
+    # Оценка стабильности (без весов — упрощённо)
     stability = evaluate_model_stability(model, X, y, cv=10)
-    print(f"\n📈 Стабильность модели (10-fold CV):")
+    print(f"\nСтабильность модели (10-fold CV):")
     print(f"   Mean: {stability['mean']:.4f}")
     print(f"   Std:  {stability['std']:.4f}")
     print(f"   Min:  {stability['min']:.4f}")
     print(f"   Max:  {stability['max']:.4f}")
-    
-    
-    
-    #print_feature_importances(model, CATEGORIES)
 
-    # Калибровка (опционально, может немного снизить точность)
     if calibrate:
         model = apply_calibration(model, X_train, y_train, method="isotonic")
-        
-        # Переоценка после калибровки
         y_pred_calib = model.predict(X_val)
         calib_accuracy = accuracy_score(y_val, y_pred_calib)
-        print(f"\n📊 Точность после калибровки: {calib_accuracy:.4f}")
+        print(f"\nТочность после калибровки: {calib_accuracy:.4f}")
 
     metrics = {
         'validation_accuracy': float(accuracy),
@@ -597,17 +591,15 @@ def main():
         return 1
 
     
-    print(f"📂 Загрузка датасета из {args.dataset}")
+    print(f"Загрузка датасета из {args.dataset}")
     X, y = load_dataset(args.dataset)
     print(f"   Загружено {len(X)} примеров")
     print(f"   Классы: {np.unique(y)}")
 
-    
     label_encoder = LabelEncoder()
     label_encoder.fit(CATEGORIES)
     y_encoded = label_encoder.transform(y)
 
-    
     model, metrics = train_model(
         X, y_encoded,
         model_type=args.model_type,

@@ -76,8 +76,11 @@ class SurveyResponse(BaseModel):
     primary: str  # category key (analytical, social, etc.)
     sphere: str  # название сферы (IT и аналитика)
     description: str
+    confidence: str  # high / medium / low
     probabilities: Dict[str, float]
     ranking: List[tuple]
+    answer_distribution: Dict[str, float]  # нормализованное распределение ответов
+    reasoning: List[str]  # текстовое объяснение результата
 
 
 @app.get("/questions")
@@ -153,8 +156,11 @@ async def submit_survey(request: SurveyRequest) -> SurveyResponse:
         primary=prediction["primary"],
         sphere=sphere_info["name"],
         description=sphere_info["description"],
+        confidence=prediction["confidence"],
         probabilities=prediction["probabilities"],
-        ranking=prediction["ranking"]
+        ranking=prediction["ranking"],
+        answer_distribution=prediction["answer_distribution"],
+        reasoning=prediction["reasoning"],
     )
 
     # Сохранение ответа для будущего переобучения
