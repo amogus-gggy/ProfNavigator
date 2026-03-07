@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Профориентация - Опрос</title>
+    <title>ProfNavigator</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <style>
@@ -65,22 +65,59 @@
     </style>
 </head>
 <body class="bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-100 min-h-screen">
-    <div class="container mx-auto px-4 py-8 max-w-3xl">
-        <!-- Header -->
-        <header class="text-center mb-10">
-            <div class="inline-flex items-center justify-center w-16 h-16 bg-gradient-to-br from-indigo-500 to-purple-600 rounded-2xl shadow-lg mb-4">
-                <span class="text-3xl">🎯</span>
+    <div class="container mx-auto px-3 py-4 sm:px-4 sm:py-8 max-w-3xl">
+<!-- Welcome Screen -->
+        <div id="welcome-screen" class="hidden">
+            <div class="glass-effect rounded-2xl shadow-xl p-6 sm:p-10 border border-white/50 text-center">
+                <div class="inline-flex items-center justify-center w-20 h-20 bg-gradient-to-br from-indigo-500 to-purple-600 rounded-2xl shadow-lg mb-6">
+                    <span class="text-4xl">🎯</span>
+                </div>
+                <h2 class="text-2xl sm:text-3xl font-bold bg-gradient-to-r from-indigo-700 to-purple-700 bg-clip-text text-transparent mb-4">
+                    ProfNavigator
+                </h2>
+                <p class="text-gray-600 text-base sm:text-lg mb-6 max-w-md mx-auto">
+                    Интеллектуальная система профориентации на основе машинного обучения
+                </p>
+                
+                <div class="text-left bg-indigo-50 border border-indigo-100 rounded-xl p-6 mb-8 max-w-lg mx-auto">
+                    <h3 class="text-lg font-semibold text-indigo-800 mb-4 flex items-center gap-2">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"></path>
+                        </svg>
+                        Как это работает?
+                    </h3>
+                    <ul class="space-y-3 text-indigo-700 text-sm">
+                        <li class="flex items-start gap-3">
+                            <span class="flex-shrink-0 w-6 h-6 bg-indigo-200 text-indigo-700 rounded-full flex items-center justify-center text-xs font-bold">1</span>
+                            <span>Вы отвечаете на <strong>15 вопросов</strong> теста, выбирая наиболее подходящие варианты</span>
+                        </li>
+                        <li class="flex items-start gap-3">
+                            <span class="flex-shrink-0 w-6 h-6 bg-indigo-200 text-indigo-700 rounded-full flex items-center justify-center text-xs font-bold">2</span>
+                            <span>ML-модель анализирует ваши ответы и рассчитывает соответствие <strong>10 профессиональным сферам</strong></span>
+                        </li>
+                        <li class="flex items-start gap-3">
+                            <span class="flex-shrink-0 w-6 h-6 bg-indigo-200 text-indigo-700 rounded-full flex items-center justify-center text-xs font-bold">3</span>
+                            <span>Получаете <strong>персональный результат</strong> с подробным объяснением и рекомендациями</span>
+                        </li>
+                    </ul>
+                </div>
+
+                <button id="start-test-btn"
+                        class="w-full sm:w-auto px-8 py-4 bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-700 hover:to-purple-700 text-white font-semibold rounded-xl shadow-lg shadow-indigo-500/30 transition duration-200 flex items-center justify-center gap-3 mx-auto text-base sm:text-lg">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path>
+                    </svg>
+                    Начать тестирование
+                </button>
+
+                <p class="text-xs text-gray-400 mt-6">
+                    Результаты носят исключительно справочный характер и не являются профессиональной консультацией.
+                </p>
             </div>
-            <h1 class="text-4xl font-bold bg-gradient-to-r from-indigo-700 to-purple-700 bg-clip-text text-transparent mb-3">
-                Профориентация
-            </h1>
-            <p class="text-gray-600 text-lg max-w-md mx-auto">
-                Ответьте на вопросы и узнайте, какая профессиональная сфера вам подходит больше всего
-            </p>
-        </header>
+        </div>
 
         <!-- Loading State -->
-        <div id="loading" class="text-center py-16">
+        <div id="loading" class="hidden text-center py-16">
             <div class="relative">
                 <div class="animate-spin rounded-full h-16 w-16 border-4 border-indigo-200 border-t-indigo-600 mx-auto"></div>
                 <div class="absolute inset-0 flex items-center justify-center">
@@ -106,12 +143,12 @@
             </div>
 
             <!-- Question Card -->
-            <div id="question-card" class="glass-effect rounded-2xl shadow-xl p-8 mb-6 fade-in border border-white/50">
+            <div id="question-card" class="glass-effect rounded-2xl shadow-xl p-5 sm:p-8 mb-6 fade-in border border-white/50">
                 <div class="mb-6">
                     <span class="inline-block px-3 py-1 bg-indigo-100 text-indigo-700 rounded-full text-sm font-semibold mb-4">
                         Вопрос <span id="question-number">1</span>
                     </span>
-                    <h3 id="question-text" class="text-2xl font-semibold text-gray-800 leading-relaxed">
+                    <h3 id="question-text" class="text-lg sm:text-2xl font-semibold text-gray-800 leading-relaxed">
                         Загрузка вопроса...
                     </h3>
                 </div>
@@ -124,7 +161,7 @@
                 <!-- Navigation Buttons -->
                 <div class="flex justify-between items-center mt-8 pt-6 border-t border-gray-100">
                     <button id="prev-btn"
-                            class="px-6 py-3 rounded-xl font-medium text-gray-600 hover:bg-gray-100 transition duration-200 flex items-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed"
+                            class="px-4 sm:px-6 py-3 rounded-xl font-medium text-gray-600 hover:bg-gray-100 transition duration-200 flex items-center gap-1 sm:gap-2 disabled:opacity-50 disabled:cursor-not-allowed text-sm sm:text-base"
                             disabled>
                         <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path>
@@ -133,7 +170,7 @@
                     </button>
 
                     <button id="next-btn"
-                            class="px-8 py-3 bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-700 hover:to-purple-700 text-white font-semibold rounded-xl shadow-lg shadow-indigo-500/30 transition duration-200 flex items-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed disabled:shadow-none"
+                            class="px-5 sm:px-8 py-3 bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-700 hover:to-purple-700 text-white font-semibold rounded-xl shadow-lg shadow-indigo-500/30 transition duration-200 flex items-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed disabled:shadow-none text-sm sm:text-base"
                             disabled>
                         <span id="next-btn-text">Далее</span>
                         <svg id="next-btn-icon" class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -146,17 +183,17 @@
 
         <!-- Result Container -->
         <div id="result-container" class="hidden">
-            <div class="glass-effect rounded-2xl shadow-xl p-8 border border-white/50">
+            <div class="glass-effect rounded-2xl shadow-xl p-5 sm:p-8 border border-white/50">
                 <!-- Main Result -->
                 <div class="text-center mb-8">
-                    <div class="inline-flex items-center justify-center w-24 h-24 bg-gradient-to-br from-yellow-400 to-orange-500 rounded-full shadow-lg mb-6 animate-bounce">
-                        <span class="text-5xl" id="result-icon">🎯</span>
+                    <div class="inline-flex items-center justify-center w-16 h-16 sm:w-24 sm:h-24 bg-gradient-to-br from-yellow-400 to-orange-500 rounded-full shadow-lg mb-4 sm:mb-6 animate-bounce">
+                        <span class="text-3xl sm:text-5xl" id="result-icon">🎯</span>
                     </div>
-                    <h2 class="text-3xl font-bold text-gray-800 mb-2">Ваш результат</h2>
-                    <p id="result-sphere" class="text-2xl font-bold bg-gradient-to-r from-indigo-600 to-purple-600 bg-clip-text text-transparent mb-3"></p>
+                    <h2 class="text-2xl sm:text-3xl font-bold text-gray-800 mb-2">Ваш результат</h2>
+                    <p id="result-sphere" class="text-xl sm:text-2xl font-bold bg-gradient-to-r from-indigo-600 to-purple-600 bg-clip-text text-transparent mb-3"></p>
                     <!-- Confidence badge -->
                     <div id="confidence-badge" class="inline-block px-4 py-1 rounded-full text-sm font-semibold mb-4"></div>
-                    <p id="result-description" class="text-gray-600 text-lg max-w-lg mx-auto leading-relaxed"></p>
+                    <p id="result-description" class="text-gray-600 text-base sm:text-lg max-w-lg mx-auto leading-relaxed"></p>
                 </div>
 
                 <!-- Reasoning -->
@@ -172,34 +209,23 @@
                     </ul>
                 </div>
 
-                <!-- Answer Distribution -->
-                <div class="bg-white/50 rounded-xl p-6 mb-6">
-                    <h3 class="text-lg font-semibold text-gray-800 mb-4 text-center">Распределение ваших ответов</h3>
-                    <div id="answer-distribution-container" class="space-y-3">
-                        <!-- Answer distribution bars -->
-                    </div>
-                </div>
-
-                <!-- Probabilities Chart -->
-                <div class="bg-white/50 rounded-xl p-6 mb-6">
-                    <h3 class="text-lg font-semibold text-gray-800 mb-4 text-center">Соответствие сферам (ML)</h3>
-                    <div id="probabilities-container" class="space-y-4">
-                        <!-- Bars will be inserted here -->
-                    </div>
-                </div>
-
                 <!-- Ranking -->
-                <div class="bg-white/50 rounded-xl p-6 mb-8">
+                <div class="bg-white/50 rounded-xl p-4 sm:p-6 mb-6 sm:mb-8">
                     <h3 class="text-lg font-semibold text-gray-800 mb-4 text-center">Рейтинг сфер</h3>
                     <div id="ranking-container" class="space-y-2">
                         <!-- Ranking will be inserted here -->
                     </div>
                 </div>
 
+                <!-- Disclaimer -->
+                <p class="text-xs text-gray-400 text-center mb-6">
+                    Результаты созданы с помощью технологий машинного обучения и моугт быть ошибочными. Носят исключительно справочный характер и не являются профессиональной консультацией.
+                </p>
+
                 <!-- Restart Button -->
                 <div class="text-center">
                     <button id="restart-btn"
-                            class="px-8 py-4 bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-700 hover:to-purple-700 text-white font-semibold rounded-xl shadow-lg shadow-indigo-500/30 transition duration-200 flex items-center gap-2 mx-auto">
+                            class="w-full sm:w-auto px-8 py-4 bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-700 hover:to-purple-700 text-white font-semibold rounded-xl shadow-lg shadow-indigo-500/30 transition duration-200 flex items-center justify-center gap-2 mx-auto">
                         <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"></path>
                         </svg>
@@ -219,7 +245,7 @@
     </div>
 
     <script>
-        const API_URL = 'http://127.0.0.1:8000';
+        const API_URL = window.location.origin;
 
         let questionsData = null;
         let currentQuestionIndex = 0;
@@ -254,6 +280,7 @@
         };
 
         const elements = {
+            welcomeScreen: document.getElementById('welcome-screen'),
             loading: document.getElementById('loading'),
             quizContainer: document.getElementById('quiz-container'),
             questionCard: document.getElementById('question-card'),
@@ -272,10 +299,9 @@
             resultIcon: document.getElementById('result-icon'),
             resultSphere: document.getElementById('result-sphere'),
             resultDescription: document.getElementById('result-description'),
-            probabilitiesContainer: document.getElementById('probabilities-container'),
             rankingContainer: document.getElementById('ranking-container'),
-            answerDistContainer: document.getElementById('answer-distribution-container'),
             restartBtn: document.getElementById('restart-btn'),
+            startTestBtn: document.getElementById('start-test-btn'),
             errorContainer: document.getElementById('error-container'),
             errorMessage: document.getElementById('error-message')
         };
@@ -297,6 +323,7 @@
                 elements.totalQuestions.textContent = questionsData.selected_count || questionsData.questions.length;
                 answers = new Array(questionsData.questions.length).fill(null);
 
+                elements.welcomeScreen.classList.add('hidden');
                 elements.loading.classList.add('hidden');
                 elements.quizContainer.classList.remove('hidden');
 
@@ -360,6 +387,8 @@
             elements.questionCard.classList.remove('fade-in');
             void elements.questionCard.offsetWidth;
             elements.questionCard.classList.add('fade-in');
+
+            window.scrollTo({ top: 0, behavior: 'smooth' });
         }
 
         function selectOption(optionId) {
@@ -495,70 +524,6 @@
                 reasoningEl.innerHTML = '<li class="text-indigo-500">Нет данных для объяснения</li>';
             }
 
-            // Answer distribution (what the user actually answered)
-            const answerDistContainer = document.getElementById('answer-distribution-container');
-            if (result.answer_distribution) {
-                const sortedAnswers = Object.entries(result.answer_distribution)
-                    .sort((a, b) => b[1] - a[1])
-                    .filter(([, pct]) => pct > 0);
-
-                answerDistContainer.innerHTML = sortedAnswers.map(([cat, pct]) => {
-                    const percentage = Math.round(pct * 100);
-                    const sphereInfo = spheres[cat] || {};
-                    const name = sphereInfo.name || cat;
-                    const icon = sphereInfo.icon || SPHERE_ICONS_MAP[cat] || '📌';
-                    const isTop = cat === result.primary;
-
-                    return `
-                        <div>
-                            <div class="flex justify-between items-center mb-1">
-                                <div class="flex items-center gap-2">
-                                    <span class="text-base">${icon}</span>
-                                    <span class="text-sm font-medium ${isTop ? 'text-indigo-700 font-semibold' : 'text-gray-600'}">${name}</span>
-                                </div>
-                                <span class="text-sm font-bold ${isTop ? 'text-indigo-700' : 'text-gray-500'}">${percentage}%</span>
-                            </div>
-                            <div class="w-full bg-gray-100 rounded-full h-2 overflow-hidden">
-                                <div
-                                    class="h-2 rounded-full transition-all duration-700 ease-out ${isTop ? 'bg-indigo-500' : 'bg-gray-400'}"
-                                    style="width: 0%"
-                                    data-width="${percentage}%"
-                                ></div>
-                            </div>
-                        </div>
-                    `;
-                }).join('');
-            }
-
-            // ML Probabilities chart
-            const categories = Object.entries(result.probabilities).sort((a, b) => b[1] - a[1]);
-            elements.probabilitiesContainer.innerHTML = categories.map(([cat, prob]) => {
-                const percentage = Math.round(prob * 100);
-                const sphereInfo = spheres[cat] || {};
-                const name = sphereInfo.name || cat;
-                const icon = sphereInfo.icon || SPHERE_ICONS_MAP[cat] || '📌';
-                const gradient = SPHERE_COLORS_MAP[cat] || 'from-indigo-500 to-purple-500';
-
-                return `
-                    <div>
-                        <div class="flex justify-between items-center mb-2">
-                            <div class="flex items-center gap-2">
-                                <span class="text-xl">${icon}</span>
-                                <span class="font-medium text-gray-700">${name}</span>
-                            </div>
-                            <span class="font-bold text-gray-900">${percentage}%</span>
-                        </div>
-                        <div class="w-full bg-gray-200 rounded-full h-3 overflow-hidden">
-                            <div
-                                class="h-3 rounded-full bg-gradient-to-r ${gradient} transition-all duration-1000 ease-out"
-                                style="width: 0%"
-                                data-width="${percentage}%"
-                            ></div>
-                        </div>
-                    </div>
-                `;
-            }).join('');
-
             // Ranking
             const medals = ['🥇', '🥈', '🥉', '4️⃣', '5️⃣', '6️⃣', '7️⃣', '8️⃣', '9️⃣', '🔟'];
             const colors = [
@@ -580,13 +545,13 @@
                 const icon = sphereInfo.icon || SPHERE_ICONS_MAP[cat] || '📌';
 
                 return `
-                    <div class="flex items-center justify-between p-4 rounded-xl border-2 ${colors[index] || colors[3]} transition duration-200 hover:shadow-md">
-                        <div class="flex items-center gap-3">
-                            <span class="text-2xl">${medals[index] || `${index + 1}.`}</span>
-                            <span class="text-xl">${icon}</span>
-                            <span class="font-semibold text-gray-800">${name}</span>
+                    <div class="flex items-center justify-between p-3 sm:p-4 rounded-xl border-2 ${colors[index] || colors[3]} transition duration-200 hover:shadow-md">
+                        <div class="flex items-center gap-2 sm:gap-3 min-w-0">
+                            <span class="text-xl sm:text-2xl flex-shrink-0">${medals[index] || `${index + 1}.`}</span>
+                            <span class="text-lg sm:text-xl flex-shrink-0">${icon}</span>
+                            <span class="font-semibold text-gray-800 text-sm sm:text-base truncate">${name}</span>
                         </div>
-                        <span class="font-bold text-indigo-600 text-lg">${Math.round(prob * 100)}%</span>
+                        <span class="font-bold text-indigo-600 text-base sm:text-lg flex-shrink-0 ml-2">${Math.round(prob * 100)}%</span>
                     </div>
                 `;
             }).join('');
@@ -615,18 +580,22 @@
             currentQuestionIndex = 0;
             answers = new Array(questionsData.selected_count || questionsData.questions.length).fill(null);
             elements.resultContainer.classList.add('hidden');
-            elements.quizContainer.classList.remove('hidden');
+            elements.welcomeScreen.classList.remove('hidden');
             elements.nextBtnIcon.classList.remove('animate-spin');
-            loadQuestions();
         }
 
         // Event listeners
         elements.nextBtn.addEventListener('click', nextQuestion);
         elements.prevBtn.addEventListener('click', prevQuestion);
         elements.restartBtn.addEventListener('click', restartQuiz);
+        elements.startTestBtn.addEventListener('click', () => {
+            elements.welcomeScreen.classList.add('hidden');
+            elements.loading.classList.remove('hidden');
+            loadQuestions();
+        });
 
-        // Initialize
-        loadQuestions();
+        // Initialize - show welcome screen
+        elements.welcomeScreen.classList.remove('hidden');
     </script>
 </body>
 </html>
