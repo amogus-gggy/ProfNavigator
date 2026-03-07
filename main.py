@@ -1,21 +1,21 @@
 from fastapi import FastAPI, HTTPException
 from fastapi.staticfiles import StaticFiles
-from fastapi.responses import FileResponse
+from fastapi.responses import FileResponse, UJSONResponse
 from pydantic import BaseModel
 from typing import List, Dict, Any
-import json
+import ujson
 import random
 from datetime import datetime
 from model import SurveyModel
 
-app = FastAPI(title="Career Survey API")
+app = FastAPI(title="ProfNavigator", default_response_class=UJSONResponse)
 
 app.mount("/static", StaticFiles(directory="static"), name="static")
 
 
 def load_questions() -> dict:
     with open("questions.json", "r", encoding="utf-8") as f:
-        return json.load(f)
+        return ujson.load(f)
 
 #ML init
 survey_model = SurveyModel()
@@ -27,40 +27,40 @@ RESPONSES_FILE = "responses.json"
 def save_response(answers: List[Dict], result: Dict):
     """Сохранение ответа пользователя для будущего переобучения"""
     data = {"samples": []}
-    
+
     try:
         with open(RESPONSES_FILE, "r", encoding="utf-8") as f:
-            data = json.load(f)
+            data = ujson.load(f)
     except FileNotFoundError:
         pass
-    
+
     # Подсчёт категорий
     category_counts = {
         "analytical": 0, "social": 0, "creative": 0,
         "managerial": 0, "practical": 0, "research": 0,
         "technical": 0, "artistic": 0, "entrepreneurial": 0, "scientific": 0
     }
-    
+
     data["questions"] = load_questions()["questions"]
     options_map = {}
     for q in data["questions"]:
         for opt in q["options"]:
             options_map[(q["id"], opt["id"])] = opt["category"]
-    
+
     for answer in answers:
         category = options_map.get((answer["question_id"], answer["option_id"]))
         if category and category in category_counts:
             category_counts[category] += 1
-    
+
     # Добавление нового семпла
     data["samples"].append({
         "features": category_counts,
         "label": result["primary"],
         "timestamp": datetime.now().isoformat()
     })
-    
+
     with open(RESPONSES_FILE, "w", encoding="utf-8") as f:
-        json.dump(data, f, ensure_ascii=False, indent=2)
+        ujson.dump(data, f, ensure_ascii=False, indent=2)
 
 
 class Answer(BaseModel):
@@ -185,22 +185,22 @@ async def health_check():
 # Админский эндпоинт для переобучения модели на основе накопленных данных(закоментирован, потому что в падлу авторизацию писать)
 """@app.post("/api/retrain")
 async def retrain_model():
-    
+
     import subprocess
     import sys
-    
+
     if not Path(RESPONSES_FILE).exists():
         raise HTTPException(status_code=400, detail="Нет накопленных данных для обучения")
-    
+
     # Копируем responses.json в dataset.json для trainer
     with open(RESPONSES_FILE, "r", encoding="utf-8") as f:
-        responses_data = json.load(f)
-    
+        responses_data = ujson.load(f)
+
     # Оставляем только samples
     dataset = {"samples": responses_data.get("samples", [])}
-    
+
     with open("dataset.json", "w", encoding="utf-8") as f:
-        json.dump(dataset, f, ensure_ascii=False, indent=2)
+        ujson.dump(dataset, f, ensure_ascii=False, indent=2)
     
     # Запускаем trainer
     try:
