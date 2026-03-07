@@ -11,6 +11,7 @@
 *.sln.docstates
 .json
 catboost_info
+.pkl
 
 # User-specific files (MonoDevelop/Xamarin Studio)
 *.userprefs
@@ -367,3 +368,4 @@ FodyWeavers.xsd
 /responses.json
 /questions.json
 /dataset.json
+/model_artifact.pkl
