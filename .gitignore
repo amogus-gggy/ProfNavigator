@@ -369,3 +369,7 @@ FodyWeavers.xsd
 /questions.json
 /dataset.json
 /model_artifact.pkl
+*.docx
+/profnavigator.service
+/txt.py
+/test_ratelimit.py
