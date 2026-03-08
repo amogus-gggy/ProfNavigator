@@ -1,6 +1,7 @@
-from fastapi import FastAPI, HTTPException
+from fastapi import FastAPI, HTTPException, Request
 from fastapi.staticfiles import StaticFiles
 from fastapi.responses import FileResponse, UJSONResponse
+from fastapi.middleware.base import BaseHTTPMiddleware
 from pydantic import BaseModel
 from typing import List, Dict, Any
 import ujson
@@ -9,6 +10,15 @@ from datetime import datetime
 from model import SurveyModel
 
 app = FastAPI(title="ProfNavigator", default_response_class=UJSONResponse)
+
+
+class NoTransformMiddleware(BaseHTTPMiddleware):
+    async def dispatch(self, request: Request, call_next):
+        response = await call_next(request)
+        response.headers["Cache-Control"] = "no-transform"
+        return response
+
+app.add_middleware(NoTransformMiddleware)
 
 app.mount("/static", StaticFiles(directory="static"), name="static")
 
