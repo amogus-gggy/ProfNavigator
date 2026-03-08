@@ -1,4 +1,4 @@
-from fastapi import FastAPI, HTTPException, Request
+from fastapi import FastAPI, HTTPException, Request, Body
 from fastapi.staticfiles import StaticFiles
 from fastapi.responses import FileResponse, UJSONResponse
 from starlette.middleware.base import BaseHTTPMiddleware
@@ -8,8 +8,27 @@ import ujson
 import random
 from datetime import datetime
 from model import SurveyModel
+from slowapi import Limiter
+from slowapi.errors import RateLimitExceeded
+from slowapi.middleware import SlowAPIMiddleware
+from slowapi.util import get_remote_address
+
+
+def get_cloudflare_ip(request: Request) -> str:
+    return request.headers.get("cf-connecting-ip") or (
+        request.client.host if request.client else "127.0.0.1"
+    )
+
+
+limiter = Limiter(key_func=get_cloudflare_ip)
 
 app = FastAPI(title="ProfNavigator", default_response_class=UJSONResponse)
+
+app.state.limiter = limiter
+app.add_exception_handler(RateLimitExceeded, lambda req, exc: UJSONResponse(
+    {"detail": "Слишком много запросов. Попробуйте через 3 минуты."}, status_code=429
+))
+app.add_middleware(SlowAPIMiddleware)
 
 
 class NoTransformMiddleware(BaseHTTPMiddleware):
@@ -126,7 +145,8 @@ async def get_questions(n: int = 15) -> dict:
 
 
 @app.post("/submit", response_model=SurveyResponse)
-async def submit_survey(request: SurveyRequest) -> SurveyResponse:
+@limiter.limit("1/3minutes")
+async def submit_survey(request: Request, request_body: SurveyRequest = Body(...)) -> SurveyResponse:
     """Отправить ответы и получить результат на основе ML модели"""
     data = load_questions()
 
@@ -151,7 +171,7 @@ async def submit_survey(request: SurveyRequest) -> SurveyResponse:
             options_map[(q["id"], opt["id"])] = opt["category"]
 
     # Подсчёт категорий
-    for answer in request.answers:
+    for answer in request_body.answers:
         category = options_map.get((answer.question_id, answer.option_id))
         if category:
             category_counts[category] += 1
@@ -175,7 +195,7 @@ async def submit_survey(request: SurveyRequest) -> SurveyResponse:
 
     # Сохранение ответа для будущего переобучения
     save_response(
-        [a.dict() for a in request.answers],
+        [a.dict() for a in request_body.answers],
         {"primary": prediction["primary"]}
     )
 

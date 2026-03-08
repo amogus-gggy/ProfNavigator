@@ -46,6 +46,8 @@ The app is a FastAPI server with a single-page HTML frontend.
 2. User answers in `static/index.html`
 3. `POST /submit` — maps `(question_id, option_id)` pairs to categories, builds a feature vector of 10 category counts, passes to `SurveyModel.predict()`, saves to `responses.json`
 
+**Dependencies note:** `ujson` is used instead of the standard `json` module throughout the app for performance. Imports are `import ujson` and responses use `UJSONResponse`.
+
 **Key files:**
 - `main.py` — FastAPI app, endpoints, response persistence
 - `model.py` — `SurveyModel` class: loads `model_artifact.pkl` on startup; falls back to a simple `DecisionTreeClassifier` if the artifact is missing

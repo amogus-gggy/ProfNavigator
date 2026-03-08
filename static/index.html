@@ -479,7 +479,17 @@
                     body: JSON.stringify({ answers: validAnswers })
                 });
 
-                if (!response.ok) throw new Error('Ошибка отправки ответов');
+                if (!response.ok) {
+                    const msg = response.status === 429
+                        ? 'Вы уже проходили тест недавно. Повторная попытка доступна через 3 минуты.'
+                        : 'Не удалось отправить ответы. Попробуйте позже.';
+                    showError(msg);
+                    elements.nextBtn.disabled = false;
+                    elements.nextBtnText.textContent = 'Получить результат';
+                    elements.nextBtnIcon.classList.remove('animate-spin');
+                    elements.nextBtnIcon.innerHTML = '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>';
+                    return;
+                }
 
                 const result = await response.json();
                 showResult(result);
