@@ -27,7 +27,7 @@ def get_cloudflare_ip(request: Request) -> str:
 
 limiter = Limiter(key_func=get_cloudflare_ip)
 
-semaphore = asyncio.Semaphore(150)
+semaphore = asyncio.Semaphore(50)
 
 # Глобальный кеш вопросов и options_map (инициализируется при старте)
 _questions_data: dict = {}
@@ -65,17 +65,18 @@ async def _flush_to_disk():
         return
 
     async with _responses_lock:
-        data = {"samples": []}
-        try:
-            with open(RESPONSES_FILE, "r", encoding="utf-8") as f:
-                data = ujson.load(f)
-        except FileNotFoundError:
-            pass
+        def _write():
+            data = {"samples": []}
+            try:
+                with open(RESPONSES_FILE, "r", encoding="utf-8") as f:
+                    data = ujson.load(f)
+            except FileNotFoundError:
+                pass
+            data["samples"].extend(batch)
+            with open(RESPONSES_FILE, "w", encoding="utf-8") as f:
+                ujson.dump(data, f, ensure_ascii=False, indent=2)
 
-        data["samples"].extend(batch)
-
-        with open(RESPONSES_FILE, "w", encoding="utf-8") as f:
-            ujson.dump(data, f, ensure_ascii=False, indent=2)
+        await asyncio.get_event_loop().run_in_executor(None, _write)
 
 
 @asynccontextmanager
@@ -221,7 +222,8 @@ async def submit_survey(request: Request, request_body: SurveyRequest = Body(...
             if category:
                 category_counts[category] += 1
 
-        prediction = survey_model.predict(category_counts)
+        loop = asyncio.get_event_loop()
+        prediction = await loop.run_in_executor(None, survey_model.predict, category_counts)
 
         sphere_info = _questions_data["spheres"][prediction["primary"]]
 
