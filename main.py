@@ -1,6 +1,6 @@
 from fastapi import FastAPI, HTTPException, Request, Body
 from fastapi.staticfiles import StaticFiles
-from fastapi.responses import FileResponse, HTMLResponse
+from fastapi.responses import FileResponse, HTMLResponse, JSONResponse
 from starlette.middleware.base import BaseHTTPMiddleware
 from pydantic import BaseModel
 from typing import List, Dict, Any
@@ -39,7 +39,7 @@ async def lifespan(app: FastAPI):
 app = FastAPI(title="ProfNavigator", lifespan=lifespan)
 
 app.state.limiter = limiter
-app.add_exception_handler(RateLimitExceeded, lambda req, exc: UJSONResponse(
+app.add_exception_handler(RateLimitExceeded, lambda req, exc: JSONResponse(
     {"detail": "Слишком много запросов. Попробуйте через 3 минуты."}, status_code=429
 ))
 app.add_middleware(SlowAPIMiddleware)
