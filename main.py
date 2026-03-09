@@ -1,17 +1,22 @@
 from fastapi import FastAPI, HTTPException, Request, Body
 from fastapi.staticfiles import StaticFiles
-from fastapi.responses import FileResponse, UJSONResponse
+from fastapi.responses import FileResponse, HTMLResponse
 from starlette.middleware.base import BaseHTTPMiddleware
 from pydantic import BaseModel
 from typing import List, Dict, Any
 import ujson
 import random
 from datetime import datetime
+import asyncio
 from model import SurveyModel
 from slowapi import Limiter
 from slowapi.errors import RateLimitExceeded
 from slowapi.middleware import SlowAPIMiddleware
 from slowapi.util import get_remote_address
+from fastapi_cache import FastAPICache
+from fastapi_cache.backends.inmemory import InMemoryBackend
+from fastapi_cache.decorator import cache
+from contextlib import asynccontextmanager
 
 
 def get_cloudflare_ip(request: Request) -> str:
@@ -22,7 +27,16 @@ def get_cloudflare_ip(request: Request) -> str:
 
 limiter = Limiter(key_func=get_cloudflare_ip)
 
-app = FastAPI(title="ProfNavigator", default_response_class=UJSONResponse)
+semaphore = asyncio.Semaphore(150)
+
+
+@asynccontextmanager
+async def lifespan(app: FastAPI):
+    FastAPICache.init(InMemoryBackend())
+    yield
+
+
+app = FastAPI(title="ProfNavigator", lifespan=lifespan)
 
 app.state.limiter = limiter
 app.add_exception_handler(RateLimitExceeded, lambda req, exc: UJSONResponse(
@@ -148,63 +162,65 @@ async def get_questions(n: int = 15) -> dict:
 @limiter.limit("1/3minutes")
 async def submit_survey(request: Request, request_body: SurveyRequest = Body(...)) -> SurveyResponse:
     """Отправить ответы и получить результат на основе ML модели"""
-    data = load_questions()
+    async with semaphore:
+        data = load_questions()
 
-    # Подсчёт ответов по категориям
-    category_counts = {
-        "analytical": 0,
-        "social": 0,
-        "creative": 0,
-        "managerial": 0,
-        "practical": 0,
-        "research": 0,
-        "technical": 0,
-        "artistic": 0,
-        "entrepreneurial": 0,
-        "scientific": 0
-    }
+        # Подсчёт ответов по категориям
+        category_counts = {
+            "analytical": 0,
+            "social": 0,
+            "creative": 0,
+            "managerial": 0,
+            "practical": 0,
+            "research": 0,
+            "technical": 0,
+            "artistic": 0,
+            "entrepreneurial": 0,
+            "scientific": 0
+        }
 
-    # Построение карты question_id -> options
-    options_map = {}
-    for q in data["questions"]:
-        for opt in q["options"]:
-            options_map[(q["id"], opt["id"])] = opt["category"]
+        # Построение карты question_id -> options
+        options_map = {}
+        for q in data["questions"]:
+            for opt in q["options"]:
+                options_map[(q["id"], opt["id"])] = opt["category"]
 
-    # Подсчёт категорий
-    for answer in request_body.answers:
-        category = options_map.get((answer.question_id, answer.option_id))
-        if category:
-            category_counts[category] += 1
+        # Подсчёт категорий
+        for answer in request_body.answers:
+            category = options_map.get((answer.question_id, answer.option_id))
+            if category:
+                category_counts[category] += 1
 
-    
-    prediction = survey_model.predict(category_counts)
+        prediction = survey_model.predict(category_counts)
 
-    
-    sphere_info = data["spheres"][prediction["primary"]]
+        sphere_info = data["spheres"][prediction["primary"]]
 
-    result = SurveyResponse(
-        primary=prediction["primary"],
-        sphere=sphere_info["name"],
-        description=sphere_info["description"],
-        confidence=prediction["confidence"],
-        probabilities=prediction["probabilities"],
-        ranking=prediction["ranking"],
-        answer_distribution=prediction["answer_distribution"],
-        reasoning=prediction["reasoning"],
-    )
+        result = SurveyResponse(
+            primary=prediction["primary"],
+            sphere=sphere_info["name"],
+            description=sphere_info["description"],
+            confidence=prediction["confidence"],
+            probabilities=prediction["probabilities"],
+            ranking=prediction["ranking"],
+            answer_distribution=prediction["answer_distribution"],
+            reasoning=prediction["reasoning"],
+        )
 
-    # Сохранение ответа для будущего переобучения
-    save_response(
-        [a.dict() for a in request_body.answers],
-        {"primary": prediction["primary"]}
-    )
+        # Сохранение ответа для будущего переобучения
+        save_response(
+            [a.dict() for a in request_body.answers],
+            {"primary": prediction["primary"]}
+        )
 
-    return result
+        return result
 
 
-@app.get("/")
-async def root():
-    return FileResponse("static/index.html")
+@app.get("/", response_class=HTMLResponse)
+@limiter.limit("1000/second")
+@cache(expire=3600)
+async def root(request: Request):
+    with open("static/index.html", "r", encoding="utf-8") as f:
+        return f.read()
 
 
 @app.get("/api/health")
