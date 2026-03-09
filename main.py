@@ -29,11 +29,83 @@ limiter = Limiter(key_func=get_cloudflare_ip)
 
 semaphore = asyncio.Semaphore(150)
 
+# Глобальный кеш вопросов и options_map (инициализируется при старте)
+_questions_data: dict = {}
+_options_map: dict = {}
+
+# Очередь и лок для батч-записи ответов
+_responses_queue: asyncio.Queue = None
+_responses_lock: asyncio.Lock = None
+_flush_task: asyncio.Task = None
+
+FLUSH_INTERVAL = 5  # секунд между записями на диск
+FLUSH_BATCH_SIZE = 50  # максимум записей за раз
+
+
+async def _flush_responses_worker():
+    """Фоновая задача: периодически сбрасывает очередь ответов на диск."""
+    while True:
+        await asyncio.sleep(FLUSH_INTERVAL)
+        await _flush_to_disk()
+
+
+async def _flush_to_disk():
+    """Записывает все накопленные ответы из очереди в responses.json."""
+    if _responses_queue.empty():
+        return
+
+    batch = []
+    while not _responses_queue.empty() and len(batch) < FLUSH_BATCH_SIZE:
+        try:
+            batch.append(_responses_queue.get_nowait())
+        except asyncio.QueueEmpty:
+            break
+
+    if not batch:
+        return
+
+    async with _responses_lock:
+        data = {"samples": []}
+        try:
+            with open(RESPONSES_FILE, "r", encoding="utf-8") as f:
+                data = ujson.load(f)
+        except FileNotFoundError:
+            pass
+
+        data["samples"].extend(batch)
+
+        with open(RESPONSES_FILE, "w", encoding="utf-8") as f:
+            ujson.dump(data, f, ensure_ascii=False, indent=2)
+
 
 @asynccontextmanager
 async def lifespan(app: FastAPI):
+    global _questions_data, _options_map, _responses_queue, _responses_lock, _flush_task
+
     FastAPICache.init(InMemoryBackend())
+
+    # Загружаем вопросы один раз при старте
+    with open("questions.json", "r", encoding="utf-8") as f:
+        _questions_data = ujson.load(f)
+
+    # Строим options_map один раз
+    _options_map = {}
+    for q in _questions_data["questions"]:
+        for opt in q["options"]:
+            _options_map[(q["id"], opt["id"])] = opt["category"]
+
+    # Инициализируем очередь и лок
+    _responses_queue = asyncio.Queue()
+    _responses_lock = asyncio.Lock()
+
+    # Запускаем фоновый воркер записи
+    _flush_task = asyncio.create_task(_flush_responses_worker())
+
     yield
+
+    # При завершении — сбрасываем остаток на диск
+    _flush_task.cancel()
+    await _flush_to_disk()
 
 
 app = FastAPI(title="ProfNavigator", lifespan=lifespan)
@@ -57,8 +129,8 @@ app.mount("/static", StaticFiles(directory="static"), name="static")
 
 
 def load_questions() -> dict:
-    with open("questions.json", "r", encoding="utf-8") as f:
-        return ujson.load(f)
+    """Возвращает кешированные вопросы (загружены при старте)."""
+    return _questions_data
 
 #ML init
 survey_model = SurveyModel()
@@ -67,43 +139,17 @@ survey_model = SurveyModel()
 RESPONSES_FILE = "responses.json"
 
 
-def save_response(answers: List[Dict], result: Dict):
-    """Сохранение ответа пользователя для будущего переобучения"""
-    data = {"samples": []}
-
-    try:
-        with open(RESPONSES_FILE, "r", encoding="utf-8") as f:
-            data = ujson.load(f)
-    except FileNotFoundError:
-        pass
-
-    # Подсчёт категорий
-    category_counts = {
-        "analytical": 0, "social": 0, "creative": 0,
-        "managerial": 0, "practical": 0, "research": 0,
-        "technical": 0, "artistic": 0, "entrepreneurial": 0, "scientific": 0
-    }
-
-    data["questions"] = load_questions()["questions"]
-    options_map = {}
-    for q in data["questions"]:
-        for opt in q["options"]:
-            options_map[(q["id"], opt["id"])] = opt["category"]
-
-    for answer in answers:
-        category = options_map.get((answer["question_id"], answer["option_id"]))
-        if category and category in category_counts:
-            category_counts[category] += 1
-
-    # Добавление нового семпла
-    data["samples"].append({
+def _enqueue_response(category_counts: Dict, primary_label: str):
+    """Добавляет семпл в очередь записи (не блокирует)."""
+    sample = {
         "features": category_counts,
-        "label": result["primary"],
+        "label": primary_label,
         "timestamp": datetime.now().isoformat()
-    })
-
-    with open(RESPONSES_FILE, "w", encoding="utf-8") as f:
-        ujson.dump(data, f, ensure_ascii=False, indent=2)
+    }
+    try:
+        _responses_queue.put_nowait(sample)
+    except asyncio.QueueFull:
+        pass  # При переполнении пропускаем запись
 
 
 class Answer(BaseModel):
@@ -159,41 +205,25 @@ async def get_questions(n: int = 15) -> dict:
 
 
 @app.post("/submit", response_model=SurveyResponse)
-@limiter.limit("1/3minutes")
+@limiter.limit("1000/1minutes")
 async def submit_survey(request: Request, request_body: SurveyRequest = Body(...)) -> SurveyResponse:
     """Отправить ответы и получить результат на основе ML модели"""
     async with semaphore:
-        data = load_questions()
-
-        # Подсчёт ответов по категориям
+        # Подсчёт ответов по категориям через кешированный options_map
         category_counts = {
-            "analytical": 0,
-            "social": 0,
-            "creative": 0,
-            "managerial": 0,
-            "practical": 0,
-            "research": 0,
-            "technical": 0,
-            "artistic": 0,
-            "entrepreneurial": 0,
-            "scientific": 0
+            "analytical": 0, "social": 0, "creative": 0,
+            "managerial": 0, "practical": 0, "research": 0,
+            "technical": 0, "artistic": 0, "entrepreneurial": 0, "scientific": 0
         }
 
-        # Построение карты question_id -> options
-        options_map = {}
-        for q in data["questions"]:
-            for opt in q["options"]:
-                options_map[(q["id"], opt["id"])] = opt["category"]
-
-        # Подсчёт категорий
         for answer in request_body.answers:
-            category = options_map.get((answer.question_id, answer.option_id))
+            category = _options_map.get((answer.question_id, answer.option_id))
             if category:
                 category_counts[category] += 1
 
         prediction = survey_model.predict(category_counts)
 
-        sphere_info = data["spheres"][prediction["primary"]]
+        sphere_info = _questions_data["spheres"][prediction["primary"]]
 
         result = SurveyResponse(
             primary=prediction["primary"],
@@ -206,11 +236,8 @@ async def submit_survey(request: Request, request_body: SurveyRequest = Body(...
             reasoning=prediction["reasoning"],
         )
 
-        # Сохранение ответа для будущего переобучения
-        save_response(
-            [a.dict() for a in request_body.answers],
-            {"primary": prediction["primary"]}
-        )
+        # Неблокирующая постановка в очередь записи
+        _enqueue_response(category_counts, prediction["primary"])
 
         return result
 
