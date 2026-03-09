@@ -1,0 +1,13 @@
+[Unit]
+Description=ProfNavigator FastAPI App
+After=network.target
+
+[Service]
+User=root
+WorkingDirectory=/root/ProfNavigator
+ExecStart=/root/ProfNavigator/venv/bin/python -m uvicorn redirect:app --host 0.0.0.0 --port 443
+Restart=always
+RestartSec=5
+
+[Install]
+WantedBy=multi-user.target
