@@ -8,7 +8,6 @@ import ujson
 import random
 import uuid
 import time
-from datetime import datetime
 from dataclasses import dataclass, field
 from concurrent.futures import ProcessPoolExecutor
 import asyncio
@@ -73,14 +72,6 @@ limiter = Limiter(key_func=get_cloudflare_ip)
 _questions_data: dict = {}
 _options_map: dict = {}
 
-# Очередь и лок для батч-записи ответов
-_responses_queue: asyncio.Queue = None
-_responses_lock: asyncio.Lock = None
-_flush_task: asyncio.Task = None
-
-FLUSH_INTERVAL = 5  # секунд между записями на диск
-FLUSH_BATCH_SIZE = 50  # максимум записей за раз
-
 
 async def _process_jobs():
     """Фоновый воркер: обрабатывает джобы из очереди по одному."""
@@ -116,7 +107,6 @@ async def _process_jobs():
                 "reasoning": prediction["reasoning"],
             }
             job.status = "done"
-            _enqueue_response(job.category_counts, prediction["primary"])
         except Exception as e:
             job.status = "error"
             job.error = str(e)
@@ -137,46 +127,10 @@ def _cleanup_expired_jobs():
         _jobs.pop(jid, None)
 
 
-async def _flush_responses_worker():
-    """Фоновая задача: периодически сбрасывает очередь ответов на диск."""
-    while True:
-        await asyncio.sleep(FLUSH_INTERVAL)
-        await _flush_to_disk()
-
-
-async def _flush_to_disk():
-    """Записывает все накопленные ответы из очереди в responses.json."""
-    if _responses_queue.empty():
-        return
-
-    batch = []
-    while not _responses_queue.empty() and len(batch) < FLUSH_BATCH_SIZE:
-        try:
-            batch.append(_responses_queue.get_nowait())
-        except asyncio.QueueEmpty:
-            break
-
-    if not batch:
-        return
-
-    async with _responses_lock:
-        def _write():
-            data = {"samples": []}
-            try:
-                with open(RESPONSES_FILE, "r", encoding="utf-8") as f:
-                    data = ujson.load(f)
-            except FileNotFoundError:
-                pass
-            data["samples"].extend(batch)
-            with open(RESPONSES_FILE, "w", encoding="utf-8") as f:
-                ujson.dump(data, f, ensure_ascii=False, indent=2)
-
-        await asyncio.get_event_loop().run_in_executor(None, _write)
-
 
 @asynccontextmanager
 async def lifespan(app: FastAPI):
-    global _questions_data, _options_map, _responses_queue, _responses_lock, _flush_task
+    global _questions_data, _options_map
     global _job_queue, _process_pool, _job_worker_task
 
     FastAPICache.init(InMemoryBackend())
@@ -191,13 +145,6 @@ async def lifespan(app: FastAPI):
         for opt in q["options"]:
             _options_map[(q["id"], opt["id"])] = opt["category"]
 
-    # Инициализируем очередь и лок для записи ответов
-    _responses_queue = asyncio.Queue()
-    _responses_lock = asyncio.Lock()
-
-    # Запускаем фоновый воркер записи
-    _flush_task = asyncio.create_task(_flush_responses_worker())
-
     # Инициализируем очередь джобов и ProcessPoolExecutor
     _job_queue = asyncio.Queue()
     _process_pool = ProcessPoolExecutor(max_workers=1, initializer=_init_worker)
@@ -208,8 +155,6 @@ async def lifespan(app: FastAPI):
     # При завершении — останавливаем воркеры
     _job_worker_task.cancel()
     _process_pool.shutdown(wait=False)
-    _flush_task.cancel()
-    await _flush_to_disk()
 
 
 app = FastAPI(title="ProfNavigator", lifespan=lifespan)
@@ -236,18 +181,6 @@ def load_questions() -> dict:
     """Возвращает кешированные вопросы (загружены при старте)."""
     return _questions_data
 
-
-def _enqueue_response(category_counts: Dict, primary_label: str):
-    """Добавляет семпл в очередь записи (не блокирует)."""
-    sample = {
-        "features": category_counts,
-        "label": primary_label,
-        "timestamp": datetime.now().isoformat()
-    }
-    try:
-        _responses_queue.put_nowait(sample)
-    except asyncio.QueueFull:
-        pass  # При переполнении пропускаем запись
 
 
 class Answer(BaseModel):
