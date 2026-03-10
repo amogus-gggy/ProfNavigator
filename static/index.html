@@ -458,6 +458,60 @@
             }
         }
 
+        function setButtonLoading(text) {
+            elements.nextBtn.disabled = true;
+            elements.nextBtnText.textContent = text;
+            elements.nextBtnIcon.innerHTML = '<circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle><path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>';
+            elements.nextBtnIcon.classList.add('animate-spin');
+        }
+
+        function resetButton() {
+            elements.nextBtn.disabled = false;
+            elements.nextBtnText.textContent = 'Получить результат';
+            elements.nextBtnIcon.classList.remove('animate-spin');
+            elements.nextBtnIcon.innerHTML = '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>';
+        }
+
+        async function pollJob(jobId) {
+            const POLL_INTERVAL = 1000;
+            const MAX_ATTEMPTS = 120;
+
+            for (let attempt = 0; attempt < MAX_ATTEMPTS; attempt++) {
+                await new Promise(r => setTimeout(r, POLL_INTERVAL));
+
+                let data;
+                try {
+                    const r = await fetch(`${API_URL}/job/${jobId}`);
+                    if (!r.ok) {
+                        showError('Ошибка при получении результата. Попробуйте позже.');
+                        resetButton();
+                        return;
+                    }
+                    data = await r.json();
+                } catch {
+                    showError('Не удалось получить результат. Проверьте соединение.');
+                    resetButton();
+                    return;
+                }
+
+                if (data.status === 'pending') {
+                    setButtonLoading(`В очереди: позиция ${data.position}`);
+                } else if (data.status === 'processing') {
+                    setButtonLoading('Анализируем...');
+                } else if (data.status === 'done') {
+                    showResult(data.result);
+                    return;
+                } else {
+                    showError('Ошибка при обработке. Попробуйте позже.');
+                    resetButton();
+                    return;
+                }
+            }
+
+            showError('Превышено время ожидания. Попробуйте позже.');
+            resetButton();
+        }
+
         async function submitAnswers() {
             const totalQuestions = questionsData.selected_count || questionsData.questions.length;
             const validAnswers = answers.filter(a => a !== null);
@@ -467,10 +521,7 @@
                 return;
             }
 
-            elements.nextBtn.disabled = true;
-            elements.nextBtnText.textContent = 'Обработка...';
-            elements.nextBtnIcon.innerHTML = '<circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle><path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>';
-            elements.nextBtnIcon.classList.add('animate-spin');
+            setButtonLoading('Отправка...');
 
             try {
                 const response = await fetch(`${API_URL}/submit`, {
@@ -484,21 +535,16 @@
                         ? 'Слишком много запросов с вашего IP-адреса. Попробуйте позже.'
                         : 'Не удалось отправить ответы. Попробуйте позже.';
                     showError(msg);
-                    elements.nextBtn.disabled = false;
-                    elements.nextBtnText.textContent = 'Получить результат';
-                    elements.nextBtnIcon.classList.remove('animate-spin');
-                    elements.nextBtnIcon.innerHTML = '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>';
+                    resetButton();
                     return;
                 }
 
-                const result = await response.json();
-                showResult(result);
+                const { job_id, position } = await response.json();
+                setButtonLoading(`В очереди: позиция ${position}`);
+                await pollJob(job_id);
             } catch (error) {
                 showError('Не удалось отправить ответы. Попробуйте позже.');
-                elements.nextBtn.disabled = false;
-                elements.nextBtnText.textContent = 'Получить результат';
-                elements.nextBtnIcon.classList.remove('animate-spin');
-                elements.nextBtnIcon.innerHTML = '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>';
+                resetButton();
             }
         }
 
