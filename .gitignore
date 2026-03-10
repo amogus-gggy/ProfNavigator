@@ -366,7 +366,7 @@ MigrationBackup/
 # Fody - auto-generated XML schema
 FodyWeavers.xsd
 /responses.json
-/questions.json
+
 /dataset.json
 /model_artifact.pkl
 *.docx
@@ -374,3 +374,4 @@ FodyWeavers.xsd
 /txt.py
 /test_ratelimit.py
 /profnavigator.service
+/temp.txt
