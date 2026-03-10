@@ -9,7 +9,9 @@ CATEGORIES = [
     "technical", "artistic", "entrepreneurial", "scientific"
 ]
 
-N_QUESTIONS = 15
+# Масштаб для float-признаков (пропорции Дирихле * N_QUESTIONS).
+# Итоговые features нормализуются до суммы 1 при обучении и инференсе.
+N_QUESTIONS = 30
 
 # Параметры Дирихле для каждого профиля.
 # Высокий alpha у основной категории -> она доминирует, но не абсолютно.
@@ -81,16 +83,10 @@ def generate_sample_for_category(category: str) -> dict:
     # Сэмплируем пропорции из Дирихле
     proportions = np.random.dirichlet(alpha_vec)
 
-    # Переводим в целые счётчики (сумма = N_QUESTIONS)
-    raw_counts = proportions * N_QUESTIONS
-    counts = np.floor(raw_counts).astype(int)
-    remainder = N_QUESTIONS - counts.sum()
-    if remainder > 0:
-        fracs = raw_counts - counts
-        top_indices = np.argsort(fracs)[::-1][:remainder]
-        counts[top_indices] += 1
-
-    features = {cat: int(counts[i]) for i, cat in enumerate(CATEGORIES)}
+    # Храним как float-веса, масштабированные к N_QUESTIONS.
+    # Не округляем до int — в продакшне мульти-категорийные вопросы тоже
+    # дают float-суммы, и обе стороны нормализуются до пропорций перед моделью.
+    features = {cat: round(float(proportions[i] * N_QUESTIONS), 4) for i, cat in enumerate(CATEGORIES)}
 
     # Топ-3 soft labels по пропорциям Дирихле (порог > 8%)
     props = {cat: float(proportions[i]) for i, cat in enumerate(CATEGORIES)}

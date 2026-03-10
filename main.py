@@ -139,11 +139,19 @@ async def lifespan(app: FastAPI):
     with open("questions.json", "r", encoding="utf-8") as f:
         _questions_data = ujson.load(f)
 
-    # Строим options_map один раз
+    # Строим options_map один раз.
+    # Новый формат: opt["categories"] = {cat: weight} (мульти-категорийные ответы).
+    # Старый формат: opt["category"] = str (одна категория, weight = 1.0).
+    # "Ничего из перечисленного": categories = {} -> пустой dict, ничего не добавляется.
     _options_map = {}
     for q in _questions_data["questions"]:
         for opt in q["options"]:
-            _options_map[(q["id"], opt["id"])] = opt["category"]
+            if "categories" in opt:
+                _options_map[(q["id"], opt["id"])] = opt["categories"]
+            elif "category" in opt:
+                _options_map[(q["id"], opt["id"])] = {opt["category"]: 1.0}
+            else:
+                _options_map[(q["id"], opt["id"])] = {}
 
     # Инициализируем очередь джобов и ProcessPoolExecutor
     _job_queue = asyncio.Queue()
@@ -194,7 +202,7 @@ class SurveyRequest(BaseModel):
 
 
 @app.get("/questions")
-async def get_questions(n: int = 15) -> dict:
+async def get_questions(n: int = 30) -> dict:
     """
     Получить N случайных вопросов в случайном порядке.
     
@@ -236,9 +244,10 @@ async def submit_survey(request: Request, request_body: SurveyRequest = Body(...
     }
 
     for answer in request_body.answers:
-        category = _options_map.get((answer.question_id, answer.option_id))
-        if category:
-            category_counts[category] += 1
+        cat_weights = _options_map.get((answer.question_id, answer.option_id), {})
+        for cat, weight in cat_weights.items():
+            if cat in category_counts:
+                category_counts[cat] += weight
 
     job_id = str(uuid.uuid4())
     job = Job(id=job_id, status="pending", category_counts=category_counts)

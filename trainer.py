@@ -52,7 +52,7 @@ CATEGORIES = [
     "technical", "artistic", "entrepreneurial", "scientific"
 ]
 
-N_QUESTIONS = 15
+N_QUESTIONS = 30
 
 
 #параметры RandomizedSearchCV
@@ -166,7 +166,6 @@ def create_model(model_type: str, **kwargs) -> Any:
             bootstrap=True,
             criterion='entropy',
             random_state=42,
-            class_weight='balanced',
             n_jobs=-1
         )
     elif model_type == "extra_trees":
@@ -178,7 +177,6 @@ def create_model(model_type: str, **kwargs) -> Any:
             max_features='sqrt',
             criterion='entropy',
             random_state=42,
-            class_weight='balanced',
             n_jobs=-1
         )
     elif model_type == "gradient_boosting":
@@ -204,7 +202,6 @@ def create_model(model_type: str, **kwargs) -> Any:
             bagging_fraction=0.9,
             bagging_freq=5,
             random_state=42,
-            class_weight='balanced',
             verbose=-1
         )
     elif model_type == "catboost":

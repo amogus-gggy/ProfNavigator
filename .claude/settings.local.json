@@ -1,0 +1,7 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(python -c \"\nimport json\nwith open\\('C:/Users/fedor/Desktop/project/questions.json', encoding='utf-8'\\) as f:\n    d = json.load\\(f\\)\nprint\\('max id:', max\\(q['id'] for q in d['questions']\\)\\)\nprint\\('keys in first option:', list\\(d['questions'][0]['options'][0].keys\\(\\)\\)\\)\n\")"
+    ]
+  }
+}

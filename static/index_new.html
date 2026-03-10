@@ -1,0 +1,1261 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ProfNavigator</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-deep: #060a14;
+            --bg-mid: #0d1424;
+            --bg-card: rgba(255,255,255,0.04);
+            --border: rgba(255,255,255,0.08);
+            --border-hi: rgba(139,92,246,0.5);
+            --violet: #8b5cf6;
+            --violet-hi: #a78bfa;
+            --cyan: #22d3ee;
+            --gold: #f59e0b;
+            --text-pri: #f1f5f9;
+            --text-sec: #94a3b8;
+            --text-muted: #475569;
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'DM Sans', sans-serif;
+            background: var(--bg-deep);
+            color: var(--text-pri);
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+            /* ── noise texture overlay ── */
+            body::before {
+                content: '';
+                position: fixed;
+                inset: 0;
+                background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 512 512' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.03'/%3E%3C/svg%3E");
+                pointer-events: none;
+                z-index: 0;
+            }
+
+        /* ── ambient glow blobs ── */
+        .glow-blob {
+            position: fixed;
+            border-radius: 50%;
+            filter: blur(120px);
+            pointer-events: none;
+            z-index: 0;
+            opacity: 0.18;
+        }
+
+        .glow-blob-1 {
+            width: 600px;
+            height: 600px;
+            background: #7c3aed;
+            top: -200px;
+            left: -200px;
+        }
+
+        .glow-blob-2 {
+            width: 500px;
+            height: 500px;
+            background: #0891b2;
+            bottom: -150px;
+            right: -150px;
+        }
+
+        .glow-blob-3 {
+            width: 300px;
+            height: 300px;
+            background: #7c3aed;
+            top: 40%;
+            right: 20%;
+            animation: blobDrift 12s ease-in-out infinite alternate;
+        }
+
+        @keyframes blobDrift {
+            from {
+                transform: translate(0, 0) scale(1);
+            }
+
+            to {
+                transform: translate(40px, -60px) scale(1.15);
+            }
+        }
+
+        /* ── layout wrapper ── */
+        .wrapper {
+            position: relative;
+            z-index: 1;
+            min-height: 100vh;
+            display: flex;
+            align-items: flex-start;
+            justify-content: center;
+            padding: 24px 16px 48px;
+        }
+
+        .panel {
+            width: 100%;
+            max-width: 680px;
+        }
+
+        /* ── glass card ── */
+        .glass {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border-radius: 20px;
+        }
+
+        .glass-hi {
+            border-color: var(--border-hi);
+            box-shadow: 0 0 0 1px rgba(139,92,246,0.15), 0 24px 64px rgba(0,0,0,0.5);
+        }
+
+        /* ── logo / header ── */
+        .logo-mark {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 40px;
+        }
+
+        .logo-icon {
+            width: 36px;
+            height: 36px;
+            background: linear-gradient(135deg, var(--violet), var(--cyan));
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 18px;
+            box-shadow: 0 0 20px rgba(139,92,246,0.4);
+        }
+
+        .logo-text {
+            font-family: 'Syne', sans-serif;
+            font-weight: 700;
+            font-size: 18px;
+            letter-spacing: -0.02em;
+            color: var(--text-pri);
+        }
+
+            .logo-text span {
+                color: var(--violet-hi);
+            }
+
+        /* ── fade / slide animations ── */
+        @keyframes fadeUp {
+            from {
+                opacity: 0;
+                transform: translateY(28px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+
+            to {
+                opacity: 1;
+            }
+        }
+
+        .fade-up {
+            animation: fadeUp 0.5s cubic-bezier(0.22, 1, 0.36, 1) both;
+        }
+
+        .fade-in {
+            animation: fadeIn 0.4s ease both;
+        }
+
+        .delay-1 {
+            animation-delay: 0.06s;
+        }
+
+        .delay-2 {
+            animation-delay: 0.12s;
+        }
+
+        .delay-3 {
+            animation-delay: 0.18s;
+        }
+
+        .delay-4 {
+            animation-delay: 0.24s;
+        }
+
+        /* ── welcome screen ── */
+        .hero-title {
+            font-family: 'Syne', sans-serif;
+            font-size: clamp(2.4rem, 6vw, 3.6rem);
+            font-weight: 800;
+            line-height: 1.08;
+            letter-spacing: -0.04em;
+            margin-bottom: 16px;
+        }
+
+            .hero-title .accent {
+                background: linear-gradient(90deg, var(--violet-hi), var(--cyan));
+                -webkit-background-clip: text;
+                -webkit-text-fill-color: transparent;
+                background-clip: text;
+            }
+
+        .hero-sub {
+            font-size: 1.05rem;
+            color: var(--text-sec);
+            line-height: 1.6;
+            max-width: 460px;
+            margin-bottom: 40px;
+        }
+
+        /* ── steps list ── */
+        .steps {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            margin-bottom: 40px;
+        }
+
+        .step-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 14px;
+            padding: 16px 18px;
+            background: rgba(255,255,255,0.03);
+            border: 1px solid var(--border);
+            border-radius: 14px;
+            transition: border-color 0.2s, background 0.2s;
+        }
+
+            .step-item:hover {
+                border-color: rgba(139,92,246,0.3);
+                background: rgba(139,92,246,0.05);
+            }
+
+        .step-num {
+            flex-shrink: 0;
+            width: 28px;
+            height: 28px;
+            border-radius: 8px;
+            background: linear-gradient(135deg, var(--violet), #6d28d9);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: 'Syne', sans-serif;
+            font-weight: 700;
+            font-size: 13px;
+            color: #fff;
+        }
+
+        .step-text {
+            font-size: 0.88rem;
+            color: var(--text-sec);
+            line-height: 1.5;
+            padding-top: 4px;
+        }
+
+            .step-text strong {
+                color: var(--text-pri);
+                font-weight: 600;
+            }
+
+        /* ── primary button ── */
+        .btn-primary {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            padding: 14px 32px;
+            background: linear-gradient(135deg, var(--violet), #6d28d9);
+            color: #fff;
+            font-family: 'Syne', sans-serif;
+            font-weight: 700;
+            font-size: 1rem;
+            letter-spacing: 0.01em;
+            border: none;
+            border-radius: 14px;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+            transition: transform 0.15s, box-shadow 0.15s;
+            box-shadow: 0 8px 32px rgba(109,40,217,0.4);
+        }
+
+            .btn-primary::before {
+                content: '';
+                position: absolute;
+                inset: 0;
+                background: linear-gradient(135deg, rgba(255,255,255,0.12), transparent);
+                pointer-events: none;
+            }
+
+            .btn-primary:hover {
+                transform: translateY(-2px);
+                box-shadow: 0 12px 40px rgba(109,40,217,0.55);
+            }
+
+            .btn-primary:active {
+                transform: translateY(0);
+            }
+
+        .btn-ghost {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 12px 20px;
+            background: transparent;
+            color: var(--text-sec);
+            font-size: 0.9rem;
+            font-weight: 500;
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            cursor: pointer;
+            transition: color 0.2s, border-color 0.2s, background 0.2s;
+        }
+
+            .btn-ghost:hover {
+                color: var(--text-pri);
+                border-color: rgba(255,255,255,0.2);
+                background: rgba(255,255,255,0.05);
+            }
+
+            .btn-ghost:disabled {
+                opacity: 0.3;
+                cursor: not-allowed;
+            }
+
+        /* ── progress track ── */
+        .progress-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: baseline;
+            margin-bottom: 10px;
+        }
+
+        .progress-label {
+            font-family: 'Syne', sans-serif;
+            font-size: 0.8rem;
+            font-weight: 600;
+            color: var(--text-muted);
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+        }
+
+        .progress-frac {
+            font-family: 'Syne', sans-serif;
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: var(--violet-hi);
+        }
+
+        .progress-track {
+            width: 100%;
+            height: 4px;
+            background: rgba(255,255,255,0.07);
+            border-radius: 99px;
+            overflow: hidden;
+            margin-bottom: 32px;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, var(--violet), var(--cyan));
+            border-radius: 99px;
+            transition: width 0.5s cubic-bezier(0.22, 1, 0.36, 1);
+            box-shadow: 0 0 10px rgba(139,92,246,0.6);
+        }
+
+        /* ── question card ── */
+        .q-index {
+            font-family: 'Syne', sans-serif;
+            font-size: 0.75rem;
+            font-weight: 700;
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+            color: var(--violet-hi);
+            margin-bottom: 14px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+            .q-index::before {
+                content: '';
+                display: inline-block;
+                width: 20px;
+                height: 2px;
+                background: var(--violet-hi);
+                border-radius: 1px;
+            }
+
+        .q-text {
+            font-family: 'Syne', sans-serif;
+            font-size: clamp(1.1rem, 3vw, 1.45rem);
+            font-weight: 600;
+            line-height: 1.35;
+            color: var(--text-pri);
+            margin-bottom: 28px;
+        }
+
+        /* ── option cards ── */
+        .option-card {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            padding: 14px 18px;
+            background: rgba(255,255,255,0.03);
+            border: 1.5px solid rgba(255,255,255,0.07);
+            border-radius: 14px;
+            cursor: pointer;
+            transition: all 0.2s cubic-bezier(0.22, 1, 0.36, 1);
+            margin-bottom: 10px;
+            user-select: none;
+        }
+
+            .option-card:hover {
+                border-color: rgba(139,92,246,0.4);
+                background: rgba(139,92,246,0.07);
+                transform: translateX(4px);
+            }
+
+            .option-card.selected {
+                border-color: var(--violet);
+                background: rgba(139,92,246,0.12);
+                box-shadow: 0 0 0 1px rgba(139,92,246,0.2) inset;
+            }
+
+        .option-radio {
+            flex-shrink: 0;
+            width: 22px;
+            height: 22px;
+            border-radius: 50%;
+            border: 2px solid rgba(255,255,255,0.2);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.2s;
+        }
+
+        .option-card.selected .option-radio {
+            border-color: var(--violet);
+            background: var(--violet);
+            box-shadow: 0 0 10px rgba(139,92,246,0.5);
+        }
+
+        .option-radio-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: #fff;
+            opacity: 0;
+            transform: scale(0);
+            transition: all 0.2s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+
+        .option-card.selected .option-radio-dot {
+            opacity: 1;
+            transform: scale(1);
+        }
+
+        .option-text {
+            font-size: 0.92rem;
+            font-weight: 500;
+            color: var(--text-sec);
+            line-height: 1.45;
+            transition: color 0.2s;
+        }
+
+        .option-card.selected .option-text {
+            color: var(--text-pri);
+        }
+
+        /* ── nav row ── */
+        .nav-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 28px;
+            padding-top: 24px;
+            border-top: 1px solid var(--border);
+        }
+
+        /* ── loading spinner ── */
+        .spinner-ring {
+            width: 56px;
+            height: 56px;
+            border-radius: 50%;
+            border: 3px solid rgba(139,92,246,0.15);
+            border-top-color: var(--violet);
+            animation: spin 0.9s linear infinite;
+            margin: 0 auto 20px;
+        }
+
+        @keyframes spin {
+            to {
+                transform: rotate(360deg);
+            }
+        }
+
+        /* ── result screen ── */
+        .result-hero {
+            text-align: center;
+            padding: 40px 24px 32px;
+        }
+
+        .result-badge {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 88px;
+            height: 88px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #f59e0b, #ef4444);
+            font-size: 44px;
+            margin-bottom: 20px;
+            box-shadow: 0 0 0 12px rgba(245,158,11,0.1), 0 20px 60px rgba(245,158,11,0.3);
+            animation: pulseBadge 2.5s ease-in-out infinite;
+        }
+
+        @keyframes pulseBadge {
+            0%, 100% {
+                box-shadow: 0 0 0 12px rgba(245,158,11,0.1), 0 20px 60px rgba(245,158,11,0.3);
+            }
+
+            50% {
+                box-shadow: 0 0 0 20px rgba(245,158,11,0.05), 0 20px 60px rgba(245,158,11,0.45);
+            }
+        }
+
+        .result-label {
+            font-family: 'Syne', sans-serif;
+            font-size: 0.75rem;
+            font-weight: 700;
+            letter-spacing: 0.14em;
+            text-transform: uppercase;
+            color: var(--text-muted);
+            margin-bottom: 8px;
+        }
+
+        .result-sphere-name {
+            font-family: 'Syne', sans-serif;
+            font-size: clamp(1.8rem, 5vw, 2.6rem);
+            font-weight: 800;
+            letter-spacing: -0.03em;
+            background: linear-gradient(90deg, var(--violet-hi), var(--cyan));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 12px;
+            line-height: 1.1;
+        }
+
+        .confidence-pill {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 5px 14px;
+            border-radius: 99px;
+            font-size: 0.78rem;
+            font-weight: 600;
+            letter-spacing: 0.02em;
+            margin-bottom: 16px;
+        }
+
+        .conf-high {
+            background: rgba(34,197,94,0.12);
+            color: #4ade80;
+            border: 1px solid rgba(34,197,94,0.2);
+        }
+
+        .conf-medium {
+            background: rgba(234,179,8,0.12);
+            color: #facc15;
+            border: 1px solid rgba(234,179,8,0.2);
+        }
+
+        .conf-low {
+            background: rgba(239,68,68,0.12);
+            color: #f87171;
+            border: 1px solid rgba(239,68,68,0.2);
+        }
+
+        .result-desc {
+            font-size: 0.95rem;
+            color: var(--text-sec);
+            line-height: 1.6;
+            max-width: 460px;
+            margin: 0 auto;
+        }
+
+        /* ── reasoning block ── */
+        .reasoning-block {
+            background: rgba(139,92,246,0.06);
+            border: 1px solid rgba(139,92,246,0.15);
+            border-radius: 16px;
+            padding: 22px 24px;
+            margin: 0 0 20px;
+        }
+
+        .section-heading {
+            font-family: 'Syne', sans-serif;
+            font-size: 0.78rem;
+            font-weight: 700;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            color: var(--violet-hi);
+            margin-bottom: 14px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .reasoning-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 10px;
+            padding: 8px 0;
+            border-bottom: 1px solid rgba(139,92,246,0.08);
+            font-size: 0.87rem;
+            color: var(--text-sec);
+            line-height: 1.5;
+        }
+
+            .reasoning-item:last-child {
+                border-bottom: none;
+            }
+
+        .reasoning-dot {
+            flex-shrink: 0;
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            background: var(--violet-hi);
+            margin-top: 7px;
+        }
+
+        /* ── ranking ── */
+        .ranking-block {
+            background: rgba(255,255,255,0.02);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 22px 24px;
+            margin-bottom: 20px;
+        }
+
+        .rank-item {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 10px 0;
+            border-bottom: 1px solid rgba(255,255,255,0.04);
+        }
+
+            .rank-item:last-child {
+                border-bottom: none;
+            }
+
+        .rank-medal {
+            flex-shrink: 0;
+            font-size: 1.2rem;
+            width: 28px;
+            text-align: center;
+        }
+
+        .rank-icon {
+            flex-shrink: 0;
+            font-size: 1.1rem;
+        }
+
+        .rank-name {
+            flex: 1;
+            font-size: 0.88rem;
+            font-weight: 500;
+            color: var(--text-sec);
+            min-width: 0;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .rank-item:first-child .rank-name {
+            color: var(--text-pri);
+            font-weight: 600;
+        }
+
+        .rank-bar-wrap {
+            width: 80px;
+            height: 4px;
+            background: rgba(255,255,255,0.07);
+            border-radius: 99px;
+            overflow: hidden;
+            flex-shrink: 0;
+        }
+
+        .rank-bar {
+            height: 100%;
+            border-radius: 99px;
+            background: linear-gradient(90deg, var(--violet), var(--cyan));
+            width: 0;
+            transition: width 0.8s cubic-bezier(0.22, 1, 0.36, 1);
+        }
+
+        .rank-pct {
+            flex-shrink: 0;
+            font-family: 'Syne', sans-serif;
+            font-weight: 700;
+            font-size: 0.88rem;
+            color: var(--violet-hi);
+            width: 40px;
+            text-align: right;
+        }
+
+        /* ── disclaimer ── */
+        .disclaimer {
+            font-size: 0.75rem;
+            color: var(--text-muted);
+            text-align: center;
+            line-height: 1.5;
+            padding: 0 8px;
+            margin-bottom: 24px;
+        }
+
+        /* ── error toast ── */
+        .error-toast {
+            position: fixed;
+            bottom: 24px;
+            left: 50%;
+            transform: translateX(-50%) translateY(80px);
+            background: rgba(239,68,68,0.15);
+            border: 1px solid rgba(239,68,68,0.3);
+            backdrop-filter: blur(12px);
+            color: #fca5a5;
+            padding: 12px 24px;
+            border-radius: 12px;
+            font-size: 0.88rem;
+            font-weight: 500;
+            white-space: nowrap;
+            z-index: 100;
+            transition: transform 0.35s cubic-bezier(0.22, 1, 0.36, 1), opacity 0.35s;
+            opacity: 0;
+        }
+
+            .error-toast.show {
+                transform: translateX(-50%) translateY(0);
+                opacity: 1;
+            }
+
+        /* ── responsive tweaks ── */
+        @media (max-width: 480px) {
+            .wrapper {
+                padding: 16px 12px 40px;
+            }
+
+            .glass {
+                border-radius: 16px;
+            }
+
+            .result-hero {
+                padding: 28px 16px 24px;
+            }
+
+            .reasoning-block, .ranking-block {
+                padding: 16px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- ambient glow -->
+    <div class="glow-blob glow-blob-1"></div>
+    <div class="glow-blob glow-blob-2"></div>
+    <div class="glow-blob glow-blob-3"></div>
+
+    <div class="wrapper">
+        <div class="panel">
+
+            <!-- ══════════════ WELCOME ══════════════ -->
+            <div id="welcome-screen" class="hidden">
+                <div class="logo-mark fade-up">
+                    <div class="logo-icon">🎯</div>
+                    <span class="logo-text">Prof<span>Navigator</span></span>
+                </div>
+
+                <div class="glass glass-hi" style="padding: 40px 36px 36px;">
+                    <h1 class="hero-title fade-up delay-1">
+                        Найди своё<br><span class="accent">призвание</span>
+                    </h1>
+                    <p class="hero-sub fade-up delay-2">
+                        Интеллектуальная система профориентации на основе машинного обучения — 15 вопросов, 10 сфер, один точный результат.
+                    </p>
+
+                    <div class="steps fade-up delay-3">
+                        <div class="step-item">
+                            <div class="step-num">1</div>
+                            <p class="step-text">Ответьте на <strong>15 вопросов</strong> теста, выбирая наиболее подходящие варианты</p>
+                        </div>
+                        <div class="step-item">
+                            <div class="step-num">2</div>
+                            <p class="step-text">ML-модель анализирует ответы и рассчитывает соответствие <strong>10 профессиональным сферам</strong></p>
+                        </div>
+                        <div class="step-item">
+                            <div class="step-num">3</div>
+                            <p class="step-text">Получите <strong>персональный результат</strong> с подробным объяснением и рейтингом сфер</p>
+                        </div>
+                    </div>
+
+                    <div class="fade-up delay-4">
+                        <button id="start-test-btn" class="btn-primary">
+                            <svg width="18" height="18" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M13 10V3L4 14h7v7l9-11h-7z" />
+                            </svg>
+                            Начать тестирование
+                        </button>
+                    </div>
+                </div>
+
+                <p class="disclaimer" style="margin-top: 16px;">
+                    Результаты носят исключительно справочный характер и не являются профессиональной консультацией.
+                </p>
+            </div>
+
+            <!-- ══════════════ LOADING ══════════════ -->
+            <div id="loading" class="hidden" style="padding: 80px 0; text-align: center;">
+                <div class="spinner-ring"></div>
+                <p style="font-size: 0.9rem; color: var(--text-sec);">Загрузка вопросов...</p>
+            </div>
+
+            <!-- ══════════════ QUIZ ══════════════ -->
+            <div id="quiz-container" class="hidden">
+                <div class="logo-mark" style="margin-bottom: 24px;">
+                    <div class="logo-icon">🎯</div>
+                    <span class="logo-text">Prof<span>Navigator</span></span>
+                </div>
+
+                <!-- Progress -->
+                <div class="progress-header">
+                    <span class="progress-label">Прогресс</span>
+                    <span class="progress-frac">
+                        <span id="current-question-num">1</span>&thinsp;/&thinsp;<span id="total-questions">15</span>
+                    </span>
+                </div>
+                <div class="progress-track">
+                    <div id="progress-bar" class="progress-fill" style="width: 0%"></div>
+                </div>
+
+                <!-- Question card -->
+                <div id="question-card" class="glass glass-hi fade-in" style="padding: 32px 28px 28px;">
+                    <div class="q-index">
+                        Вопрос&nbsp;<span id="question-number">1</span>
+                        <span style="color:var(--text-muted); font-weight:400; font-family:'DM Sans',sans-serif; text-transform:none; letter-spacing:0;">из <span id="progress-percent" style="color:var(--violet-hi);">0%</span></span>
+                    </div>
+                    <h3 id="question-text" class="q-text">Загрузка вопроса...</h3>
+
+                    <div id="options-container"></div>
+
+                    <div class="nav-row">
+                        <button id="prev-btn" class="btn-ghost" disabled>
+                            <svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
+                            </svg>
+                            Назад
+                        </button>
+
+                        <button id="next-btn" class="btn-primary" disabled>
+                            <span id="next-btn-text">Далее</span>
+                            <svg id="next-btn-icon" width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24" style="flex-shrink:0;">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M9 5l7 7-7 7" />
+                            </svg>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ══════════════ RESULT ══════════════ -->
+            <div id="result-container" class="hidden">
+                <div class="logo-mark" style="margin-bottom: 24px;">
+                    <div class="logo-icon">🎯</div>
+                    <span class="logo-text">Prof<span>Navigator</span></span>
+                </div>
+
+                <div class="glass glass-hi">
+                    <div class="result-hero">
+                        <div class="result-badge" id="result-icon">🎯</div>
+                        <p class="result-label">Ваша сфера</p>
+                        <h2 id="result-sphere" class="result-sphere-name"></h2>
+                        <div id="confidence-badge" class="confidence-pill"></div>
+                        <p id="result-description" class="result-desc"></p>
+                    </div>
+
+                    <div style="padding: 0 24px 24px;">
+                        <!-- Reasoning -->
+                        <div class="reasoning-block">
+                            <h3 class="section-heading">
+                                <svg width="14" height="14" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z" />
+                                </svg>
+                                Почему такой результат?
+                            </h3>
+                            <div id="reasoning-container"></div>
+                        </div>
+
+                        <!-- Ranking -->
+                        <div class="ranking-block">
+                            <h3 class="section-heading">
+                                <svg width="14" height="14" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
+                                </svg>
+                                Рейтинг сфер
+                            </h3>
+                            <div id="ranking-container"></div>
+                        </div>
+
+                        <p class="disclaimer">
+                            Результаты созданы с помощью технологий машинного обучения и могут быть ошибочными.<br>
+                            Носят исключительно справочный характер и не являются профессиональной консультацией.
+                        </p>
+
+                        <button id="restart-btn" class="btn-primary" style="width:100%; justify-content:center;">
+                            <svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
+                            </svg>
+                            Пройти заново
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- Error toast -->
+    <div id="error-container" class="error-toast">
+        <span id="error-message"></span>
+    </div>
+
+    <script>
+        const API_URL = window.location.origin;
+
+        let questionsData = null;
+        let currentQuestionIndex = 0;
+        let answers = [];
+
+        const SPHERE_ICONS_MAP = {
+        "analytical": "💻", "social": "🤝", "creative": "🎨", "managerial": "📊",
+        "practical": "🔧", "research": "🔬", "technical": "⚙️", "artistic": "🎭",
+        "entrepreneurial": "🚀", "scientific": "🧪"
+        };
+
+        const elements = {
+        welcomeScreen:      document.getElementById('welcome-screen'),
+        loading:            document.getElementById('loading'),
+        quizContainer:      document.getElementById('quiz-container'),
+        questionCard:       document.getElementById('question-card'),
+        questionNumber:     document.getElementById('question-number'),
+        questionText:       document.getElementById('question-text'),
+        optionsContainer:   document.getElementById('options-container'),
+        currentQuestionNum: document.getElementById('current-question-num'),
+        totalQuestions:     document.getElementById('total-questions'),
+        progressPercent:    document.getElementById('progress-percent'),
+        progressBar:        document.getElementById('progress-bar'),
+        prevBtn:            document.getElementById('prev-btn'),
+        nextBtn:            document.getElementById('next-btn'),
+        nextBtnText:        document.getElementById('next-btn-text'),
+        nextBtnIcon:        document.getElementById('next-btn-icon'),
+        resultContainer:    document.getElementById('result-container'),
+        resultIcon:         document.getElementById('result-icon'),
+        resultSphere:       document.getElementById('result-sphere'),
+        resultDescription:  document.getElementById('result-description'),
+        rankingContainer:   document.getElementById('ranking-container'),
+        restartBtn:         document.getElementById('restart-btn'),
+        startTestBtn:       document.getElementById('start-test-btn'),
+        errorContainer:     document.getElementById('error-container'),
+        errorMessage:       document.getElementById('error-message')
+        };
+
+        async function loadQuestions() {
+        try {
+        const response = await fetch(`${API_URL}/questions?t=${Date.now()}`);
+        if (!response.ok) throw new Error('Ошибка загрузки вопросов');
+        questionsData = await response.json();
+
+        elements.totalQuestions.textContent = questionsData.selected_count || questionsData.questions.length;
+        answers = new Array(questionsData.questions.length).fill(null);
+
+        elements.welcomeScreen.classList.add('hidden');
+        elements.loading.classList.add('hidden');
+        elements.quizContainer.classList.remove('hidden');
+
+        renderQuestion();
+        } catch (error) {
+        console.error('Error loading questions:', error);
+        showError('Не удалось загрузить вопросы. Убедитесь, что сервер запущен.');
+        }
+        }
+
+        function renderQuestion() {
+        const question  = questionsData.questions[currentQuestionIndex];
+        const totalQ    = questionsData.selected_count || questionsData.questions.length;
+        const progress  = ((currentQuestionIndex + 1) / totalQ) * 100;
+
+        elements.currentQuestionNum.textContent = currentQuestionIndex + 1;
+        elements.progressPercent.textContent    = Math.round(progress) + '%';
+        elements.progressBar.style.width        = progress + '%';
+        elements.questionNumber.textContent     = currentQuestionIndex + 1;
+        elements.questionText.textContent       = question.text;
+
+        const savedAnswer = answers[currentQuestionIndex];
+        elements.optionsContainer.innerHTML = '';
+
+        question.options.forEach(opt => {
+        const isSelected = savedAnswer && savedAnswer.option_id === opt.id;
+        const div = document.createElement('div');
+        div.className = `option-card${isSelected ? ' selected' : ''}`;
+        div.dataset.optionId = opt.id;
+        div.innerHTML = `
+        <div class="option-radio">
+        <div class="option-radio-dot"></div>
+        </div>
+        <span class="option-text">${opt.text}</span>
+        `;
+        div.addEventListener('click', () => selectOption(opt.id));
+        elements.optionsContainer.appendChild(div);
+        });
+
+        elements.prevBtn.disabled = currentQuestionIndex === 0;
+        updateNextButton();
+
+        // re-trigger card animation
+        elements.questionCard.classList.remove('fade-in');
+        void elements.questionCard.offsetWidth;
+        elements.questionCard.classList.add('fade-in');
+
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        function selectOption(optionId) {
+        const question = questionsData.questions[currentQuestionIndex];
+        answers[currentQuestionIndex] = { question_id: question.id, option_id: optionId };
+
+        elements.optionsContainer.querySelectorAll('.option-card').forEach(card => {
+        const sel = card.dataset.optionId === optionId;
+        card.classList.toggle('selected', sel);
+        });
+
+        updateNextButton();
+        }
+
+        function updateNextButton() {
+        const totalQ   = questionsData.selected_count || questionsData.questions.length;
+        const isLast   = currentQuestionIndex === totalQ - 1;
+        const hasAnswer = answers[currentQuestionIndex] !== null;
+
+        elements.nextBtnText.textContent = isLast ? 'Получить результат' : 'Далее';
+        elements.nextBtnIcon.innerHTML   = isLast
+        ? '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>'
+        : '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M9 5l7 7-7 7"/>';
+        elements.nextBtn.disabled = !hasAnswer;
+        }
+
+        function nextQuestion() {
+        const totalQ = questionsData.selected_count || questionsData.questions.length;
+        if (currentQuestionIndex < totalQ - 1) {
+        currentQuestionIndex++;
+        renderQuestion();
+        } else {
+        submitAnswers();
+        }
+        }
+
+        function prevQuestion() {
+        if (currentQuestionIndex > 0) {
+        currentQuestionIndex--;
+        renderQuestion();
+        }
+        }
+
+        function setButtonLoading(text) {
+        elements.nextBtn.disabled = true;
+        elements.nextBtnText.textContent = text;
+        elements.nextBtnIcon.innerHTML   =
+        '<circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>' +
+        '<path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>';
+        elements.nextBtnIcon.style.animation = 'spin 0.9s linear infinite';
+        }
+
+        function resetButton() {
+        elements.nextBtn.disabled = false;
+        elements.nextBtnText.textContent = 'Получить результат';
+        elements.nextBtnIcon.style.animation = '';
+        elements.nextBtnIcon.innerHTML =
+        '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>';
+        }
+
+        async function pollJob(jobId) {
+        const POLL_INTERVAL = 1000;
+        const MAX_ATTEMPTS  = 120;
+
+        for (let attempt = 0; attempt < MAX_ATTEMPTS; attempt++) {
+        await new Promise(r => setTimeout(r, POLL_INTERVAL));
+        let data;
+        try {
+        const r = await fetch(`${API_URL}/job/${jobId}`);
+        if (!r.ok) { showError('Ошибка при получении результата. Попробуйте позже.'); resetButton(); return; }
+        data = await r.json();
+        } catch {
+        showError('Не удалось получить результат. Проверьте соединение.'); resetButton(); return;
+        }
+
+        if      (data.status === 'pending')    setButtonLoading(`В очереди: позиция ${data.position}`);
+        else if (data.status === 'processing') setButtonLoading('Анализируем...');
+        else if (data.status === 'done')       { showResult(data.result); return; }
+        else { showError('Ошибка при обработке. Попробуйте позже.'); resetButton(); return; }
+        }
+
+        showError('Превышено время ожидания. Попробуйте позже.');
+        resetButton();
+        }
+
+        async function submitAnswers() {
+        const totalQ      = questionsData.selected_count || questionsData.questions.length;
+        const validAnswers = answers.filter(a => a !== null);
+
+        if (validAnswers.length !== totalQ) { showError('Пожалуйста, ответьте на все вопросы'); return; }
+
+        setButtonLoading('Отправка...');
+
+        try {
+        const response = await fetch(`${API_URL}/submit`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ answers: validAnswers })
+        });
+
+        if (!response.ok) {
+        showError(response.status === 429
+        ? 'Слишком много запросов с вашего IP-адреса. Попробуйте позже.'
+        : 'Не удалось отправить ответы. Попробуйте позже.');
+        resetButton();
+        return;
+        }
+
+        const { job_id, position } = await response.json();
+        setButtonLoading(`В очереди: позиция ${position}`);
+        await pollJob(job_id);
+        } catch {
+        showError('Не удалось отправить ответы. Попробуйте позже.');
+        resetButton();
+        }
+        }
+
+        function showResult(result) {
+        const spheres       = questionsData.spheres || {};
+        const primarySphere = spheres[result.primary] || {};
+
+        elements.resultSphere.textContent      = primarySphere.name || result.primary;
+        elements.resultIcon.textContent         = primarySphere.icon || SPHERE_ICONS_MAP[result.primary] || '🎯';
+        elements.resultDescription.textContent  = primarySphere.description || '';
+
+        // Confidence badge
+        const confMap = {
+        high:   { text: 'Высокая уверенность',   cls: 'conf-high' },
+        medium: { text: 'Умеренная уверенность', cls: 'conf-medium' },
+        low:    { text: 'Низкая уверенность',    cls: 'conf-low' }
+        };
+        const conf = confMap[result.confidence] || confMap.medium;
+        const badge = document.getElementById('confidence-badge');
+        badge.textContent = conf.text;
+        badge.className   = `confidence-pill ${conf.cls}`;
+
+        // Reasoning
+        const reasoningEl = document.getElementById('reasoning-container');
+        if (result.reasoning && result.reasoning.length > 0) {
+        reasoningEl.innerHTML = result.reasoning.map(text => `
+        <div class="reasoning-item">
+        <div class="reasoning-dot"></div>
+        <span>${text}</span>
+        </div>
+        `).join('');
+        } else {
+        reasoningEl.innerHTML = '<div class="reasoning-item"><span style="color:var(--text-muted)">Нет данных для объяснения</span></div>';
+        }
+
+        // Ranking
+        const medals = ['🥇','🥈','🥉','4️⃣','5️⃣','6️⃣','7️⃣','8️⃣','9️⃣','🔟'];
+        const maxProb = result.ranking[0]?.[1] || 1;
+
+        elements.rankingContainer.innerHTML = result.ranking.map(([cat, prob], i) => {
+        const info  = spheres[cat] || {};
+        const name  = info.name || cat;
+        const icon  = info.icon || SPHERE_ICONS_MAP[cat] || '📌';
+        const barW  = Math.round((prob / maxProb) * 100);
+        return `
+        <div class="rank-item">
+        <span class="rank-medal">${medals[i] || (i + 1) + '.'}</span>
+        <span class="rank-icon">${icon}</span>
+        <span class="rank-name">${name}</span>
+        <div class="rank-bar-wrap">
+        <div class="rank-bar" data-width="${barW}%"></div>
+        </div>
+        <span class="rank-pct">${Math.round(prob * 100)}%</span>
+        </div>
+        `;
+        }).join('');
+
+        elements.quizContainer.classList.add('hidden');
+        elements.resultContainer.classList.remove('hidden');
+
+        // Animate bars
+        setTimeout(() => {
+        document.querySelectorAll('.rank-bar[data-width]').forEach(bar => {
+        bar.style.width = bar.getAttribute('data-width');
+        });
+        }, 120);
+
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        let errorTimer = null;
+        function showError(message) {
+        elements.errorMessage.textContent = message;
+        elements.errorContainer.classList.add('show');
+        if (errorTimer) clearTimeout(errorTimer);
+        errorTimer = setTimeout(() => {
+        elements.errorContainer.classList.remove('show');
+        }, 5000);
+        }
+
+        function restartQuiz() {
+        currentQuestionIndex = 0;
+        answers = new Array(questionsData.selected_count || questionsData.questions.length).fill(null);
+        elements.resultContainer.classList.add('hidden');
+        elements.welcomeScreen.classList.remove('hidden');
+        }
+
+        elements.nextBtn.addEventListener('click', nextQuestion);
+        elements.prevBtn.addEventListener('click', prevQuestion);
+        elements.restartBtn.addEventListener('click', restartQuiz);
+        elements.startTestBtn.addEventListener('click', () => {
+        elements.welcomeScreen.classList.add('hidden');
+        elements.loading.classList.remove('hidden');
+        loadQuestions();
+        });
+
+        // Init
+        elements.welcomeScreen.classList.remove('hidden');
+    </script>
+</body>
+</html>

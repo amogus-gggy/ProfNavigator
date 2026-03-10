@@ -28,7 +28,7 @@ class SurveyModel:
         "technical", "artistic", "entrepreneurial", "scientific"
     ]
 
-    N_QUESTIONS = 15
+    N_QUESTIONS = 30
 
     def __init__(self, model_path: str = "model_artifact.pkl"):
         self.model_path = model_path
@@ -241,11 +241,19 @@ class SurveyModel:
             for cat, prob in zip(self.label_encoder.classes_, raw_probs)
         }
 
-        # Блендинг: смешиваем ML-вероятности с реальным распределением ответов.
-        # Это позволяет вторичным категориям (напр. 20% managerial) получить
-        # ненулевую вероятность, не ломая основное предсказание.
-        BLEND_ML = 0.65      # вес ML
-        BLEND_ANSWER = 0.35  # вес ответов пользователя
+        # Энтропийный блендинг: если ответы пользователя сконцентрированы
+        # (низкая энтропия) — доверяем им больше; если размыты — ML ведёт.
+        answer_probs_list = np.array([answer_distribution[cat] for cat in self.label_encoder.classes_])
+        # Нормализованная энтропия Шеннона в диапазоне [0, 1]
+        safe_probs = np.where(answer_probs_list > 0, answer_probs_list, 1e-10)
+        raw_entropy = -np.sum(safe_probs * np.log(safe_probs))
+        max_entropy = np.log(len(answer_probs_list))
+        normalized_entropy = raw_entropy / max_entropy if max_entropy > 0 else 0.0
+
+        # Вес ответов: 0.25 (равномерные ответы) → 0.70 (сконцентрированные)
+        BLEND_ANSWER = 0.25 + 0.45 * (1.0 - normalized_entropy)
+        BLEND_ML = 1.0 - BLEND_ANSWER
+
         category_probs = {
             cat: BLEND_ML * ml_probs[cat] + BLEND_ANSWER * answer_distribution.get(cat, 0.0)
             for cat in self.label_encoder.classes_
