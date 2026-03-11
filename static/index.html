@@ -62,11 +62,89 @@
             border-color: #6366f1;
             background-color: #6366f1;
         }
+
+        /* Queue Screen Animations */
+        .queue-pulse {
+            animation: queuePulse 2s ease-in-out infinite;
+        }
+
+        @keyframes queuePulse {
+            0%, 100% {
+                transform: scale(1);
+                opacity: 1;
+            }
+
+            50% {
+                transform: scale(1.05);
+                opacity: 0.8;
+            }
+        }
+
+        .dots-animation::after {
+            content: '';
+            animation: dots 1.5s steps(4, end) infinite;
+        }
+
+        @keyframes dots {
+            0% {
+                content: '';
+            }
+
+            25% {
+                content: '.';
+            }
+
+            50% {
+                content: '..';
+            }
+
+            75% {
+                content: '...';
+            }
+
+            100% {
+                content: '';
+            }
+        }
+
+        .shimmer {
+            background: linear-gradient(90deg, rgba(255,255,255,0) 0%, rgba(255,255,255,0.4) 50%, rgba(255,255,255,0) 100%);
+            background-size: 200% 100%;
+            animation: shimmer 2s infinite;
+        }
+
+        @keyframes shimmer {
+            0% {
+                background-position: -200% 0;
+            }
+
+            100% {
+                background-position: 200% 0;
+            }
+        }
+
+        .queue-progress-fill {
+            transition: width 1s ease;
+        }
+
+        .status-indicator {
+            animation: statusBlink 2s ease-in-out infinite;
+        }
+
+        @keyframes statusBlink {
+            0%, 100% {
+                opacity: 1;
+            }
+
+            50% {
+                opacity: 0.5;
+            }
+        }
     </style>
 </head>
 <body class="bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-100 min-h-screen">
     <div class="container mx-auto px-3 py-4 sm:px-4 sm:py-8 max-w-3xl">
-<!-- Welcome Screen -->
+        <!-- Welcome Screen -->
         <div id="welcome-screen" class="hidden">
             <div class="glass-effect rounded-2xl shadow-xl p-6 sm:p-10 border border-white/50 text-center">
                 <div class="inline-flex items-center justify-center w-20 h-20 bg-gradient-to-br from-indigo-500 to-purple-600 rounded-2xl shadow-lg mb-6">
@@ -78,7 +156,7 @@
                 <p class="text-gray-600 text-base sm:text-lg mb-6 max-w-md mx-auto">
                     Интеллектуальная система профориентации на основе машинного обучения
                 </p>
-                
+
                 <div class="text-left bg-indigo-50 border border-indigo-100 rounded-xl p-6 mb-8 max-w-lg mx-auto">
                     <h3 class="text-lg font-semibold text-indigo-800 mb-4 flex items-center gap-2">
                         <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -181,6 +259,86 @@
             </div>
         </div>
 
+        <!-- Queue Screen -->
+        <div id="queue-screen" class="hidden">
+            <div class="glass-effect rounded-2xl shadow-xl p-6 sm:p-10 border border-white/50 text-center">
+                <!-- Main Queue Visual -->
+                <div class="mb-8">
+                    <div class="relative inline-flex items-center justify-center w-32 h-32 mb-6">
+                        <!-- Outer Ring -->
+                        <div class="absolute inset-0 rounded-full border-4 border-indigo-100"></div>
+                        <!-- Animated Ring -->
+                        <div class="absolute inset-0 rounded-full border-4 border-indigo-500 border-t-transparent animate-spin" style="animation-duration: 3s;"></div>
+                        <!-- Inner Content -->
+                        <div class="relative w-24 h-24 bg-gradient-to-br from-indigo-500 to-purple-600 rounded-full flex items-center justify-center shadow-lg queue-pulse">
+                            <span class="text-4xl">⏳</span>
+                        </div>
+                    </div>
+
+                    <h2 class="text-2xl sm:text-3xl font-bold text-gray-800 mb-2">Обработка результатов</h2>
+                    <p class="text-gray-600 text-base sm:text-lg mb-4">
+                        <span id="queue-status-text">Ожидание в очереди</span><span class="dots-animation"></span>
+                    </p>
+                </div>
+
+                <!-- Queue Position Card -->
+                <div class="bg-white/60 rounded-xl p-6 mb-6 max-w-md mx-auto border border-white/50 shadow-inner">
+                    <div class="flex items-center justify-between mb-4">
+                        <span class="text-sm font-medium text-gray-600">Ваша позиция в очереди</span>
+                        <span id="queue-position" class="text-2xl font-bold text-indigo-600">#--</span>
+                    </div>
+
+                    <!-- Queue Progress Bar -->
+                    <div class="w-full bg-gray-200 rounded-full h-4 overflow-hidden mb-2 relative">
+                        <div class="shimmer absolute inset-0 z-10"></div>
+                        <div id="queue-progress-bar" class="queue-progress-fill bg-gradient-to-r from-indigo-500 via-purple-500 to-indigo-500 h-4 rounded-full" style="width: 0%"></div>
+                    </div>
+
+                    <div class="flex justify-between text-xs text-gray-500 mt-1">
+                        <span>Начало</span>
+                        <span id="queue-estimated-time">Расчет времени...</span>
+                        <span>Готово</span>
+                    </div>
+                </div>
+
+                <!-- Status Steps -->
+                <div class="grid grid-cols-3 gap-3 max-w-lg mx-auto mb-8">
+                    <div id="status-step-1" class="flex flex-col items-center p-3 rounded-lg bg-indigo-50 border border-indigo-200 transition-all duration-300">
+                        <div class="w-8 h-8 rounded-full bg-indigo-500 text-white flex items-center justify-center text-sm font-bold mb-2 status-indicator">1</div>
+                        <span class="text-xs font-medium text-indigo-800 text-center">Отправка<br>данных</span>
+                    </div>
+                    <div id="status-step-2" class="flex flex-col items-center p-3 rounded-lg bg-gray-100 border border-gray-200 transition-all duration-300 opacity-50">
+                        <div class="w-8 h-8 rounded-full bg-gray-400 text-white flex items-center justify-center text-sm font-bold mb-2">2</div>
+                        <span class="text-xs font-medium text-gray-600 text-center">Ожидание<br>очереди</span>
+                    </div>
+                    <div id="status-step-3" class="flex flex-col items-center p-3 rounded-lg bg-gray-100 border border-gray-200 transition-all duration-300 opacity-50">
+                        <div class="w-8 h-8 rounded-full bg-gray-400 text-white flex items-center justify-center text-sm font-bold mb-2">3</div>
+                        <span class="text-xs font-medium text-gray-600 text-center">ML<br>анализ</span>
+                    </div>
+                </div>
+
+                <!-- Info Box -->
+                <div class="bg-blue-50 border border-blue-100 rounded-xl p-4 max-w-md mx-auto mb-6">
+                    <div class="flex items-start gap-3">
+                        <svg class="w-5 h-5 text-blue-600 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                        </svg>
+                        <p class="text-sm text-blue-700 text-left">
+                            Наша ML-модель обрабатывает запросы последовательно для обеспечения точности результатов. Обычно это занимает 10-30 секунд.
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Cancel Button -->
+                <button id="cancel-queue-btn" class="px-6 py-2 text-gray-500 hover:text-gray-700 font-medium text-sm transition duration-200 flex items-center gap-2 mx-auto">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                    </svg>
+                    Отменить и вернуться
+                </button>
+            </div>
+        </div>
+
         <!-- Result Container -->
         <div id="result-container" class="hidden">
             <div class="glass-effect rounded-2xl shadow-xl p-5 sm:p-8 border border-white/50">
@@ -250,394 +408,529 @@
         let questionsData = null;
         let currentQuestionIndex = 0;
         let answers = [];
+        let currentJobId = null;
 
         // Иконки для сфер (ключи - category key из questions.json)
         const SPHERE_ICONS_MAP = {
-            "analytical": "💻",
-            "social": "🤝",
-            "creative": "🎨",
-            "managerial": "📊",
-            "practical": "🔧",
-            "research": "🔬",
-            "technical": "⚙️",
-            "artistic": "🎭",
-            "entrepreneurial": "🚀",
-            "scientific": "🧪"
+        "analytical": "💻",
+        "social": "🤝",
+        "creative": "🎨",
+        "managerial": "📊",
+        "practical": "🔧",
+        "research": "🔬",
+        "technical": "⚙️",
+        "artistic": "🎭",
+        "entrepreneurial": "🚀",
+        "scientific": "🧪"
         };
 
         // Градиенты для сфер (ключи - category key)
         const SPHERE_COLORS_MAP = {
-            "analytical": "from-blue-500 to-cyan-500",
-            "social": "from-green-500 to-emerald-500",
-            "creative": "from-purple-500 to-pink-500",
-            "managerial": "from-red-500 to-orange-500",
-            "practical": "from-orange-500 to-amber-500",
-            "research": "from-cyan-500 to-teal-500",
-            "technical": "from-slate-500 to-gray-500",
-            "artistic": "from-pink-500 to-rose-500",
-            "entrepreneurial": "from-emerald-500 to-green-500",
-            "scientific": "from-violet-500 to-purple-500"
+        "analytical": "from-blue-500 to-cyan-500",
+        "social": "from-green-500 to-emerald-500",
+        "creative": "from-purple-500 to-pink-500",
+        "managerial": "from-red-500 to-orange-500",
+        "practical": "from-orange-500 to-amber-500",
+        "research": "from-cyan-500 to-teal-500",
+        "technical": "from-slate-500 to-gray-500",
+        "artistic": "from-pink-500 to-rose-500",
+        "entrepreneurial": "from-emerald-500 to-green-500",
+        "scientific": "from-violet-500 to-purple-500"
         };
 
         const elements = {
-            welcomeScreen: document.getElementById('welcome-screen'),
-            loading: document.getElementById('loading'),
-            quizContainer: document.getElementById('quiz-container'),
-            questionCard: document.getElementById('question-card'),
-            questionNumber: document.getElementById('question-number'),
-            questionText: document.getElementById('question-text'),
-            optionsContainer: document.getElementById('options-container'),
-            currentQuestionNum: document.getElementById('current-question-num'),
-            totalQuestions: document.getElementById('total-questions'),
-            progressPercent: document.getElementById('progress-percent'),
-            progressBar: document.getElementById('progress-bar'),
-            prevBtn: document.getElementById('prev-btn'),
-            nextBtn: document.getElementById('next-btn'),
-            nextBtnText: document.getElementById('next-btn-text'),
-            nextBtnIcon: document.getElementById('next-btn-icon'),
-            resultContainer: document.getElementById('result-container'),
-            resultIcon: document.getElementById('result-icon'),
-            resultSphere: document.getElementById('result-sphere'),
-            resultDescription: document.getElementById('result-description'),
-            rankingContainer: document.getElementById('ranking-container'),
-            restartBtn: document.getElementById('restart-btn'),
-            startTestBtn: document.getElementById('start-test-btn'),
-            errorContainer: document.getElementById('error-container'),
-            errorMessage: document.getElementById('error-message')
+        welcomeScreen: document.getElementById('welcome-screen'),
+        loading: document.getElementById('loading'),
+        quizContainer: document.getElementById('quiz-container'),
+        questionCard: document.getElementById('question-card'),
+        questionNumber: document.getElementById('question-number'),
+        questionText: document.getElementById('question-text'),
+        optionsContainer: document.getElementById('options-container'),
+        currentQuestionNum: document.getElementById('current-question-num'),
+        totalQuestions: document.getElementById('total-questions'),
+        progressPercent: document.getElementById('progress-percent'),
+        progressBar: document.getElementById('progress-bar'),
+        prevBtn: document.getElementById('prev-btn'),
+        nextBtn: document.getElementById('next-btn'),
+        nextBtnText: document.getElementById('next-btn-text'),
+        nextBtnIcon: document.getElementById('next-btn-icon'),
+        resultContainer: document.getElementById('result-container'),
+        resultIcon: document.getElementById('result-icon'),
+        resultSphere: document.getElementById('result-sphere'),
+        resultDescription: document.getElementById('result-description'),
+        rankingContainer: document.getElementById('ranking-container'),
+        restartBtn: document.getElementById('restart-btn'),
+        startTestBtn: document.getElementById('start-test-btn'),
+        errorContainer: document.getElementById('error-container'),
+        errorMessage: document.getElementById('error-message'),
+        // Queue screen elements
+        queueScreen: document.getElementById('queue-screen'),
+        queuePosition: document.getElementById('queue-position'),
+        queueProgressBar: document.getElementById('queue-progress-bar'),
+        queueStatusText: document.getElementById('queue-status-text'),
+        queueEstimatedTime: document.getElementById('queue-estimated-time'),
+        cancelQueueBtn: document.getElementById('cancel-queue-btn'),
+        statusStep1: document.getElementById('status-step-1'),
+        statusStep2: document.getElementById('status-step-2'),
+        statusStep3: document.getElementById('status-step-3')
         };
 
         async function loadQuestions() {
-            try {
-                // Добавляем timestamp для отключения кэширования
-                const response = await fetch(`${API_URL}/questions?t=${Date.now()}`);
-                if (!response.ok) throw new Error('Ошибка загрузки вопросов');
-                questionsData = await response.json();
+        try {
+        // Добавляем timestamp для отключения кэширования
+        const response = await fetch(`${API_URL}/questions?t=${Date.now()}`);
+        if (!response.ok) throw new Error('Ошибка загрузки вопросов');
+        questionsData = await response.json();
 
-                console.log('Loaded questionsData:', {
-                    questionsCount: questionsData.questions.length,
-                    selectedCount: questionsData.selected_count,
-                    spheresCount: Object.keys(questionsData.spheres || {}).length,
-                    spheres: questionsData.spheres
-                });
+        console.log('Loaded questionsData:', {
+        questionsCount: questionsData.questions.length,
+        selectedCount: questionsData.selected_count,
+        spheresCount: Object.keys(questionsData.spheres || {}).length,
+        spheres: questionsData.spheres
+        });
 
-                elements.totalQuestions.textContent = questionsData.selected_count || questionsData.questions.length;
-                answers = new Array(questionsData.questions.length).fill(null);
+        elements.totalQuestions.textContent = questionsData.selected_count || questionsData.questions.length;
+        answers = new Array(questionsData.questions.length).fill(null);
 
-                elements.welcomeScreen.classList.add('hidden');
-                elements.loading.classList.add('hidden');
-                elements.quizContainer.classList.remove('hidden');
+        elements.welcomeScreen.classList.add('hidden');
+        elements.loading.classList.add('hidden');
+        elements.quizContainer.classList.remove('hidden');
 
-                renderQuestion();
-            } catch (error) {
-                console.error('Error loading questions:', error);
-                showError('Не удалось загрузить вопросы. Убедитесь, что сервер запущен.');
-            }
+        renderQuestion();
+        } catch (error) {
+        console.error('Error loading questions:', error);
+        showError('Не удалось загрузить вопросы. Убедитесь, что сервер запущен.');
+        }
         }
 
         function renderQuestion() {
-            const question = questionsData.questions[currentQuestionIndex];
-            const totalQuestions = questionsData.selected_count || questionsData.questions.length;
+        const question = questionsData.questions[currentQuestionIndex];
+        const totalQuestions = questionsData.selected_count || questionsData.questions.length;
 
-            // Update progress
-            const progress = ((currentQuestionIndex + 1) / totalQuestions) * 100;
-            elements.currentQuestionNum.textContent = currentQuestionIndex + 1;
-            elements.progressPercent.textContent = Math.round(progress) + '%';
-            elements.progressBar.style.width = progress + '%';
+        // Update progress
+        const progress = ((currentQuestionIndex + 1) / totalQuestions) * 100;
+        elements.currentQuestionNum.textContent = currentQuestionIndex + 1;
+        elements.progressPercent.textContent = Math.round(progress) + '%';
+        elements.progressBar.style.width = progress + '%';
 
-            // Update question
-            elements.questionNumber.textContent = currentQuestionIndex + 1;
-            elements.questionText.textContent = question.text;
+        // Update question
+        elements.questionNumber.textContent = currentQuestionIndex + 1;
+        elements.questionText.textContent = question.text;
 
-            // Render options
-            const savedAnswer = answers[currentQuestionIndex];
-            elements.optionsContainer.innerHTML = '';
+        // Render options
+        const savedAnswer = answers[currentQuestionIndex];
+        elements.optionsContainer.innerHTML = '';
 
-            question.options.forEach((opt, idx) => {
-                const isSelected = savedAnswer && savedAnswer.option_id === opt.id;
+        question.options.forEach((opt, idx) => {
+        const isSelected = savedAnswer && savedAnswer.option_id === opt.id;
 
-                const optionDiv = document.createElement('div');
-                optionDiv.className = `option-card flex items-center p-4 border-2 rounded-xl cursor-pointer transition duration-200 group ${isSelected ? 'selected' : 'border-gray-200 hover:border-indigo-300'}`;
-                optionDiv.dataset.optionId = opt.id;
+        const optionDiv = document.createElement('div');
+        optionDiv.className = `option-card flex items-center p-4 border-2 rounded-xl cursor-pointer transition duration-200 group ${isSelected ? 'selected' : 'border-gray-200 hover:border-indigo-300'}`;
+        optionDiv.dataset.optionId = opt.id;
 
-                optionDiv.innerHTML = `
-                    <div class="check-circle flex-shrink-0 w-6 h-6 rounded-full border-2 ${isSelected ? 'border-indigo-500 bg-indigo-500' : 'border-gray-300 group-hover:border-indigo-400'} flex items-center justify-center mr-4">
-                        ${isSelected ? '<svg class="w-4 h-4 text-white" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path></svg>' : ''}
-                    </div>
-                    <span class="option-text text-gray-700 font-medium ${isSelected ? 'text-indigo-700' : ''}">${opt.text}</span>
-                `;
+        optionDiv.innerHTML = `
+        <div class="check-circle flex-shrink-0 w-6 h-6 rounded-full border-2 ${isSelected ? 'border-indigo-500 bg-indigo-500' : 'border-gray-300 group-hover:border-indigo-400'} flex items-center justify-center mr-4">
+        ${isSelected ? '<svg class="w-4 h-4 text-white" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path></svg>' : ''}
+        </div>
+        <span class="option-text text-gray-700 font-medium ${isSelected ? 'text-indigo-700' : ''}">${opt.text}</span>
+        `;
 
-                optionDiv.addEventListener('click', () => selectOption(opt.id));
-                elements.optionsContainer.appendChild(optionDiv);
-            });
+        optionDiv.addEventListener('click', () => selectOption(opt.id));
+        elements.optionsContainer.appendChild(optionDiv);
+        });
 
-            // Update buttons
-            elements.prevBtn.disabled = currentQuestionIndex === 0;
+        // Update buttons
+        elements.prevBtn.disabled = currentQuestionIndex === 0;
 
-            if (currentQuestionIndex === questionsData.questions.length - 1) {
-                elements.nextBtnText.textContent = 'Получить результат';
-                elements.nextBtnIcon.innerHTML = '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>';
-            } else {
-                elements.nextBtnText.textContent = 'Далее';
-                elements.nextBtnIcon.innerHTML = '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>';
-            }
+        if (currentQuestionIndex === questionsData.questions.length - 1) {
+        elements.nextBtnText.textContent = 'Получить результат';
+        elements.nextBtnIcon.innerHTML = '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>';
+        } else {
+        elements.nextBtnText.textContent = 'Далее';
+        elements.nextBtnIcon.innerHTML = '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>';
+        }
 
-            updateNextButton();
+        updateNextButton();
 
-            // Re-trigger animation
-            elements.questionCard.classList.remove('fade-in');
-            void elements.questionCard.offsetWidth;
-            elements.questionCard.classList.add('fade-in');
+        // Re-trigger animation
+        elements.questionCard.classList.remove('fade-in');
+        void elements.questionCard.offsetWidth;
+        elements.questionCard.classList.add('fade-in');
 
-            window.scrollTo({ top: 0, behavior: 'smooth' });
+        window.scrollTo({ top: 0, behavior: 'smooth' });
         }
 
         function selectOption(optionId) {
-            const question = questionsData.questions[currentQuestionIndex];
-            answers[currentQuestionIndex] = {
-                question_id: question.id,
-                option_id: optionId
-            };
+        const question = questionsData.questions[currentQuestionIndex];
+        answers[currentQuestionIndex] = {
+        question_id: question.id,
+        option_id: optionId
+        };
 
-            // Update UI immediately without full re-render
-            const options = elements.optionsContainer.querySelectorAll('.option-card');
-            options.forEach(opt => {
-                const isSelected = opt.dataset.optionId === optionId;
-                const checkCircle = opt.querySelector('.check-circle');
-                const optionText = opt.querySelector('.option-text');
+        // Update UI immediately without full re-render
+        const options = elements.optionsContainer.querySelectorAll('.option-card');
+        options.forEach(opt => {
+        const isSelected = opt.dataset.optionId === optionId;
+        const checkCircle = opt.querySelector('.check-circle');
+        const optionText = opt.querySelector('.option-text');
 
-                if (isSelected) {
-                    opt.classList.add('selected');
-                    opt.classList.remove('border-gray-200', 'hover:border-indigo-300');
-                    checkCircle.classList.add('border-indigo-500', 'bg-indigo-500');
-                    checkCircle.classList.remove('border-gray-300');
-                    checkCircle.innerHTML = '<svg class="w-4 h-4 text-white" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path></svg>';
-                    optionText.classList.add('text-indigo-700', 'font-semibold');
-                } else {
-                    opt.classList.remove('selected');
-                    opt.classList.add('border-gray-200', 'hover:border-indigo-300');
-                    checkCircle.classList.remove('border-indigo-500', 'bg-indigo-500');
-                    checkCircle.classList.add('border-gray-300');
-                    checkCircle.innerHTML = '';
-                    optionText.classList.remove('text-indigo-700', 'font-semibold');
-                }
-            });
+        if (isSelected) {
+        opt.classList.add('selected');
+        opt.classList.remove('border-gray-200', 'hover:border-indigo-300');
+        checkCircle.classList.add('border-indigo-500', 'bg-indigo-500');
+        checkCircle.classList.remove('border-gray-300');
+        checkCircle.innerHTML = '<svg class="w-4 h-4 text-white" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path></svg>';
+        optionText.classList.add('text-indigo-700', 'font-semibold');
+        } else {
+        opt.classList.remove('selected');
+        opt.classList.add('border-gray-200', 'hover:border-indigo-300');
+        checkCircle.classList.remove('border-indigo-500', 'bg-indigo-500');
+        checkCircle.classList.add('border-gray-300');
+        checkCircle.innerHTML = '';
+        optionText.classList.remove('text-indigo-700', 'font-semibold');
+        }
+        });
 
-            updateNextButton();
+        updateNextButton();
         }
 
         function updateNextButton() {
-            const totalQuestions = questionsData.selected_count || questionsData.questions.length;
-            
-            if (currentQuestionIndex === totalQuestions - 1) {
-                elements.nextBtnText.textContent = 'Получить результат';
-                elements.nextBtnIcon.innerHTML = '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>';
-            } else {
-                elements.nextBtnText.textContent = 'Далее';
-                elements.nextBtnIcon.innerHTML = '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>';
-            }
-            
-            const hasAnswer = answers[currentQuestionIndex] !== null;
-            elements.nextBtn.disabled = !hasAnswer;
+        const totalQuestions = questionsData.selected_count || questionsData.questions.length;
+
+        if (currentQuestionIndex === totalQuestions - 1) {
+        elements.nextBtnText.textContent = 'Получить результат';
+        elements.nextBtnIcon.innerHTML = '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>';
+        } else {
+        elements.nextBtnText.textContent = 'Далее';
+        elements.nextBtnIcon.innerHTML = '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>';
+        }
+
+        const hasAnswer = answers[currentQuestionIndex] !== null;
+        elements.nextBtn.disabled = !hasAnswer;
         }
 
         function nextQuestion() {
-            const totalQuestions = questionsData.selected_count || questionsData.questions.length;
-            
-            if (currentQuestionIndex < totalQuestions - 1) {
-                currentQuestionIndex++;
-                renderQuestion();
-            } else {
-                submitAnswers();
-            }
+        const totalQuestions = questionsData.selected_count || questionsData.questions.length;
+
+        if (currentQuestionIndex < totalQuestions - 1) {
+        currentQuestionIndex++;
+        renderQuestion();
+        } else {
+        submitAnswers();
+        }
         }
 
         function prevQuestion() {
-            if (currentQuestionIndex > 0) {
-                currentQuestionIndex--;
-                renderQuestion();
-            }
+        if (currentQuestionIndex > 0) {
+        currentQuestionIndex--;
+        renderQuestion();
+        }
+        }
+
+        function showQueueScreen() {
+        elements.quizContainer.classList.add('hidden');
+        elements.queueScreen.classList.remove('hidden');
+
+        // Reset queue UI
+        updateQueueStatus('pending', 1);
+        elements.queuePosition.textContent = '#--';
+        elements.queueProgressBar.style.width = '0%';
+        elements.queueEstimatedTime.textContent = 'Расчет времени...';
+        }
+
+        function hideQueueScreen() {
+        elements.queueScreen.classList.add('hidden');
+        }
+
+        function updateQueueStatus(status, position) {
+        // Update status steps
+        const step1 = elements.statusStep1;
+        const step2 = elements.statusStep2;
+        const step3 = elements.statusStep3;
+
+        // Reset all steps
+        [step1, step2, step3].forEach(step => {
+        step.classList.remove('bg-indigo-50', 'border-indigo-200', 'opacity-100');
+        step.classList.add('bg-gray-100', 'border-gray-200', 'opacity-50');
+        step.querySelector('div').classList.remove('bg-indigo-500', 'status-indicator');
+        step.querySelector('div').classList.add('bg-gray-400');
+        step.querySelector('span').classList.remove('text-indigo-800');
+        step.querySelector('span').classList.add('text-gray-600');
+        });
+
+        // Activate steps based on status
+        if (status === 'pending') {
+        // Step 1: Completed (data sent)
+        step1.classList.remove('bg-gray-100', 'border-gray-200', 'opacity-50');
+        step1.classList.add('bg-indigo-50', 'border-indigo-200', 'opacity-100');
+        step1.querySelector('div').classList.remove('bg-gray-400');
+        step1.querySelector('div').classList.add('bg-indigo-500');
+        step1.querySelector('span').classList.remove('text-gray-600');
+        step1.querySelector('span').classList.add('text-indigo-800');
+
+        // Step 2: Active (waiting in queue)
+        step2.classList.remove('bg-gray-100', 'opacity-50');
+        step2.classList.add('bg-yellow-50', 'border-yellow-200', 'opacity-100');
+        step2.querySelector('div').classList.remove('bg-gray-400');
+        step2.querySelector('div').classList.add('bg-yellow-500', 'status-indicator');
+        step2.querySelector('span').classList.remove('text-gray-600');
+        step2.querySelector('span').classList.add('text-yellow-800');
+
+        elements.queueStatusText.textContent = 'Ожидание в очереди';
+        elements.queuePosition.textContent = `#${position}`;
+
+        // Calculate progress based on position (inverse)
+        const maxPosition = 10; // Assume max queue length
+        const progress = Math.max(5, 100 - ((position - 1) / maxPosition * 100));
+        elements.queueProgressBar.style.width = `${progress}%`;
+
+        // Estimate time
+        const estimatedSeconds = position * 3; // ~3 seconds per job
+        if (estimatedSeconds < 60) {
+        elements.queueEstimatedTime.textContent = `~${estimatedSeconds} сек`;
+        } else {
+        elements.queueEstimatedTime.textContent = `~${Math.ceil(estimatedSeconds / 60)} мин`;
+        }
+
+        } else if (status === 'processing') {
+        // Step 1: Completed
+        step1.classList.remove('bg-gray-100', 'border-gray-200', 'opacity-50');
+        step1.classList.add('bg-green-50', 'border-green-200', 'opacity-100');
+        step1.querySelector('div').classList.remove('bg-gray-400', 'status-indicator');
+        step1.querySelector('div').classList.add('bg-green-500');
+        step1.querySelector('span').classList.remove('text-gray-600');
+        step1.querySelector('span').classList.add('text-green-800');
+        step1.querySelector('div').innerHTML = '✓';
+
+        // Step 2: Completed
+        step2.classList.remove('bg-gray-100', 'border-gray-200', 'opacity-50');
+        step2.classList.add('bg-green-50', 'border-green-200', 'opacity-100');
+        step2.querySelector('div').classList.remove('bg-gray-400', 'status-indicator');
+        step2.querySelector('div').classList.add('bg-green-500');
+        step2.querySelector('span').classList.remove('text-gray-600');
+        step2.querySelector('span').classList.add('text-green-800');
+        step2.querySelector('div').innerHTML = '✓';
+
+        // Step 3: Active (ML analysis)
+        step3.classList.remove('bg-gray-100', 'opacity-50');
+        step3.classList.add('bg-indigo-50', 'border-indigo-200', 'opacity-100');
+        step3.querySelector('div').classList.remove('bg-gray-400');
+        step3.querySelector('div').classList.add('bg-indigo-500', 'status-indicator');
+        step3.querySelector('span').classList.remove('text-gray-600');
+        step3.querySelector('span').classList.add('text-indigo-800');
+
+        elements.queueStatusText.textContent = 'ML-модель анализирует ваши ответы';
+        elements.queuePosition.textContent = '#0';
+        elements.queueProgressBar.style.width = '90%';
+        elements.queueEstimatedTime.textContent = 'Почти готово...';
+        }
         }
 
         function setButtonLoading(text) {
-            elements.nextBtn.disabled = true;
-            elements.nextBtnText.textContent = text;
-            elements.nextBtnIcon.innerHTML = '<circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle><path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>';
-            elements.nextBtnIcon.classList.add('animate-spin');
+        elements.nextBtn.disabled = true;
+        elements.nextBtnText.textContent = text;
+        elements.nextBtnIcon.innerHTML = '<circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle><path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>';
+        elements.nextBtnIcon.classList.add('animate-spin');
         }
 
         function resetButton() {
-            elements.nextBtn.disabled = false;
-            elements.nextBtnText.textContent = 'Получить результат';
-            elements.nextBtnIcon.classList.remove('animate-spin');
-            elements.nextBtnIcon.innerHTML = '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>';
+        elements.nextBtn.disabled = false;
+        elements.nextBtnText.textContent = 'Получить результат';
+        elements.nextBtnIcon.classList.remove('animate-spin');
+        elements.nextBtnIcon.innerHTML = '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>';
         }
 
         async function pollJob(jobId) {
-            const POLL_INTERVAL = 1000;
-            const MAX_ATTEMPTS = 120;
+        const POLL_INTERVAL = 1000;
+        const MAX_ATTEMPTS = 120;
 
-            for (let attempt = 0; attempt < MAX_ATTEMPTS; attempt++) {
-                await new Promise(r => setTimeout(r, POLL_INTERVAL));
+        for (let attempt = 0; attempt < MAX_ATTEMPTS; attempt++) {
+        await new Promise(r => setTimeout(r, POLL_INTERVAL));
 
-                let data;
-                try {
-                    const r = await fetch(`${API_URL}/job/${jobId}`);
-                    if (!r.ok) {
-                        showError('Ошибка при получении результата. Попробуйте позже.');
-                        resetButton();
-                        return;
-                    }
-                    data = await r.json();
-                } catch {
-                    showError('Не удалось получить результат. Проверьте соединение.');
-                    resetButton();
-                    return;
-                }
+        let data;
+        try {
+        const r = await fetch(`${API_URL}/job/${jobId}`);
+        if (!r.ok) {
+        hideQueueScreen();
+        showError('Ошибка при получении результата. Попробуйте позже.');
+        resetButton();
+        return;
+        }
+        data = await r.json();
+        } catch {
+        hideQueueScreen();
+        showError('Не удалось получить результат. Проверьте соединение.');
+        resetButton();
+        return;
+        }
 
-                if (data.status === 'pending') {
-                    setButtonLoading(`В очереди: позиция ${data.position}`);
-                } else if (data.status === 'processing') {
-                    setButtonLoading('Анализируем...');
-                } else if (data.status === 'done') {
-                    showResult(data.result);
-                    return;
-                } else {
-                    showError('Ошибка при обработке. Попробуйте позже.');
-                    resetButton();
-                    return;
-                }
-            }
+        if (data.status === 'pending') {
+        updateQueueStatus('pending', data.position || 1);
+        } else if (data.status === 'processing') {
+        updateQueueStatus('processing', 0);
+        } else if (data.status === 'done') {
+        hideQueueScreen();
+        showResult(data.result);
+        return;
+        } else {
+        hideQueueScreen();
+        showError('Ошибка при обработке. Попробуйте позже.');
+        resetButton();
+        return;
+        }
+        }
 
-            showError('Превышено время ожидания. Попробуйте позже.');
-            resetButton();
+        hideQueueScreen();
+        showError('Превышено время ожидания. Попробуйте позже.');
+        resetButton();
         }
 
         async function submitAnswers() {
-            const totalQuestions = questionsData.selected_count || questionsData.questions.length;
-            const validAnswers = answers.filter(a => a !== null);
+        const totalQuestions = questionsData.selected_count || questionsData.questions.length;
+        const validAnswers = answers.filter(a => a !== null);
 
-            if (validAnswers.length !== totalQuestions) {
-                showError('Пожалуйста, ответьте на все вопросы');
-                return;
-            }
+        if (validAnswers.length !== totalQuestions) {
+        showError('Пожалуйста, ответьте на все вопросы');
+        return;
+        }
 
-            setButtonLoading('Отправка...');
+        setButtonLoading('Отправка...');
 
-            try {
-                const response = await fetch(`${API_URL}/submit`, {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ answers: validAnswers })
-                });
+        try {
+        const response = await fetch(`${API_URL}/submit`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ answers: validAnswers })
+        });
 
-                if (!response.ok) {
-                    const msg = response.status === 429
-                        ? 'Слишком много запросов с вашего IP-адреса. Попробуйте позже.'
-                        : 'Не удалось отправить ответы. Попробуйте позже.';
-                    showError(msg);
-                    resetButton();
-                    return;
-                }
+        if (!response.ok) {
+        const msg = response.status === 429
+        ? 'Слишком много запросов с вашего IP-адреса. Попробуйте позже.'
+        : 'Не удалось отправить ответы. Попробуйте позже.';
+        showError(msg);
+        resetButton();
+        return;
+        }
 
-                const { job_id, position } = await response.json();
-                setButtonLoading(`В очереди: позиция ${position}`);
-                await pollJob(job_id);
-            } catch (error) {
-                showError('Не удалось отправить ответы. Попробуйте позже.');
-                resetButton();
-            }
+        const { job_id, position } = await response.json();
+        currentJobId = job_id;
+
+        // Show queue screen instead of just loading button
+        showQueueScreen();
+        updateQueueStatus('pending', position);
+
+        await pollJob(job_id);
+        } catch (error) {
+        showError('Не удалось отправить ответы. Попробуйте позже.');
+        resetButton();
+        }
+        }
+
+        function cancelQueue() {
+        // Stop polling and return to quiz
+        currentJobId = null;
+        hideQueueScreen();
+        elements.quizContainer.classList.remove('hidden');
+        resetButton();
+        showError('Обработка отменена');
         }
 
         function showResult(result) {
-            const spheres = questionsData.spheres || {};
-            const primarySphere = spheres[result.primary] || {};
+        const spheres = questionsData.spheres || {};
+        const primarySphere = spheres[result.primary] || {};
 
-            elements.resultSphere.textContent = primarySphere.name || result.primary;
-            elements.resultIcon.textContent = primarySphere.icon || SPHERE_ICONS_MAP[result.primary] || '🎯';
-            elements.resultDescription.textContent = primarySphere.description || '';
+        elements.resultSphere.textContent = primarySphere.name || result.primary;
+        elements.resultIcon.textContent = primarySphere.icon || SPHERE_ICONS_MAP[result.primary] || '🎯';
+        elements.resultDescription.textContent = primarySphere.description || '';
 
-            // Confidence badge
-            const confidenceBadge = document.getElementById('confidence-badge');
-            const confidenceConfig = {
-                high:   { text: 'Высокая уверенность', cls: 'bg-green-100 text-green-800 border border-green-200' },
-                medium: { text: 'Умеренная уверенность', cls: 'bg-yellow-100 text-yellow-800 border border-yellow-200' },
-                low:    { text: 'Низкая уверенность', cls: 'bg-red-100 text-red-800 border border-red-200' }
-            };
-            const conf = confidenceConfig[result.confidence] || confidenceConfig.medium;
-            confidenceBadge.textContent = conf.text;
-            confidenceBadge.className = `inline-block px-4 py-1 rounded-full text-sm font-semibold mb-4 ${conf.cls}`;
+        // Confidence badge
+        const confidenceBadge = document.getElementById('confidence-badge');
+        const confidenceConfig = {
+        high:   { text: 'Высокая уверенность', cls: 'bg-green-100 text-green-800 border border-green-200' },
+        medium: { text: 'Умеренная уверенность', cls: 'bg-yellow-100 text-yellow-800 border border-yellow-200' },
+        low:    { text: 'Низкая уверенность', cls: 'bg-red-100 text-red-800 border border-red-200' }
+        };
+        const conf = confidenceConfig[result.confidence] || confidenceConfig.medium;
+        confidenceBadge.textContent = conf.text;
+        confidenceBadge.className = `inline-block px-4 py-1 rounded-full text-sm font-semibold mb-4 ${conf.cls}`;
 
-            // Reasoning
-            const reasoningEl = document.getElementById('reasoning-container');
-            if (result.reasoning && result.reasoning.length > 0) {
-                reasoningEl.innerHTML = result.reasoning.map(text => `
-                    <li class="flex items-start gap-2">
-                        <span class="mt-0.5 text-indigo-400 flex-shrink-0">&#x2022;</span>
-                        <span>${text}</span>
-                    </li>
-                `).join('');
-            } else {
-                reasoningEl.innerHTML = '<li class="text-indigo-500">Нет данных для объяснения</li>';
-            }
+        // Reasoning
+        const reasoningEl = document.getElementById('reasoning-container');
+        if (result.reasoning && result.reasoning.length > 0) {
+        reasoningEl.innerHTML = result.reasoning.map(text => `
+        <li class="flex items-start gap-2">
+        <span class="mt-0.5 text-indigo-400 flex-shrink-0">&#x2022;</span>
+        <span>${text}</span>
+        </li>
+        `).join('');
+        } else {
+        reasoningEl.innerHTML = '<li class="text-indigo-500">Нет данных для объяснения</li>';
+        }
 
-            // Ranking
-            const medals = ['🥇', '🥈', '🥉', '4️⃣', '5️⃣', '6️⃣', '7️⃣', '8️⃣', '9️⃣', '🔟'];
-            const colors = [
-                'bg-gradient-to-r from-yellow-100 to-amber-100 border-yellow-300',
-                'bg-gradient-to-r from-gray-100 to-slate-100 border-gray-300',
-                'bg-gradient-to-r from-orange-100 to-amber-100 border-orange-300',
-                'bg-gray-50 border-gray-200',
-                'bg-gray-50 border-gray-200',
-                'bg-gray-50 border-gray-200',
-                'bg-gray-50 border-gray-200',
-                'bg-gray-50 border-gray-200',
-                'bg-gray-50 border-gray-200',
-                'bg-gray-50 border-gray-200'
-            ];
+        // Ranking
+        const medals = ['🥇', '🥈', '🥉', '4️⃣', '5️⃣', '6️⃣', '7️⃣', '8️⃣', '9️⃣', '🔟'];
+        const colors = [
+        'bg-gradient-to-r from-yellow-100 to-amber-100 border-yellow-300',
+        'bg-gradient-to-r from-gray-100 to-slate-100 border-gray-300',
+        'bg-gradient-to-r from-orange-100 to-amber-100 border-orange-300',
+        'bg-gray-50 border-gray-200',
+        'bg-gray-50 border-gray-200',
+        'bg-gray-50 border-gray-200',
+        'bg-gray-50 border-gray-200',
+        'bg-gray-50 border-gray-200',
+        'bg-gray-50 border-gray-200',
+        'bg-gray-50 border-gray-200'
+        ];
 
-            elements.rankingContainer.innerHTML = result.ranking.map(([cat, prob], index) => {
-                const sphereInfo = spheres[cat] || {};
-                const name = sphereInfo.name || cat;
-                const icon = sphereInfo.icon || SPHERE_ICONS_MAP[cat] || '📌';
+        elements.rankingContainer.innerHTML = result.ranking.map(([cat, prob], index) => {
+        const sphereInfo = spheres[cat] || {};
+        const name = sphereInfo.name || cat;
+        const icon = sphereInfo.icon || SPHERE_ICONS_MAP[cat] || '📌';
 
-                return `
-                    <div class="flex items-center justify-between p-3 sm:p-4 rounded-xl border-2 ${colors[index] || colors[3]} transition duration-200 hover:shadow-md">
-                        <div class="flex items-center gap-2 sm:gap-3 min-w-0">
-                            <span class="text-xl sm:text-2xl flex-shrink-0">${medals[index] || `${index + 1}.`}</span>
-                            <span class="text-lg sm:text-xl flex-shrink-0">${icon}</span>
-                            <span class="font-semibold text-gray-800 text-sm sm:text-base truncate">${name}</span>
-                        </div>
-                        <span class="font-bold text-indigo-600 text-base sm:text-lg flex-shrink-0 ml-2">${Math.round(prob * 100)}%</span>
-                    </div>
-                `;
-            }).join('');
+        return `
+        <div class="flex items-center justify-between p-3 sm:p-4 rounded-xl border-2 ${colors[index] || colors[3]} transition duration-200 hover:shadow-md">
+        <div class="flex items-center gap-2 sm:gap-3 min-w-0">
+        <span class="text-xl sm:text-2xl flex-shrink-0">${medals[index] || `${index + 1}.`}</span>
+        <span class="text-lg sm:text-xl flex-shrink-0">${icon}</span>
+        <span class="font-semibold text-gray-800 text-sm sm:text-base truncate">${name}</span>
+        </div>
+        <span class="font-bold text-indigo-600 text-base sm:text-lg flex-shrink-0 ml-2">${Math.round(prob * 100)}%</span>
+        </div>
+        `;
+        }).join('');
 
-            elements.quizContainer.classList.add('hidden');
-            elements.resultContainer.classList.remove('hidden');
-            elements.errorContainer.classList.add('hidden');
+        elements.quizContainer.classList.add('hidden');
+        elements.resultContainer.classList.remove('hidden');
+        elements.errorContainer.classList.add('hidden');
 
-            // Animate all progress bars after render
-            setTimeout(() => {
-                document.querySelectorAll('[data-width]').forEach(bar => {
-                    bar.style.width = bar.getAttribute('data-width');
-                });
-            }, 100);
+        // Animate all progress bars after render
+        setTimeout(() => {
+        document.querySelectorAll('[data-width]').forEach(bar => {
+        bar.style.width = bar.getAttribute('data-width');
+        });
+        }, 100);
         }
 
         function showError(message) {
-            elements.errorMessage.textContent = message;
-            elements.errorContainer.classList.remove('hidden');
-            setTimeout(() => {
-                elements.errorContainer.classList.add('hidden');
-            }, 5000);
+        elements.errorMessage.textContent = message;
+        elements.errorContainer.classList.remove('hidden');
+        setTimeout(() => {
+        elements.errorContainer.classList.add('hidden');
+        }, 5000);
         }
 
         function restartQuiz() {
-            currentQuestionIndex = 0;
-            answers = new Array(questionsData.selected_count || questionsData.questions.length).fill(null);
-            elements.resultContainer.classList.add('hidden');
-            elements.welcomeScreen.classList.remove('hidden');
-            elements.nextBtnIcon.classList.remove('animate-spin');
+        currentQuestionIndex = 0;
+        currentJobId = null;
+        answers = new Array(questionsData.selected_count || questionsData.questions.length).fill(null);
+        elements.resultContainer.classList.add('hidden');
+        elements.welcomeScreen.classList.remove('hidden');
+        elements.nextBtnIcon.classList.remove('animate-spin');
+
+        // Reset queue steps
+        [elements.statusStep1, elements.statusStep2, elements.statusStep3].forEach(step => {
+        step.querySelector('div').innerHTML = step.querySelector('div').textContent;
+        });
         }
 
         // Event listeners
@@ -645,10 +938,11 @@
         elements.prevBtn.addEventListener('click', prevQuestion);
         elements.restartBtn.addEventListener('click', restartQuiz);
         elements.startTestBtn.addEventListener('click', () => {
-            elements.welcomeScreen.classList.add('hidden');
-            elements.loading.classList.remove('hidden');
-            loadQuestions();
+        elements.welcomeScreen.classList.add('hidden');
+        elements.loading.classList.remove('hidden');
+        loadQuestions();
         });
+        elements.cancelQueueBtn.addEventListener('click', cancelQueue);
 
         // Initialize - show welcome screen
         elements.welcomeScreen.classList.remove('hidden');

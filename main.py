@@ -3,7 +3,7 @@ from fastapi.staticfiles import StaticFiles
 from fastapi.responses import FileResponse, HTMLResponse, JSONResponse
 from starlette.middleware.base import BaseHTTPMiddleware
 from pydantic import BaseModel
-from typing import List, Dict, Any, Optional
+from typing import List, Dict, Any, Optional, Tuple
 import ujson
 import random
 import uuid
@@ -169,7 +169,7 @@ app = FastAPI(title="ProfNavigator", lifespan=lifespan)
 
 app.state.limiter = limiter
 app.add_exception_handler(RateLimitExceeded, lambda req, exc: JSONResponse(
-    {"detail": "Слишком много запросов. Попробуйте через 3 минуты."}, status_code=429
+    {"detail": "Слишком много запросов. Попробуйте позже."}, status_code=429
 ))
 app.add_middleware(SlowAPIMiddleware)
 
@@ -190,6 +190,158 @@ def load_questions() -> dict:
     return _questions_data
 
 
+def _calculate_category_scores(questions: list) -> Dict[str, float]:
+    """
+    Подсчитывает сумму баллов по каждой категории для списка вопросов.
+    Для каждого вопроса берётся максимальный вес категории среди всех вариантов.
+    """
+    category_totals = {
+        "analytical": 0.0, "social": 0.0, "creative": 0.0,
+        "managerial": 0.0, "practical": 0.0, "research": 0.0,
+        "technical": 0.0, "artistic": 0.0, "entrepreneurial": 0.0, "scientific": 0.0
+    }
+
+    for q in questions:
+        # Для каждого вопроса находим максимальный вес по каждой категории среди всех вариантов
+        for opt in q["options"]:
+            cats = opt.get("categories", {})
+            for cat, weight in cats.items():
+                if cat in category_totals:
+                    category_totals[cat] += weight
+
+    return category_totals
+
+
+def _check_imbalance(category_scores: Dict[str, float], threshold: float = 1.5) -> Tuple[bool, Optional[str], Optional[str]]:
+    """
+    Проверяет дисбаланс между категориями.
+    Возвращает (has_imbalance, weak_category, strong_category).
+    """
+    # Фильтруем категории с ненулевыми баллами
+    active_scores = {cat: score for cat, score in category_scores.items() if score > 0}
+
+    if len(active_scores) < 2:
+        return False, None, None
+
+    min_cat = min(active_scores, key=active_scores.get)
+    max_cat = max(active_scores, key=active_scores.get)
+
+    min_score = active_scores[min_cat]
+    max_score = active_scores[max_cat]
+
+    if min_score == 0:
+        return True, min_cat, max_cat
+
+    ratio = max_score / min_score
+
+    if ratio > threshold:
+        return True, min_cat, max_cat
+
+    return False, None, None
+
+
+def _find_replacement_question(
+    selected_questions: list,
+    all_questions: list,
+    weak_category: str,
+    strong_category: str
+) -> Optional[dict]:
+    """
+    Ищет вопрос для замены, который усилит слабую категорию и уменьшит доминирование сильной.
+    prefer_questions_with_category — категория, которую нужно усилить.
+    """
+    selected_ids = {q["id"] for q in selected_questions}
+
+    # Считаем "потенциал" каждого неиспользованного вопроса
+    candidates = []
+
+    for q in all_questions:
+        if q["id"] in selected_ids:
+            continue
+
+        # Считаем веса категорий для этого вопроса
+        cat_scores = {
+            "analytical": 0.0, "social": 0.0, "creative": 0.0,
+            "managerial": 0.0, "practical": 0.0, "research": 0.0,
+            "technical": 0.0, "artistic": 0.0, "entrepreneurial": 0.0, "scientific": 0.0
+        }
+
+        for opt in q["options"]:
+            cats = opt.get("categories", {})
+            for cat, weight in cats.items():
+                if cat in cat_scores:
+                    cat_scores[cat] += weight
+
+        # Оценка полезности вопроса: чем больше weak_category и чем меньше strong_category, тем лучше
+        weak_score = cat_scores.get(weak_category, 0)
+        strong_score = cat_scores.get(strong_category, 0)
+
+        # Счётчик: разница в пользу слабой категории
+        usefulness = weak_score - strong_score * 0.5  # Небольшой штраф за сильную категорию
+
+        if usefulness > 0:
+            candidates.append((q, usefulness, cat_scores))
+
+    if not candidates:
+        return None
+
+    # Выбираем вопрос с наибольшей полезностью
+    candidates.sort(key=lambda x: x[1], reverse=True)
+    return candidates[0][0]
+
+
+def _balance_questions(
+    selected_questions: list,
+    all_questions: list,
+    threshold: float = 1.5,
+    max_iterations: int = 10
+) -> list:
+    """
+    Балансирует выборку вопросов, заменяя вопросы для уменьшения дисбаланса категорий.
+    """
+    questions = selected_questions.copy()
+
+    for iteration in range(max_iterations):
+        category_scores = _calculate_category_scores(questions)
+        has_imbalance, weak_cat, strong_cat = _check_imbalance(category_scores, threshold)
+
+        if not has_imbalance:
+            break
+
+        # Ищем вопрос для замены
+        replacement = _find_replacement_question(questions, all_questions, weak_cat, strong_cat)
+
+        if replacement is None:
+            break
+
+        # Находим вопрос для удаления (который вносит вклад в сильную категорию)
+        question_to_remove = None
+        max_contribution = 0
+
+        for q in questions:
+            strong_contrib = 0
+            weak_contrib = 0
+            for opt in q["options"]:
+                cats = opt.get("categories", {})
+                strong_contrib += cats.get(strong_cat, 0)
+                weak_contrib += cats.get(weak_cat, 0)
+
+            # Удаляем вопрос, который сильно влияет на сильную категорию и слабо на слабую
+            contribution = strong_contrib - weak_contrib
+            if contribution > max_contribution:
+                max_contribution = contribution
+                question_to_remove = q
+
+        if question_to_remove is None:
+            # Если не нашли явного кандидата, удаляем случайный вопрос
+            question_to_remove = random.choice(questions)
+
+        questions.remove(question_to_remove)
+        questions.append(replacement)
+
+    return questions
+
+
 
 class Answer(BaseModel):
     question_id: int
@@ -205,9 +357,9 @@ class SurveyRequest(BaseModel):
 async def get_questions(n: int = 30) -> dict:
     """
     Получить N случайных вопросов в случайном порядке.
-    
+
     Args:
-        n: количество вопросов для выбора (по умолчанию 15)
+        n: количество вопросов для выбора (по умолчанию 30)
     """
     data = load_questions()
     questions = data["questions"].copy()
@@ -218,6 +370,14 @@ async def get_questions(n: int = 30) -> dict:
     # Выбираем N случайных вопросов
     num_questions = min(n, len(questions))
     selected_questions = questions[:num_questions]
+
+    # Балансируем выборку: заменяем вопросы, если дисбаланс категорий > 1.5
+    selected_questions = _balance_questions(
+        selected_questions,
+        questions,
+        threshold=1.5,
+        max_iterations=10
+    )
 
     # Перемешиваем варианты ответов в каждом вопросе
     for q in selected_questions:
